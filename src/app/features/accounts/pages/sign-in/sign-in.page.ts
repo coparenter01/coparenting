@@ -11,7 +11,9 @@ import { AuthService } from '@core/auth/auth.service';
   template: `
     <div class="auth-page-container">
       <header class="auth-header">
-        <span class="brand-title">ParentPath</span>
+        <a routerLink="/auth/sign-in" class="brand-logo-link" aria-label="ParentPath">
+          <img src="/assets/brand/parentpath-logo.svg" alt="ParentPath" height="36" />
+        </a>
         <nav aria-label="Public" class="public-nav">
           <a routerLink="/safety/resources" class="nav-link">Safety resources</a>
           <a routerLink="/support/help" class="nav-link">Help</a>

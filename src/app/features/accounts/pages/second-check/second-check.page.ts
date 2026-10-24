@@ -282,7 +282,7 @@ export class SecondCheckPage {
       return;
     }
 
-    void this.router.navigate(['/household/overview']);
+    void this.router.navigate(['/home']);
   }
 
   public onResendCode(): void {

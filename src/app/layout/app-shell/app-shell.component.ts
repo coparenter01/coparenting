@@ -4,6 +4,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterOutlet } from '@angular/router';
 import { map } from 'rxjs';
 import { SafetyModeService } from '@core/safety/safety-mode.service';
+import { AuthService } from '@core/auth/auth.service';
 import { OfflineBannerComponent, SessionTimeoutDialogComponent } from '@shared/ui';
 import { BottomNavComponent } from '../bottom-nav/bottom-nav.component';
 import { IconRailComponent } from '../icon-rail/icon-rail.component';
@@ -183,11 +184,17 @@ export class AppShellComponent {
   public readonly isWide = computed(() => this._isWide());
   public readonly isMedium = computed(() => !this._isWide() && this._isMedium());
 
-  /* ── Household/user state ── */
+  private readonly _auth = inject(AuthService);
   public readonly householdName = signal('My Household');
   public readonly householdMode = signal<'linked' | 'solo'>('solo');
   public readonly timeZone = signal(Intl.DateTimeFormat().resolvedOptions().timeZone);
-  public readonly userDisplayName = signal('You');
+  public readonly userDisplayName = computed(() => {
+    const profileName = this._auth.profile()?.display_name;
+    if (profileName) return profileName;
+    const email = this._auth.user()?.email;
+    if (email) return email.split('@')[0] ?? 'You';
+    return 'You';
+  });
 
   /* ── Safety Mode ── */
   public readonly safetyModeEnabled = computed(() => this._safety.safetyModeActive());

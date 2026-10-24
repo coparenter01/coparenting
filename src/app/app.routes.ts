@@ -1,4 +1,6 @@
+import { inject } from '@angular/core';
 import type { Routes } from '@angular/router';
+import { AuthService } from '@core/auth/auth.service';
 
 export const routes: Routes = [
   {
@@ -9,7 +11,7 @@ export const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: 'home',
+        redirectTo: () => (inject(AuthService).isAuthenticated() ? 'home' : 'auth/sign-in'),
       },
       {
         path: 'home',
@@ -362,6 +364,16 @@ export const routes: Routes = [
   {
     path: 'operations/support-measures',
     redirectTo: 'help/operations/measures',
+    pathMatch: 'full',
+  },
+  {
+    path: 'household/overview',
+    redirectTo: 'accounts/household',
+    pathMatch: 'full',
+  },
+  {
+    path: 'household/choose-mode',
+    redirectTo: 'accounts/choose-solo-mode',
     pathMatch: 'full',
   },
   // System screens (no shell chrome)
