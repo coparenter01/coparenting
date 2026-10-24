@@ -1,0 +1,75 @@
+<div class="css-page-container">
+  <div class="top-nav">
+    <a routerLink="/child-support" class="back-link" id="link-back-css">← Child support</a>
+  </div>
+
+  <header class="header">
+    <h1 class="title">Share an agency item</h1>
+    <p class="subtitle">
+      Selectively share an official agency record or hearing notice with your co-parent.
+    </p>
+  </header>
+
+  @if (errorMessage()) {
+    <div class="alert-error" role="alert" id="alert-share-error">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  <form class="card share-form" (submit)="$event.preventDefault(); onShare()">
+    <div class="form-group">
+      <label for="select-item-type" class="form-label">Item type</label>
+      <select
+        id="select-item-type"
+        class="form-control"
+        [value]="selectedType()"
+        (change)="onTypeChange($event)"
+      >
+        <option value="hearing">Hearing notice</option>
+        <option value="payment_receipt">Payment / disbursement receipt</option>
+        <option value="order_summary">Order summary</option>
+        <option value="arrears_notice">Arrears statement</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="input-item-title" class="form-label">Item title / description</label>
+      <input
+        type="text"
+        id="input-item-title"
+        class="form-control"
+        [value]="itemTitle()"
+        (input)="onTitleChange($event)"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="input-recipient" class="form-label">Recipient</label>
+      <input type="text" id="input-recipient" class="form-control" [value]="recipient()" readonly />
+    </div>
+
+    <div class="form-group">
+      <label for="textarea-note" class="form-label">Optional note for co-parent</label>
+      <textarea
+        id="textarea-note"
+        class="form-control-textarea"
+        rows="3"
+        placeholder="Add context about this item..."
+        [value]="note()"
+        (input)="onNoteChange($event)"
+      ></textarea>
+    </div>
+
+    <div class="privacy-notice">
+      <strong>Privacy safeguard:</strong> Only the specific item and details shown above will be
+      shared. Your official case number, SSN, and other agency identifiers remain strictly private.
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" id="btn-confirm-share" [disabled]="isSharing()">
+        {{ isSharing() ? 'Sharing...' : 'Share with co-parent' }}
+      </button>
+      <a routerLink="/child-support" class="btn-subtle" id="link-cancel-share">Cancel</a>
+    </div>
+  </form>
+</div>

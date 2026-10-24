@@ -1,0 +1,56 @@
+<div class="close-container">
+  <div class="breadcrumb-nav">
+    <a routerLink="/settings" class="back-link">
+      <span aria-hidden="true">&larr;</span> Settings
+    </a>
+  </div>
+
+  <header class="page-header">
+    <h1 class="page-title">Close your account</h1>
+  </header>
+
+  <div class="actions-strip">
+    <a routerLink="/records" class="chip-link"> Legal hold </a>
+  </div>
+
+  @if (exportFeedback()) {
+    <div class="export-feedback" role="status">
+      {{ exportFeedback() }}
+    </div>
+  }
+
+  <section class="section-card" aria-labelledby="export-heading">
+    <h2 id="export-heading" class="card-title">1. Export your data first</h2>
+    <p class="card-subtitle">
+      Download a complete, certified copy of your records before you close the account.
+    </p>
+    <div class="export-buttons">
+      <button type="button" class="btn-outline" (click)="exportData('PDF')">Export as PDF</button>
+      <button type="button" class="btn-outline" (click)="exportData('CSV')">Export as CSV</button>
+    </div>
+  </section>
+
+  <section class="section-card danger-card" aria-labelledby="consequences-heading">
+    <h2 id="consequences-heading" class="card-title">2. What happens when you close</h2>
+    <ul class="consequences-list">
+      <li>
+        Records tied to a case under legal hold are kept in accordance with court retention rules.
+      </li>
+      <li>Your other data is permanently deleted within 30 days.</li>
+      <li>Your account is set to Closed and you cannot sign in again.</li>
+    </ul>
+
+    <form [formGroup]="closeForm" (ngSubmit)="onCloseAccount()" class="confirm-form">
+      <label class="confirm-checkbox-row">
+        <input type="checkbox" formControlName="confirmUnderstand" />
+        <span>I understand and want to close my account</span>
+      </label>
+
+      <div class="danger-actions">
+        <button type="submit" class="btn-danger" [disabled]="!isConfirmed() || isClosing()">
+          {{ isClosing() ? 'Closing account...' : 'Close account' }}
+        </button>
+      </div>
+    </form>
+  </section>
+</div>

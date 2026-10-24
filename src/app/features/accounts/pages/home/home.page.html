@@ -1,0 +1,125 @@
+<div class="home-container">
+  <header class="home-header">
+    <div class="greeting-block">
+      <h1 class="greeting-title">{{ greeting() }}, {{ displayName() }}</h1>
+      <p class="greeting-subtitle">
+        {{ householdName() }} &middot;
+        @if (isSoloMode()) {
+          Solo Mode (Private records)
+        } @else {
+          Co-parent is linked
+        }
+      </p>
+    </div>
+
+    <div class="quick-actions">
+      <a routerLink="/messages" class="action-btn action-primary">New message</a>
+      <a routerLink="/calendar" class="action-btn action-outline">Add event</a>
+      <a routerLink="/expenses" class="action-btn action-outline">Add expense</a>
+    </div>
+  </header>
+
+  <section class="dashboard-grid-2">
+    <!-- Today and Next 7 Days -->
+    <article class="dashboard-card" aria-labelledby="upcoming-heading">
+      <div class="card-header">
+        <h2 id="upcoming-heading" class="card-title">Today and next 7 days</h2>
+        <a routerLink="/calendar" class="card-header-link">Calendar &rarr;</a>
+      </div>
+
+      <div class="table-responsive">
+        <table class="dashboard-table">
+          <thead>
+            <tr>
+              <th scope="col">When</th>
+              <th scope="col">What</th>
+              <th scope="col">With</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (evt of upcomingEvents; track evt.id) {
+              <tr>
+                <td class="cell-when">{{ evt.when }}</td>
+                <td>
+                  <a routerLink="/calendar" class="table-item-link">{{ evt.what }}</a>
+                </td>
+                <td class="cell-with">{{ evt.with }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <!-- Unread Messages -->
+    <article class="dashboard-card" aria-labelledby="messages-heading">
+      <div class="card-header">
+        <h2 id="messages-heading" class="card-title">Unread messages</h2>
+        <a routerLink="/messages" class="card-header-link">Messages &rarr;</a>
+      </div>
+
+      <div class="table-responsive">
+        <table class="dashboard-table">
+          <thead>
+            <tr>
+              <th scope="col">From</th>
+              <th scope="col">Subject</th>
+              <th scope="col">Received</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (msg of recentMessages; track msg.id) {
+              <tr>
+                <td class="cell-from">{{ msg.from }}</td>
+                <td>
+                  <a routerLink="/messages" class="table-item-link">{{ msg.subject }}</a>
+                </td>
+                <td class="cell-time">{{ msg.time }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </article>
+  </section>
+
+  <section class="dashboard-grid-3">
+    <!-- Waiting for your answer -->
+    <article class="dashboard-card widget-card" aria-labelledby="pending-heading">
+      <h2 id="pending-heading" class="card-title">Waiting for your answer</h2>
+      <div class="pending-list">
+        <a routerLink="/calendar" class="pending-item">
+          <span class="pending-icon" aria-hidden="true">&bull;</span>
+          <span>Schedule change request &middot; Friday</span>
+        </a>
+        <a routerLink="/expenses" class="pending-item">
+          <span class="pending-icon" aria-hidden="true">&bull;</span>
+          <span>Reimbursement request &middot; $45.00</span>
+        </a>
+        <a routerLink="/accounts/invites" class="pending-item">
+          <span class="pending-icon" aria-hidden="true">&bull;</span>
+          <span>Active co-parent invite status</span>
+        </a>
+      </div>
+    </article>
+
+    <!-- Open reimbursement requests -->
+    <article class="dashboard-card widget-card" aria-labelledby="reimbursements-heading">
+      <h2 id="reimbursements-heading" class="card-title">Open reimbursement requests</h2>
+      <p class="widget-metric">2 open &middot; $85.50 in total</p>
+      <div class="widget-action">
+        <a routerLink="/expenses" class="btn-widget-outline">View requests</a>
+      </div>
+    </article>
+
+    <!-- Household Summary -->
+    <article class="dashboard-card widget-card" aria-labelledby="household-widget-heading">
+      <h2 id="household-widget-heading" class="card-title">Household</h2>
+      <p class="widget-metric">2 children registered</p>
+      <div class="widget-actions-dual">
+        <a routerLink="/accounts/household" class="btn-widget-outline">Household</a>
+        <a routerLink="/children" class="btn-widget-link">Children</a>
+      </div>
+    </article>
+  </section>
+</div>

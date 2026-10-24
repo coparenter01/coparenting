@@ -1,0 +1,73 @@
+<div class="log-container">
+  <div class="back-nav">
+    <a routerLink="/safety/ai-data" class="back-link">
+      <span class="material-symbols-rounded" aria-hidden="true">arrow_back</span>
+      AI and your data
+    </a>
+  </div>
+
+  <div class="log-header">
+    <h1 class="log-title">AI use log</h1>
+    <p class="log-subtitle">
+      Record of when on-device AI features were executed for your account. Kept for 12 months.
+    </p>
+  </div>
+
+  <div class="filter-bar">
+    <label class="filter-field">
+      <span class="field-label">Filter by feature</span>
+      <select [value]="selectedFeature()" (change)="onFilterChange($event)" class="select-input">
+        <option value="ALL">All features</option>
+        <option value="Tone check">Tone check</option>
+        <option value="Incoming shield">Incoming shield</option>
+        <option value="Receipt scanner">Receipt scanner</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="table-container">
+    <table class="log-table" aria-label="AI execution log">
+      <thead>
+        <tr>
+          <th scope="col">Feature</th>
+          <th scope="col">Date and time</th>
+          <th scope="col">Item type</th>
+          <th scope="col">Processing</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (entry of filteredEntries(); track entry.id) {
+          <tr>
+            <td>
+              <span class="feature-badge">{{ entry.featureName }}</span>
+            </td>
+            <td class="date-cell">{{ entry.timestamp | date: 'medium' }}</td>
+            <td>
+              <span class="type-pill">{{ entry.itemType }}</span>
+            </td>
+            <td class="status-cell">
+              <span class="privacy-tag">
+                <span class="material-symbols-rounded check-icon" aria-hidden="true"
+                  >check_circle</span
+                >
+                Local (no content stored)
+              </span>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="empty-cell">No AI usage recorded for the selected filter.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="privacy-notice">
+    <span class="material-symbols-rounded" aria-hidden="true">shield</span>
+    <span
+      >The log records execution metrics only. Message text, audio, and receipt images are never
+      stored in the log.</span
+    >
+  </div>
+</div>

@@ -1,0 +1,81 @@
+<div class="css-page-container">
+  <div class="top-nav">
+    <a routerLink="/child-support" class="back-link" id="link-back-css">← Child support</a>
+  </div>
+
+  <header class="header">
+    <h1 class="title">Court hearing packet</h1>
+    <p class="subtitle">
+      Official court-ready compilation of orders, certified ledgers, and payment compliance.
+    </p>
+  </header>
+
+  @if (downloadSuccess()) {
+    <div class="alert-success" role="status" id="alert-hearing-packet-downloaded">
+      Certified hearing packet compiled and downloaded successfully.
+    </div>
+  }
+
+  @if (packet(); as p) {
+    <div class="card packet-preview">
+      <div class="packet-banner">
+        <div>
+          <span class="badge-court">Court-Ready certified packet</span>
+          <h2 class="matter-title">Matter: {{ p.caseNumber }} ({{ p.state }})</h2>
+        </div>
+        <div class="record-meta">
+          <span class="rec-id-label">Record ID</span>
+          <span class="rec-id-val">{{ p.verificationRecordId }}</span>
+        </div>
+      </div>
+
+      <div class="packet-grid">
+        <div class="grid-item">
+          <span class="grid-label">Assessed monthly order</span>
+          <span class="grid-val">{{ p.monthlyOrderFormatted }}</span>
+        </div>
+
+        <div class="grid-item">
+          <span class="grid-label">Outstanding balance</span>
+          <span class="grid-val">{{ p.balanceOwedFormatted }}</span>
+        </div>
+
+        <div class="grid-item">
+          <span class="grid-label">Certified arrears</span>
+          <span class="grid-val">{{ p.arrearsFormatted }}</span>
+        </div>
+
+        <div class="grid-item">
+          <span class="grid-label">Upcoming hearing</span>
+          <span class="grid-val">{{ p.nextHearingFormatted }}</span>
+        </div>
+      </div>
+
+      <div class="compliance-box">
+        <div class="compliance-title">Compliance statement</div>
+        <div class="compliance-status">{{ p.complianceStatus }}</div>
+        <p class="compliance-sub">
+          Cross-referenced against state child support enforcement database and verified payment
+          disbursement history.
+        </p>
+      </div>
+
+      <div class="footer-actions">
+        <button
+          type="button"
+          class="btn-primary"
+          id="btn-download-hearing-packet"
+          [disabled]="isDownloading()"
+          (click)="downloadPacket()"
+        >
+          {{ isDownloading() ? 'Compiling PDF...' : 'Download hearing packet (PDF)' }}
+        </button>
+        <a routerLink="/records/create" class="btn-secondary" id="link-add-journal-records">
+          Include private journal entries
+        </a>
+      </div>
+    </div>
+  } @else {
+    <div class="empty-notice">No linked case available to compile a hearing packet.</div>
+  }
+</div>

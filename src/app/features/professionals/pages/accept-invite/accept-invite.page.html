@@ -1,0 +1,74 @@
+<div class="pro-page-container">
+  <main class="pro-main">
+    <div class="pro-header">
+      <h1 class="pro-title">Accept invitation</h1>
+    </div>
+
+    @if (errorMessage()) {
+      <div class="alert alert-error" role="alert">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    @if (successMessage()) {
+      <div class="alert alert-success" role="status">
+        {{ successMessage() }}
+      </div>
+    }
+
+    <form class="pro-form" (ngSubmit)="onAccept()">
+      <p class="invite-banner">
+        Alex Morgan invited you to view their ParentPath records as an Attorney.
+      </p>
+
+      <label class="form-label">
+        Full name
+        <input
+          type="text"
+          class="form-input"
+          name="fullName"
+          [value]="fullName()"
+          (input)="onFullNameInput($event)"
+          required
+        />
+      </label>
+
+      <label class="form-label">
+        Email
+        <input
+          type="email"
+          class="form-input"
+          name="email"
+          [value]="email()"
+          (input)="onEmailInput($event)"
+          required
+        />
+      </label>
+
+      <label class="form-label">
+        Password
+        <input
+          type="password"
+          class="form-input"
+          name="password"
+          [value]="password()"
+          (input)="onPasswordInput($event)"
+          required
+        />
+      </label>
+
+      <label class="checkbox-label">
+        <input
+          type="checkbox"
+          [checked]="termsAccepted()"
+          (change)="termsAccepted.set(!termsAccepted())"
+        />
+        I accept the professional terms
+      </label>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Create account and accept</button>
+      </div>
+    </form>
+  </main>
+</div>

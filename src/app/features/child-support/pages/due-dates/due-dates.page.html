@@ -1,0 +1,97 @@
+<div class="css-page-container">
+  <div class="top-nav">
+    <a routerLink="/child-support" class="back-link" id="link-back-css">← Child support</a>
+  </div>
+
+  <header class="header">
+    <h1 class="title">Due dates & reminder times</h1>
+    <p class="subtitle">Official agency payment schedule and notification lead time settings.</p>
+  </header>
+
+  @if (saveSuccess()) {
+    <div class="alert-success" role="status" id="alert-save-reminders">
+      Reminder preferences saved successfully.
+    </div>
+  }
+
+  <section class="card schedule-card" aria-label="Upcoming schedule">
+    <h2 class="card-title">Agency payment schedule</h2>
+    <div class="schedule-row">
+      <div>
+        <div class="due-label">Next due date</div>
+        <div class="due-date">November 1, 2026</div>
+      </div>
+      <div class="due-amount">{{ getMonthlyAmount() }}</div>
+    </div>
+    <div class="schedule-meta">Monthly recurring obligation set by official agency order.</div>
+  </section>
+
+  <section class="card settings-card" aria-label="Reminder lead times">
+    <h2 class="card-title">Reminder lead times</h2>
+    <div class="checkbox-group">
+      <label class="checkbox-label" for="cb-remind-7">
+        <input
+          type="checkbox"
+          id="cb-remind-7"
+          class="checkbox-input"
+          [checked]="remind7()"
+          (change)="toggle7($event)"
+        />
+        <span>7 days before due date</span>
+      </label>
+
+      <label class="checkbox-label" for="cb-remind-3">
+        <input
+          type="checkbox"
+          id="cb-remind-3"
+          class="checkbox-input"
+          [checked]="remind3()"
+          (change)="toggle3($event)"
+        />
+        <span>3 days before due date</span>
+      </label>
+
+      <label class="checkbox-label" for="cb-remind-1">
+        <input
+          type="checkbox"
+          id="cb-remind-1"
+          class="checkbox-input"
+          [checked]="remind1()"
+          (change)="toggle1($event)"
+        />
+        <span>1 day before due date</span>
+      </label>
+    </div>
+
+    <h2 class="card-title">Delivery channels</h2>
+    <div class="checkbox-group">
+      <label class="checkbox-label" for="cb-push">
+        <input
+          type="checkbox"
+          id="cb-push"
+          class="checkbox-input"
+          [checked]="pushNotifs()"
+          (change)="togglePush($event)"
+        />
+        <span>In-app and push notifications</span>
+      </label>
+
+      <label class="checkbox-label" for="cb-email">
+        <input
+          type="checkbox"
+          id="cb-email"
+          class="checkbox-input"
+          [checked]="emailNotifs()"
+          (change)="toggleEmail($event)"
+        />
+        <span>Email notification summary</span>
+      </label>
+    </div>
+
+    <div class="form-actions">
+      <button type="button" class="btn-primary" id="btn-save-reminders" (click)="savePreferences()">
+        Save preferences
+      </button>
+    </div>
+  </section>
+</div>

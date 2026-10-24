@@ -1,0 +1,149 @@
+<div class="staff-layout" data-testid="service-notices-page">
+  <nav class="staff-nav" aria-label="Staff navigation">
+    <div class="nav-brand">ParentPath</div>
+    <div class="nav-sub">Support workspace</div>
+    <div class="nav-links-box">
+      <a routerLink="/staff/support">Queue</a>
+      <a routerLink="/staff/support/notices" class="active">Service notices</a>
+      <a routerLink="/staff/support/articles">Help articles</a>
+      <a routerLink="/staff/support/templates">Reply templates</a>
+      <a routerLink="/operations/support-measures">Support measures</a>
+    </div>
+  </nav>
+
+  <div class="staff-content">
+    <header class="staff-header">
+      <span class="header-left">Support workspace</span>
+      <div class="header-right">
+        <span class="two-step-badge">2-step verified</span>
+        <span>Taylor Lead &middot; Support Lead</span>
+      </div>
+    </header>
+
+    <main class="staff-main">
+      <div class="page-title-row">
+        <div>
+          <h1 class="page-title">Service notices</h1>
+          <p class="page-subtitle">Shown at the top of the Help screen while published.</p>
+        </div>
+        <span class="role-badge">Support Lead only</span>
+      </div>
+
+      <div class="table-card">
+        <table class="notices-table">
+          <thead>
+            <tr>
+              <th>Notice</th>
+              <th>Start</th>
+              <th>End</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (notice of notices(); track notice.noticeId) {
+              <tr>
+                <td>{{ notice.text }}</td>
+                <td>{{ notice.startsAt | slice: 0 : 16 }}</td>
+                <td>{{ notice.endsAt | slice: 0 : 16 }}</td>
+                <td>
+                  <span class="status-pill" [class]="notice.status">
+                    {{ notice.status }}
+                  </span>
+                </td>
+                <td>
+                  @if (notice.status === 'published') {
+                    <button
+                      type="button"
+                      class="pp-button pp-button--outline pp-button--sm"
+                      (click)="onTogglePublish(notice, false)"
+                    >
+                      Unpublish
+                    </button>
+                  } @else {
+                    <button
+                      type="button"
+                      class="pp-button pp-button--primary pp-button--sm"
+                      (click)="onTogglePublish(notice, true)"
+                    >
+                      Publish
+                    </button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <form class="form-card" (submit)="onSaveNotice($event, false)">
+        <h2>New notice</h2>
+
+        @if (errorMessage()) {
+          <div class="error-banner" role="alert" data-testid="notice-error-banner">
+            {{ errorMessage() }}
+          </div>
+        }
+
+        <div class="field-group">
+          <label for="notice-text">Notice text</label>
+          <textarea
+            id="notice-text"
+            rows="3"
+            maxlength="500"
+            [value]="noticeText()"
+            (input)="onTextInput($event)"
+            placeholder="System announcement or maintenance schedule..."
+          ></textarea>
+          <span class="field-hint">1 to 500 characters</span>
+        </div>
+
+        <div class="date-grid">
+          <div class="field-group">
+            <label for="notice-start">Start time</label>
+            <input
+              id="notice-start"
+              type="datetime-local"
+              [value]="startTime()"
+              (change)="onStartChange($event)"
+            />
+          </div>
+
+          <div class="field-group">
+            <label for="notice-end">End time</label>
+            <input
+              id="notice-end"
+              type="datetime-local"
+              [value]="endTime()"
+              (change)="onEndChange($event)"
+            />
+            <span class="field-hint">Must be after the start</span>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="notice-status">Status</label>
+          <select id="notice-status" [value]="noticeStatus()" (change)="onStatusSelect($event)">
+            <option value="draft">Draft</option>
+            <option value="published">Published</option>
+            <option value="unpublished">Unpublished</option>
+          </select>
+        </div>
+
+        <div class="actions-row">
+          <button type="submit" id="save-notice-draft-btn" class="pp-button pp-button--outline">
+            Save draft
+          </button>
+          <button
+            type="button"
+            id="publish-notice-btn"
+            class="pp-button pp-button--primary"
+            (click)="onSaveNotice($event, true)"
+          >
+            Publish
+          </button>
+        </div>
+      </form>
+    </main>
+  </div>
+</div>

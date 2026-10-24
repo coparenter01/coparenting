@@ -1,0 +1,133 @@
+<div class="request-detail-container">
+  <div class="detail-header">
+    <a routerLink="/expenses/requests" class="back-link">← Reimbursement Requests</a>
+    <div class="title-row">
+      <div>
+        <h1 class="page-title">Reimbursement Request</h1>
+        <p class="subtitle">For: {{ request()?.expenseDescription }}</p>
+      </div>
+      <div
+        class="status-badge"
+        [class.badge-pending]="request()?.status === 'Pending'"
+        [class.badge-accepted]="request()?.status === 'Accepted'"
+        [class.badge-declined]="request()?.status === 'Declined'"
+        [class.badge-paid]="request()?.status === 'Paid'"
+      >
+        {{ request()?.status }}
+      </div>
+    </div>
+  </div>
+
+  @if (actionMessage()) {
+    <div class="alert alert-info">{{ actionMessage() }}</div>
+  }
+
+  <div class="content-cards">
+    <div class="card main-info-card">
+      <div class="amount-hero">
+        <span class="hero-label">Requested Share ({{ request()?.splitPercentage }}%)</span>
+        <strong class="hero-amount">{{ formattedAmount() }}</strong>
+        <span class="hero-total">out of total expense {{ formattedTotal() }}</span>
+      </div>
+
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Requested By</span>
+          <span class="info-value">{{ request()?.requestedByName }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Requested From</span>
+          <span class="info-value">{{ request()?.requestedFromName }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Due / Respond By</span>
+          <span class="info-value">{{ request()?.dueDate }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Date Requested</span>
+          <span class="info-value">{{ request()?.createdAt | slice: 0 : 10 }}</span>
+        </div>
+      </div>
+
+      @if (request()?.note) {
+        <div class="note-box">
+          <span class="info-label">Requester's Note</span>
+          <p class="note-text">{{ request()?.note }}</p>
+        </div>
+      }
+
+      @if (request()?.declineReason) {
+        <div class="decline-box">
+          <span class="info-label">Reason for Decline</span>
+          <p class="decline-text">{{ request()?.declineReason }}</p>
+        </div>
+      }
+
+      <div class="action-buttons">
+        @if (request()?.status === 'Pending') {
+          @if (!isRequester()) {
+            <button type="button" (click)="acceptRequest()" class="btn btn-primary">
+              Accept Request
+            </button>
+            <a [routerLink]="['/expenses/pay', request()?.id]" class="btn btn-accent">
+              Pay Online Now
+            </a>
+            <button type="button" (click)="openDeclineModal()" class="btn btn-secondary">
+              Decline
+            </button>
+          } @else {
+            <button type="button" (click)="withdrawRequest()" class="btn btn-secondary">
+              Withdraw Request
+            </button>
+          }
+        } @else if (request()?.status === 'Accepted') {
+          <a [routerLink]="['/expenses/pay', request()?.id]" class="btn btn-accent">
+            Pay Online (Simulated)
+          </a>
+          <button type="button" (click)="markPaid()" class="btn btn-primary">
+            Mark as Paid Externally
+          </button>
+        }
+
+        <a [routerLink]="['/expenses', request()?.expenseId]" class="btn btn-text">
+          View Original Expense →
+        </a>
+      </div>
+    </div>
+  </div>
+
+  @if (showDeclineModal()) {
+    <div class="modal-backdrop">
+      <div class="modal-card">
+        <h3 class="modal-title">Decline Reimbursement</h3>
+        <p class="modal-subtitle">
+          Family law court standards require an explanation when declining an expense share.
+        </p>
+        <label for="decline-reason" class="form-label">Reason for declining *</label>
+        <textarea
+          id="decline-reason"
+          [(ngModel)]="declineReason"
+          name="declineReason"
+          rows="3"
+          maxlength="500"
+          placeholder="e.g. Not an agreed expense, amount exceeds agreed cap, etc."
+          class="form-textarea"
+          required
+        ></textarea>
+        <div class="modal-actions">
+          <button
+            type="button"
+            (click)="confirmDecline()"
+            [disabled]="!declineReason().trim()"
+            class="btn btn-danger"
+          >
+            Submit Decline
+          </button>
+          <button type="button" (click)="closeDeclineModal()" class="btn btn-secondary">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

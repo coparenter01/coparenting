@@ -1,0 +1,4 @@
+{
+  "*.{ts,html}": ["prettier --write", "eslint --max-warnings 0"],
+  "*.{scss,json,md,yml}": ["prettier --write"]
+}

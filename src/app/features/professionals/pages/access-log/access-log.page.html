@@ -1,0 +1,30 @@
+<div class="pro-page-container">
+  <main class="pro-main">
+    <a routerLink="/professionals" class="back-link">← My professionals</a>
+
+    <div class="pro-header">
+      <h1 class="pro-title">Access log</h1>
+    </div>
+
+    <div class="table-card">
+      <table class="pro-table">
+        <thead>
+          <tr>
+            <th>Professional</th>
+            <th>What they opened</th>
+            <th>Date and time</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (log of accessLogs(); track log.id) {
+            <tr>
+              <td class="pro-name">{{ log.professionalName }}</td>
+              <td>{{ log.opened }}</td>
+              <td class="log-time">{{ log.openedAt }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>

@@ -1,0 +1,63 @@
+<div class="pro-workspace-layout">
+  <nav class="pro-sidebar" aria-label="Professional portal">
+    <div class="sidebar-brand">ParentPath</div>
+    <div class="sidebar-sub">Professional workspace</div>
+    <div class="sidebar-nav">
+      <a routerLink="/professionals/portal" class="sidebar-link active">Clients</a>
+      <a routerLink="/professionals/portal/messages" class="sidebar-link">Messages from parents</a>
+    </div>
+  </nav>
+
+  <div class="pro-workspace-content">
+    <header class="workspace-header">
+      <span class="header-title">Professional workspace</span>
+      <span class="header-user">
+        <span class="badge badge-verified">2-step verified</span>
+        Sarah Jenkins, Esq. · Attorney
+      </span>
+    </header>
+
+    <main class="workspace-main">
+      <div class="main-header">
+        <h1 class="main-title">Clients</h1>
+      </div>
+
+      <div class="table-card">
+        <table class="pro-table">
+          <thead>
+            <tr>
+              <th>Client</th>
+              <th>Shared</th>
+              <th>Access ends</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (client of clients(); track client.clientId) {
+              <tr>
+                <td>
+                  <a
+                    [routerLink]="['/professionals/portal/client', client.clientId]"
+                    class="client-name-link"
+                  >
+                    {{ client.clientName }}
+                  </a>
+                </td>
+                <td class="shared-summary">{{ client.sharedSummary }}</td>
+                <td class="access-ends">{{ client.accessEndsAt }}</td>
+                <td>
+                  <a
+                    [routerLink]="['/professionals/portal/client', client.clientId]"
+                    class="btn btn-outline btn-sm"
+                  >
+                    View records
+                  </a>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>

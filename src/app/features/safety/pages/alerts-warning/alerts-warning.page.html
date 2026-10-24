@@ -1,0 +1,27 @@
+<div class="warning-container">
+  <div class="warning-card" role="dialog" aria-modal="true" aria-labelledby="warning-title">
+    <div class="warning-header">
+      <div class="warn-badge">
+        <span class="material-symbols-rounded" aria-hidden="true">warning</span>
+      </div>
+      <h1 id="warning-title" class="warning-title">Show message text in alerts?</h1>
+    </div>
+
+    <div class="warning-callout">
+      <span
+        >Anyone who can see your screen can read your messages in alerts. Do you want to show
+        message text in alerts?</span
+      >
+    </div>
+
+    <p class="warning-detail">
+      Alerts will display the sender’s name and the first 100 characters of the incoming message
+      directly on your lock screen and banners.
+    </p>
+
+    <div class="actions-row">
+      <a routerLink="/safety/alerts-images" class="btn btn-secondary"> Cancel </a>
+      <button type="button" class="btn btn-primary" (click)="onConfirm()">Confirm</button>
+    </div>
+  </div>
+</div>

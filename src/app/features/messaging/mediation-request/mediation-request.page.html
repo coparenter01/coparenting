@@ -1,0 +1,57 @@
+<section class="mediation-container">
+  <div class="mediation-header">
+    <h1>Request In-App Mediation</h1>
+  </div>
+
+  @if (isSubmitted()) {
+    <div class="success-card">
+      <h3>Mediation Request Submitted</h3>
+      <p>
+        Your request has been routed to our staff dispute resolution queue. Both parents will
+        receive an invitation when a licensed mediator is assigned.
+      </p>
+      <a routerLink="/messages" class="btn-secondary">Return to Messages</a>
+    </div>
+  } @else {
+    <div class="info-banner">
+      In-app mediation provides neutral, certified third-party assistance to help resolve
+      disagreements amicably without costly court motions.
+    </div>
+
+    <div class="mediation-card">
+      <div class="form-group">
+        <label for="mediation-topic">Topic of Disagreement</label>
+        <select id="mediation-topic" class="select-input" [(ngModel)]="topic">
+          <option value="Parenting Schedule">Parenting Schedule & Routine</option>
+          <option value="School / Education">School & Education Choices</option>
+          <option value="Medical Decisions">Healthcare & Medical Decisions</option>
+          <option value="Extracurricular Activities">Extracurriculars & Travel</option>
+          <option value="Expense Disagreements">Expense Splits & Reimbursements</option>
+          <option value="Other">Other Family Matter</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="mediation-summary">Summary of Dispute</label>
+        <textarea
+          id="mediation-summary"
+          class="textarea-summary"
+          placeholder="Briefly describe the disagreement and any solutions you have already proposed..."
+          [(ngModel)]="issueSummary"
+        ></textarea>
+      </div>
+
+      <div class="actions-row">
+        <a routerLink="/messages" class="btn-secondary">Cancel</a>
+        <button
+          type="button"
+          class="btn-primary"
+          [disabled]="!issueSummary.trim()"
+          (click)="onSubmit()"
+        >
+          Submit Mediation Request
+        </button>
+      </div>
+    </div>
+  }
+</section>

@@ -1,0 +1,36 @@
+<section class="folders-container">
+  <div class="folders-header">
+    <h1>Folders & Topics</h1>
+  </div>
+
+  <div class="new-folder-card">
+    <input
+      type="text"
+      class="folder-input"
+      placeholder="New folder name (e.g., Summer Camp 2026, Orthodontist)..."
+      [(ngModel)]="newFolderName"
+    />
+    <button type="button" class="btn-primary" (click)="onCreateFolder()">Create Folder</button>
+  </div>
+
+  <div class="folders-grid">
+    <div class="folder-tile">
+      <span class="folder-icon">&#128193;</span>
+      <span>Medical & Healthcare</span>
+    </div>
+    <div class="folder-tile">
+      <span class="folder-icon">&#128193;</span>
+      <span>School & Education</span>
+    </div>
+    <div class="folder-tile">
+      <span class="folder-icon">&#128193;</span>
+      <span>Schedule & Holidays</span>
+    </div>
+    @for (folder of folders(); track folder.id) {
+      <div class="folder-tile">
+        <span class="folder-icon">&#128193;</span>
+        <span>{{ folder.name }}</span>
+      </div>
+    }
+  </div>
+</section>

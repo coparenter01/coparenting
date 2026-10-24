@@ -1,0 +1,88 @@
+<div class="payment-form-container">
+  <div class="form-header">
+    <a routerLink="/expenses/child-support" class="back-link">← Child Support Payments</a>
+    <h1 class="page-title">Record Child Support Payment</h1>
+    <p class="page-subtitle">Log a direct payment or agency transfer into household records</p>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="alert alert-error">{{ errorMessage() }}</div>
+  }
+
+  <form (ngSubmit)="recordPayment()" class="payment-card">
+    <div class="form-group">
+      <label for="cs-amount" class="form-label">Payment Amount (USD) *</label>
+      <input
+        id="cs-amount"
+        type="text"
+        inputmode="decimal"
+        [(ngModel)]="amountStr"
+        name="amountStr"
+        placeholder="650.00"
+        class="form-input"
+        required
+      />
+    </div>
+
+    <div class="form-row">
+      <div class="form-group flex-1">
+        <label for="cs-date" class="form-label">Payment Date *</label>
+        <input
+          id="cs-date"
+          type="date"
+          [(ngModel)]="paymentDate"
+          name="paymentDate"
+          class="form-input"
+          required
+        />
+      </div>
+
+      <div class="form-group flex-1">
+        <label for="cs-method" class="form-label">Payment Method *</label>
+        <select
+          id="cs-method"
+          [(ngModel)]="paymentMethod"
+          name="paymentMethod"
+          class="form-input"
+          required
+        >
+          <option value="Bank transfer (ACH)">Bank transfer (ACH)</option>
+          <option value="Direct transfer">Direct transfer (Zelle/Venmo)</option>
+          <option value="Check">Check</option>
+          <option value="Cash">Cash with Receipt</option>
+          <option value="State agency">State agency disbursement</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="cs-ref" class="form-label">Reference / Confirmation # (optional)</label>
+      <input
+        id="cs-ref"
+        type="text"
+        [(ngModel)]="referenceNumber"
+        name="referenceNumber"
+        placeholder="e.g. ACH-94021 or Check #1042"
+        class="form-input"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="cs-note" class="form-label">Note (optional)</label>
+      <textarea
+        id="cs-note"
+        [(ngModel)]="note"
+        name="note"
+        rows="2"
+        maxlength="500"
+        placeholder="e.g. October monthly child support per court order"
+        class="form-textarea"
+      ></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Record Payment</button>
+      <a routerLink="/expenses/child-support" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>

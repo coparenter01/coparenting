@@ -1,0 +1,59 @@
+<div class="household-page-container">
+  <header class="page-header">
+    <div class="header-household-meta">
+      <h1 class="household-title">{{ householdName() }}</h1>
+      <span class="mode-badge" [class.solo]="isSoloMode()">
+        {{ isSoloMode() ? 'Solo Mode' : 'Linked' }}
+      </span>
+    </div>
+  </header>
+
+  <main class="page-main">
+    <nav class="quick-nav" aria-label="Household quick actions">
+      <a routerLink="/accounts/household-members" class="nav-chip">Members and roles</a>
+      <a routerLink="/accounts/invites" class="nav-chip">Invites</a>
+      <a routerLink="/documents" class="nav-chip">Children</a>
+    </nav>
+
+    <div class="stats-grid">
+      <div class="stat-card">
+        <span class="stat-label">Household mode</span>
+        <span class="stat-value">{{ isSoloMode() ? 'Solo Mode' : 'Linked' }}</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-label">Payer</span>
+        <span class="stat-value">—</span>
+      </div>
+    </div>
+
+    <section class="members-card" aria-labelledby="members-heading">
+      <h2 id="members-heading" class="section-title">Members</h2>
+
+      <div class="member-row">
+        <span class="member-name">{{ userDisplayName() }}</span>
+        <span class="member-role">Parent</span>
+      </div>
+
+      @if (coParentMember()) {
+        <div class="member-row">
+          <span class="member-name">Co-parent</span>
+          <span class="member-role">Active</span>
+        </div>
+      } @else {
+        <div class="member-row unjoined">
+          <span class="member-name">Co-parent not joined yet</span>
+          <span class="member-role">Invite pending</span>
+        </div>
+      }
+    </section>
+
+    <div class="actions-group">
+      <a routerLink="/accounts/invite-coparent" class="action-btn primary"> Invite co-parent </a>
+      <a routerLink="/accounts/contact-nonapp" class="action-btn secondary">
+        Message outside app
+      </a>
+      <a routerLink="/accounts/profile" class="action-btn text-link"> Manage profile </a>
+      <a routerLink="/accounts/app-lock-settings" class="action-btn text-link"> Manage security </a>
+    </div>
+  </main>
+</div>

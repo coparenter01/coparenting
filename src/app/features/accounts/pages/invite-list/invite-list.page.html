@@ -1,0 +1,97 @@
+<div class="invite-list-container">
+  <div class="header-row">
+    <div class="header-titles">
+      <h1 class="page-title">Invites</h1>
+      <p class="page-subtitle">
+        The latest invite is the valid one. Earlier invites show why they ended.
+      </p>
+    </div>
+    <a routerLink="/accounts/invite-coparent" class="btn-primary"> Send new invite </a>
+  </div>
+
+  <div class="secondary-actions">
+    <a routerLink="/notifications/delivery-status" class="nav-chip"> See delivery </a>
+  </div>
+
+  @if (activeInvite()) {
+    <div class="status-banner" role="status">
+      Your invite is active and valid until {{ activeInvite()?.expires_at }}.
+    </div>
+  }
+
+  <div class="table-card">
+    @if (hasInvites()) {
+      <table class="invites-table" aria-label="Household invites">
+        <thead>
+          <tr>
+            <th scope="col">Channel</th>
+            <th scope="col">Sent to</th>
+            <th scope="col">Status</th>
+            <th scope="col">Sent at</th>
+            <th scope="col">Expires at</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (invite of invites(); track invite.id) {
+            <tr>
+              <td class="cell-channel">{{ invite.channel }}</td>
+              <td class="cell-target">{{ getTargetDisplay(invite) }}</td>
+              <td>
+                <span
+                  class="status-pill"
+                  [class.status-sent]="invite.status === 'Sent'"
+                  [class.status-opened]="invite.status === 'Opened'"
+                  [class.status-accepted]="invite.status === 'Accepted'"
+                  [class.status-cancelled]="invite.status === 'Cancelled'"
+                  [class.status-expired]="invite.status === 'Expired'"
+                >
+                  {{ invite.status }}
+                </span>
+              </td>
+              <td class="cell-date">{{ invite.sent_at }}</td>
+              <td class="cell-date">
+                {{ invite.status === 'Cancelled' ? '—' : invite.expires_at }}
+              </td>
+              <td class="cell-actions">
+                @if (invite.status === 'Sent' || invite.status === 'Opened') {
+                  <button type="button" class="btn-table-action" (click)="cancelInvite(invite.id)">
+                    Cancel
+                  </button>
+                }
+                @if (invite.channel === 'Link') {
+                  <button
+                    type="button"
+                    class="btn-table-action"
+                    (click)="copyInviteLink(invite.token_hash)"
+                  >
+                    Copy link
+                  </button>
+                }
+                @if (invite.status === 'Expired' || invite.status === 'Accepted') {
+                  <span class="text-muted">—</span>
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <div class="empty-state">
+        <p>No invites sent yet.</p>
+        <a routerLink="/accounts/invite-coparent" class="empty-action">
+          Send your first invite &rarr;
+        </a>
+      </div>
+    }
+  </div>
+
+  <footer class="list-footer">
+    <p class="footer-note">
+      Statuses: Sent, Opened, Accepted, Expired, Cancelled.
+      <a routerLink="/accounts/contact-attempts" class="link-dark">
+        See the full contact-attempt log </a
+      >.
+    </p>
+  </footer>
+</div>

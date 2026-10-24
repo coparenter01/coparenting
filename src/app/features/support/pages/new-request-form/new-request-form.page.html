@@ -1,0 +1,131 @@
+<div class="request-form-page" data-testid="new-request-form-page">
+  <a routerLink="/help" class="back-link">← Help</a>
+
+  <header class="page-header">
+    <h1 class="page-title">Contact support</h1>
+  </header>
+
+  <div class="warning-banner" role="note">
+    Do not write passwords, full Social Security numbers or card numbers in your request.
+  </div>
+
+  @if (errorMessage()) {
+    <div class="error-banner" role="alert" data-testid="form-error-banner">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  <form class="form-card" (submit)="onSubmit($event)">
+    <div class="field-group">
+      <label for="request-category">Category</label>
+      <select id="request-category" [value]="category()" (change)="onCategoryChange($event)">
+        <option value="">Choose a category</option>
+        @for (cat of categories; track cat.id) {
+          <option [value]="cat.id">{{ cat.label }}</option>
+        }
+      </select>
+    </div>
+
+    @if (category() === 'safety') {
+      <div class="safety-warning-banner" role="alert" data-testid="safety-emergency-banner">
+        <strong>Emergency assistance:</strong> If you are in immediate danger, please call 911. You
+        can also connect with advocate resources on our
+        <a routerLink="/safety/resources">Safety Resources</a> page.
+      </div>
+    }
+
+    <div class="field-group">
+      <label for="request-subject">Subject</label>
+      <input
+        id="request-subject"
+        type="text"
+        maxlength="120"
+        [value]="subject()"
+        (input)="onSubjectChange($event)"
+        placeholder="Brief summary of your question"
+      />
+      <span class="field-hint">1 to 120 characters</span>
+    </div>
+
+    @if (suggestedArticles().length > 0) {
+      <div class="suggestions-box" data-testid="article-suggestions">
+        <span>Suggested articles:</span>
+        <ul>
+          @for (art of suggestedArticles(); track art.articleId) {
+            <li>
+              <a [routerLink]="['/help/article', art.articleId]" target="_blank">
+                {{ art.title }}
+              </a>
+            </li>
+          }
+        </ul>
+      </div>
+    }
+
+    <div class="field-group">
+      <label for="request-description">Description</label>
+      <textarea
+        id="request-description"
+        rows="6"
+        maxlength="5000"
+        [value]="description()"
+        (input)="onDescriptionChange($event)"
+        placeholder="Provide the relevant details..."
+      ></textarea>
+      <span class="field-hint">1 to 5,000 characters</span>
+    </div>
+
+    <fieldset class="field-group">
+      <legend>Is this about a court date?</legend>
+      <div class="radio-group">
+        <label>
+          <input
+            type="radio"
+            name="court-date-radio"
+            [checked]="!isCourtDate()"
+            (change)="setIsCourtDate(false)"
+          />
+          No
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="court-date-radio"
+            [checked]="isCourtDate()"
+            (change)="setIsCourtDate(true)"
+          />
+          Yes
+        </label>
+      </div>
+    </fieldset>
+
+    @if (isCourtDate()) {
+      <div class="field-group" data-testid="court-date-input-group">
+        <label for="court-date-input">Court date</label>
+        <input
+          id="court-date-input"
+          type="date"
+          [value]="courtDate()"
+          (change)="onCourtDateChange($event)"
+        />
+        <span class="field-hint">
+          Today or later &middot; Inquiries about upcoming court dates within 14 days receive
+          Priority handling
+        </span>
+      </div>
+    }
+
+    <div class="field-group">
+      <label for="attachments-input">Attachments (optional)</label>
+      <input id="attachments-input" type="file" multiple (change)="onFilesSelected($event)" />
+      <span class="field-hint">Up to 3 files, 10 MB in all &middot; JPG, PNG, PDF or DOCX</span>
+    </div>
+
+    <div class="actions-row">
+      <button id="submit-request-btn" type="submit" class="pp-button pp-button--primary">
+        Submit request
+      </button>
+      <a routerLink="/help" class="pp-button pp-button--outline"> Cancel </a>
+    </div>
+  </form>
+</div>

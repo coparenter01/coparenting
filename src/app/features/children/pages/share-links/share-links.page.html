@@ -1,0 +1,109 @@
+<div class="share-container">
+  <a routerLink="/documents" class="back-link">← Document detail and versions</a>
+
+  <div class="top-row">
+    <h1 class="page-title">Share links</h1>
+    <button type="button" class="btn-primary" (click)="toggleAddForm()">
+      {{ showAddForm() ? 'Close' : 'New link' }}
+    </button>
+  </div>
+
+  @if (copyMessage()) {
+    <div class="notice-banner" role="status">
+      {{ copyMessage() }}
+    </div>
+  }
+
+  @if (showAddForm()) {
+    <section class="form-card" aria-label="Create share link form">
+      <h2 class="page-title">Create temporary share link</h2>
+      <div class="field-group">
+        <label for="share-doc">Select document to share</label>
+        <select
+          id="share-doc"
+          class="field-select"
+          [value]="selectedDocId()"
+          (change)="updateField('docId', $event)"
+        >
+          @for (doc of documents(); track doc.id) {
+            <option [value]="doc.id">{{ doc.title }} ({{ doc.file_name }})</option>
+          }
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label for="share-duration">Expiration duration</label>
+        <select
+          id="share-duration"
+          class="field-select"
+          [value]="durationDays()"
+          (change)="updateField('duration', $event)"
+        >
+          <option [value]="1">24 hours (1 day)</option>
+          <option [value]="7">7 days</option>
+          <option [value]="30">30 days</option>
+        </select>
+      </div>
+
+      <div class="button-row">
+        <button
+          type="button"
+          class="btn-primary"
+          [disabled]="!selectedDocId()"
+          (click)="saveLink()"
+        >
+          Generate share link
+        </button>
+        <button type="button" class="btn-cancel" (click)="toggleAddForm()">Cancel</button>
+      </div>
+    </section>
+  }
+
+  <div class="table-wrapper">
+    <table class="share-table">
+      <thead>
+        <tr>
+          <th>File</th>
+          <th>Created</th>
+          <th>Ends</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (link of links(); track link.id) {
+          <tr>
+            <td>
+              <strong>{{ getResourceTitle(link.resource_id) }}</strong>
+            </td>
+            <td>{{ link.created_at | date: 'mediumDate' }}</td>
+            <td>{{ link.expires_at | date: 'medium' }}</td>
+            <td>
+              @if (isLinkActive(link)) {
+                <span class="badge-active">Active</span>
+              } @else {
+                <span class="badge-expired">Expired</span>
+              }
+            </td>
+            <td>
+              @if (isLinkActive(link)) {
+                <button type="button" class="btn-copy" (click)="copyLink(link.token)">
+                  Copy link
+                </button>
+                <button type="button" class="btn-stop" (click)="revokeLink(link.id)">
+                  Stop link
+                </button>
+              } @else {
+                <span class="badge-expired">Revoked</span>
+              }
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5">No share links generated yet. Click "New link" to create one.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

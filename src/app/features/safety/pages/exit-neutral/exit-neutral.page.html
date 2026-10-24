@@ -1,0 +1,55 @@
+<div class="exit-container">
+  <div class="safety-banner">
+    <span class="material-symbols-rounded banner-icon" aria-hidden="true">info</span>
+    <span class="banner-text">
+      <strong>Safety Mode is on.</strong> The red <strong>Exit now</strong> button in the top bar is
+      in the same place on every screen. Pressing Escape twice does the same.
+    </span>
+  </div>
+
+  <div class="exit-actions-bar">
+    <a routerLink="/safety/exit-confirmation" class="btn btn-danger">
+      <span class="material-symbols-rounded" aria-hidden="true">exit_to_app</span>
+      Exit now
+    </a>
+    <a routerLink="/safety" class="btn btn-secondary"> Back to Safety Settings </a>
+  </div>
+
+  <div class="grid-layout">
+    <section class="card" aria-labelledby="what-exit-does-title">
+      <h2 id="what-exit-does-title" class="card-title">What Exit now does</h2>
+      <ol class="steps-list">
+        <li>Signs you out immediately.</li>
+        <li>Replaces this page in the browser history using location replace.</li>
+        <li>Opens a neutral page. The browser Back button does not return to ParentPath.</li>
+      </ol>
+      <div class="neutral-note">
+        <span class="material-symbols-rounded note-icon" aria-hidden="true">warning</span>
+        <span
+          >Exit now does not delete your browser history and does not stop spyware. Use private
+          browsing if your device is monitored.</span
+        >
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="neutral-preview-title">
+      <h2 id="neutral-preview-title" class="card-title">Neutral page (after exit)</h2>
+      <p class="neutral-desc">
+        When Exit now is triggered, your browser is redirected to a neutral destination to obscure
+        your activity:
+      </p>
+
+      <div class="browser-mockup">
+        <div class="mockup-bar">
+          <span class="mockup-url">{{ neutralEscapeUrl() }}</span>
+        </div>
+        <div class="mockup-content">
+          <span class="material-symbols-rounded weather-icon" aria-hidden="true">wb_sunny</span>
+          <strong>Local Weather & Forecast</strong>
+          <span class="temp">72°F · Partly Cloudy</span>
+          <span class="mockup-hint">Neutral disguise website</span>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>

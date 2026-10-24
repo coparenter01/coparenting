@@ -1,0 +1,115 @@
+<div class="request-affidavit-container">
+  <a routerLink="/records/history" class="back-link" id="link-back-history">← Export history</a>
+
+  <header class="header">
+    <h1 class="title">Request a notarized affidavit</h1>
+    <p class="subtitle">
+      Request an official business records affidavit certifying your export for court evidentiary
+      compliance.
+    </p>
+  </header>
+
+  <form class="affidavit-form" (ngSubmit)="onSubmit()">
+    @if (errorMessage()) {
+      <div class="alert-error" role="alert" id="affidavit-error">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    <label class="field-label" for="input-record-id">
+      Record ID
+      <input
+        id="input-record-id"
+        type="text"
+        class="text-input"
+        placeholder="XXXX-XXXX-XXXX-XXXX"
+        [value]="recordId()"
+        (input)="onRecordIdChange($event)"
+      />
+      <span class="field-hint">The 16-character identifier of your certified export.</span>
+    </label>
+
+    <fieldset class="form-fieldset">
+      <legend class="fieldset-legend">Delivery</legend>
+      <div class="delivery-options">
+        <label class="radio-label">
+          <input
+            type="radio"
+            name="delivery"
+            value="electronic"
+            [checked]="delivery() === 'electronic'"
+            (change)="setDelivery('electronic')"
+            id="radio-electronic"
+          />
+          <span>Electronic copy (Included · Free PDF download)</span>
+        </label>
+        <label class="radio-label">
+          <input
+            type="radio"
+            name="delivery"
+            value="mailed"
+            [checked]="delivery() === 'mailed'"
+            (change)="setDelivery('mailed')"
+            id="radio-mailed"
+          />
+          <span>Mailed certified copy ($15 shipping &amp; handling fee)</span>
+        </label>
+      </div>
+    </fieldset>
+
+    @if (delivery() === 'mailed') {
+      <label class="field-label" for="input-mailing-address">
+        Mailing address
+        <textarea
+          id="input-mailing-address"
+          rows="3"
+          maxlength="200"
+          class="textarea-input"
+          placeholder="Recipient name, street address, suite/apt, city, state, zip"
+          [value]="mailingAddress()"
+          (input)="onAddressChange($event)"
+        ></textarea>
+        <span class="field-hint">Required for physical delivery. Max 200 characters.</span>
+      </label>
+    }
+
+    <label class="field-label" for="input-court-date">
+      Court date (optional)
+      <input
+        id="input-court-date"
+        type="date"
+        class="text-input"
+        [value]="courtDate()"
+        (input)="onCourtDateChange($event)"
+      />
+      <span class="field-hint"
+        >Requests with an upcoming hearing date are prioritized by support.</span
+      >
+    </label>
+
+    <label class="field-label" for="input-note">
+      Note (optional)
+      <textarea
+        id="input-note"
+        rows="3"
+        maxlength="500"
+        class="textarea-input"
+        placeholder="Additional context, case number, or instructions for operations..."
+        [value]="note()"
+        (input)="onNoteChange($event)"
+      ></textarea>
+      <span class="field-hint">{{ note().length }} / 500 characters</span>
+    </label>
+
+    <div class="actions-row">
+      <button type="submit" class="btn-primary" [disabled]="isSubmitting()" id="btn-send-affidavit">
+        @if (isSubmitting()) {
+          Sending request…
+        } @else {
+          Send request
+        }
+      </button>
+      <a routerLink="/records/history" class="btn-cancel" id="btn-cancel-affidavit">Cancel</a>
+    </div>
+  </form>
+</div>

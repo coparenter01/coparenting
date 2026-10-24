@@ -1,0 +1,226 @@
+.event-form-layout {
+  padding: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.form-card {
+  flex: 2 1 480px;
+  padding: 24px;
+  background: var(--pp-surface, #ffffff);
+  border: 1px solid var(--pp-outline-variant, #d9dde1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.back-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pp-primary-600, #0e5a63);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.form-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--pp-on-surface, #17212b);
+}
+
+.field-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pp-on-surface, #17212b);
+}
+
+.text-input,
+.select-input,
+.textarea-input {
+  padding: 11px;
+  border: 1px solid var(--pp-outline-variant, #c7cdd3);
+  border-radius: 8px;
+  background: var(--pp-surface, #ffffff);
+  color: var(--pp-on-surface, #17212b);
+  font: inherit;
+}
+
+.field-hint {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--pp-on-surface-variant, #4e5966);
+}
+
+.three-col-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.two-col-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.checkbox-fieldset {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkbox-legend {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pp-on-surface, #17212b);
+  margin-bottom: 4px;
+}
+
+.checkbox-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--pp-on-surface, #17212b);
+  cursor: pointer;
+}
+
+.warning-banner {
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #fff7e8;
+  color: #5c3d06;
+  font-size: 14px;
+  border: 1px solid #fedfa8;
+}
+
+.error-banner {
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: #fde8e8;
+  color: #9b1c1c;
+  font-size: 14px;
+  border: 1px solid #f8b4b4;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.btn-primary {
+  min-height: 44px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: var(--pp-primary-600, #0e5a63);
+  color: #ffffff;
+  font-weight: 600;
+  border: 0;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--pp-primary-700, #09434a);
+  }
+}
+
+.btn-secondary {
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--pp-on-surface, #17212b);
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--pp-outline-variant, #c7cdd3);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background: var(--pp-surface-variant, #eef1f4);
+  }
+}
+
+.sidebar-aside {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sidebar-card {
+  padding: 20px;
+  background: var(--pp-surface, #ffffff);
+  border: 1px solid var(--pp-outline-variant, #d9dde1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sidebar-card-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--pp-on-surface, #17212b);
+}
+
+.sidebar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.btn-outline-primary {
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid var(--pp-primary-600, #0e5a63);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--pp-primary-600, #0e5a63);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--pp-primary-50, #e3f0f0);
+  }
+}
+
+.btn-outline-neutral {
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid var(--pp-outline-variant, #c7cdd3);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--pp-on-surface, #17212b);
+  font-weight: 600;
+  font-size: 13px;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--pp-surface-variant, #eef1f4);
+  }
+}

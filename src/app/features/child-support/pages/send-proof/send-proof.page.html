@@ -1,0 +1,103 @@
+<div class="css-page-container">
+  <div class="top-nav">
+    <a routerLink="/child-support" class="back-link" id="link-back-css">← Child support</a>
+  </div>
+
+  <header class="header">
+    <h1 class="title">Send proof to the agency</h1>
+    <p class="subtitle">
+      Submit verified proof of direct payment to your state child support enforcement unit.
+    </p>
+  </header>
+
+  @if (errorMessage()) {
+    <div class="alert-error" role="alert" id="alert-proof-error">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  <form class="card proof-form" (submit)="$event.preventDefault(); onSubmit()">
+    <div class="grid-two-col">
+      <div class="form-group">
+        <label for="input-proof-date" class="form-label">Payment date</label>
+        <input
+          type="date"
+          id="input-proof-date"
+          class="form-control"
+          [value]="paymentDate()"
+          (input)="onDateChange($event)"
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="input-proof-amount" class="form-label">Amount ($ USD)</label>
+        <input
+          type="text"
+          id="input-proof-amount"
+          class="form-control"
+          placeholder="0.00"
+          [value]="amountDollars()"
+          (input)="onAmountChange($event)"
+        />
+      </div>
+    </div>
+
+    <div class="grid-two-col">
+      <div class="form-group">
+        <label for="select-proof-method" class="form-label">Payment method</label>
+        <select
+          id="select-proof-method"
+          class="form-control"
+          [value]="method()"
+          (change)="onMethodChange($event)"
+        >
+          <option value="bank_transfer">Electronic bank transfer (ACH)</option>
+          <option value="cashiers_check">Cashier's check</option>
+          <option value="certified_check">Certified check</option>
+          <option value="money_order">Money order</option>
+          <option value="other">Other verified method</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="input-proof-ref" class="form-label">Check / Transaction reference #</label>
+        <input
+          type="text"
+          id="input-proof-ref"
+          class="form-control"
+          placeholder="e.g. TX-882190"
+          [value]="referenceNumber()"
+          (input)="onRefChange($event)"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="input-proof-file" class="form-label"
+        >Upload receipt / proof document (PDF, PNG, JPG)</label
+      >
+      <input
+        type="file"
+        id="input-proof-file"
+        class="form-control-file"
+        (change)="onFileSelected($event)"
+      />
+      @if (fileName()) {
+        <span class="file-chosen-text">Selected: {{ fileName() }}</span>
+      }
+    </div>
+
+    <div class="factual-invariant-box">
+      <strong>Strict Agency Invariant:</strong> Agency proof transmissions are strictly factual
+      records. By state agency regulations, no personal messages, accusations, or non-factual
+      commentary may accompany this transmission.
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" id="btn-submit-proof" [disabled]="isSubmitting()">
+        {{ isSubmitting() ? 'Submitting...' : 'Compile & submit proof package' }}
+      </button>
+      <a routerLink="/child-support" class="btn-subtle" id="link-cancel-proof">Cancel</a>
+    </div>
+  </form>
+</div>

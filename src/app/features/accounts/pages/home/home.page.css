@@ -1,0 +1,237 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  box-sizing: border-box;
+}
+
+.home-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.greeting-block {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.greeting-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--pp-neutral-900, #17212b);
+}
+
+.greeting-subtitle {
+  margin: 0;
+  font-size: 15px;
+  color: var(--pp-neutral-600, #4e5966);
+}
+
+.quick-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.action-btn {
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.action-primary {
+  background: var(--pp-primary-600, #0e5a63);
+  color: #ffffff;
+  border: 0;
+}
+
+.action-primary:hover {
+  background: var(--pp-primary-700, #09434a);
+}
+
+.action-outline {
+  background: #ffffff;
+  border: 1px solid var(--pp-primary-600, #0e5a63);
+  color: var(--pp-primary-600, #0e5a63);
+}
+
+.action-outline:hover {
+  background: var(--pp-primary-50, #e3f0f0);
+}
+
+.dashboard-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 20px;
+}
+
+.dashboard-card {
+  background: #ffffff;
+  border: 1px solid var(--pp-neutral-200, #d9dde1);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--pp-neutral-900, #17212b);
+}
+
+.card-header-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pp-primary-600, #0e5a63);
+  text-decoration: none;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.dashboard-table th {
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--pp-neutral-600, #4e5966);
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--pp-neutral-200, #d9dde1);
+}
+
+.dashboard-table td {
+  font-size: 14px;
+  padding: 12px;
+  border-bottom: 1px solid var(--pp-neutral-100, #eef1f4);
+  vertical-align: middle;
+}
+
+.cell-when,
+.cell-from {
+  font-weight: 600;
+  color: var(--pp-neutral-800, #2b3540);
+  white-space: nowrap;
+}
+
+.cell-with,
+.cell-time {
+  color: var(--pp-neutral-600, #4e5966);
+  white-space: nowrap;
+}
+
+.table-item-link {
+  color: var(--pp-primary-600, #0e5a63);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.table-item-link:hover {
+  text-decoration: underline;
+}
+
+.dashboard-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.widget-card {
+  gap: 12px;
+}
+
+.pending-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.pending-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--pp-primary-600, #0e5a63);
+  text-decoration: none;
+  min-height: 36px;
+}
+
+.pending-icon {
+  font-size: 18px;
+  color: var(--pp-secondary-500, #e66a3b);
+}
+
+.widget-metric {
+  margin: 0;
+  font-size: 15px;
+  color: var(--pp-neutral-600, #4e5966);
+  line-height: 1.5;
+}
+
+.widget-action,
+.widget-actions-dual {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-top: 6px;
+}
+
+.btn-widget-outline {
+  min-height: 40px;
+  box-sizing: border-box;
+  padding: 8px 16px;
+  border: 1px solid var(--pp-primary-600, #0e5a63);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--pp-primary-600, #0e5a63);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-widget-link {
+  min-height: 40px;
+  padding: 8px 12px;
+  color: var(--pp-primary-600, #0e5a63);
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}

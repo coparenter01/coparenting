@@ -1,0 +1,102 @@
+<div class="pro-page-container">
+  <main class="pro-main">
+    <a routerLink="/professionals" class="back-link">← My professionals</a>
+
+    <div class="pro-header">
+      <h1 class="pro-title">{{ access()?.professional?.name ?? 'Professional Access' }}</h1>
+      <p class="pro-subtitle">
+        {{ access()?.professional?.type ?? 'Professional' }} · access ends
+        {{ access()?.accessEndsAt }}
+      </p>
+    </div>
+
+    @if (errorMessage()) {
+      <div class="alert alert-error" role="alert">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    @if (successMessage()) {
+      <div class="alert alert-success" role="status">
+        {{ successMessage() }}
+      </div>
+    }
+
+    <form class="pro-form" (ngSubmit)="onSave()">
+      <fieldset class="form-fieldset">
+        <legend class="fieldset-legend">What they can see</legend>
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [checked]="scopeMessages()"
+              (change)="scopeMessages.set(!scopeMessages())"
+            />
+            Messages
+          </label>
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [checked]="scopeCalendar()"
+              (change)="scopeCalendar.set(!scopeCalendar())"
+            />
+            Calendar
+          </label>
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [checked]="scopeExpenses()"
+              (change)="scopeExpenses.set(!scopeExpenses())"
+            />
+            Expenses
+          </label>
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [checked]="scopeChildInfo()"
+              (change)="scopeChildInfo.set(!scopeChildInfo())"
+            />
+            Child information
+          </label>
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [checked]="scopeDocuments()"
+              (change)="scopeDocuments.set(!scopeDocuments())"
+            />
+            Documents
+          </label>
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [checked]="scopeContactAttempts()"
+              (change)="scopeContactAttempts.set(!scopeContactAttempts())"
+            />
+            Contact attempts
+          </label>
+        </div>
+      </fieldset>
+
+      <label class="form-label">
+        Access ends
+        <input
+          type="date"
+          class="form-input"
+          [value]="accessEndsAt()"
+          (input)="onAccessEndsInput($event)"
+          required
+        />
+      </label>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <a routerLink="/professionals" class="btn btn-ghost">Cancel</a>
+      </div>
+    </form>
+
+    <div class="danger-zone">
+      <button type="button" class="btn btn-danger" (click)="onEndAccess()">End access</button>
+      <a routerLink="/professionals/access-log" class="btn btn-ghost">Access log</a>
+    </div>
+  </main>
+</div>

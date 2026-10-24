@@ -1,0 +1,144 @@
+<div class="req-detail-layout">
+  <section class="main-card">
+    <a routerLink="/calendar" class="back-link">← Calendar</a>
+
+    <div class="card-header-row">
+      <h1 class="page-title">{{ request()?.requestType || 'Schedule Request' }}</h1>
+      <span
+        class="status-chip"
+        [class.approved]="request()?.status === 'Approved'"
+        [class.declined]="request()?.status === 'Declined'"
+        [class.withdrawn]="request()?.status === 'Withdrawn'"
+      >
+        {{ request()?.status }}
+      </span>
+    </div>
+
+    <div class="info-row">
+      <span class="row-label">Requested by</span>
+      <span class="row-val">{{ request()?.requestedByName || 'Co-parent' }}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="row-label">Children</span>
+      <span class="row-val">{{ request()?.childNames?.join(', ') || 'All children' }}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="row-label">Change period</span>
+      <span class="row-val">{{
+        formatPeriod(request()?.changeStartAt, request()?.changeEndAt)
+      }}</span>
+    </div>
+
+    @if (request()?.tradeStartAt) {
+      <div class="info-row">
+        <span class="row-label">Offered in return</span>
+        <span class="row-val">{{
+          formatPeriod(request()?.tradeStartAt, request()?.tradeEndAt)
+        }}</span>
+      </div>
+    }
+
+    <div class="info-row vertical">
+      <span class="row-label">Reason</span>
+      <span class="row-val">{{ request()?.reason }}</span>
+    </div>
+
+    <div class="info-row">
+      <span class="row-label">Respond by</span>
+      <span class="row-val">{{ formatDateTime(request()?.respondByAt) }}</span>
+    </div>
+
+    @if (request()?.status === 'Pending') {
+      <label class="field-label">
+        Reason for declining (optional)
+        <textarea
+          rows="2"
+          class="textarea-input"
+          [(ngModel)]="declineReason"
+          placeholder="Provide an explanation if declining"
+          id="req-decline-reason"
+        ></textarea>
+      </label>
+
+      <div class="actions-row">
+        @if (isRequester()) {
+          <button type="button" class="btn-danger" (click)="withdraw()" id="req-withdraw-btn">
+            Withdraw request
+          </button>
+        } @else {
+          <button
+            type="button"
+            class="btn-primary"
+            (click)="openConfirmDialog()"
+            id="req-approve-btn"
+          >
+            Approve
+          </button>
+          <button type="button" class="btn-secondary" (click)="decline()" id="req-decline-btn">
+            Decline
+          </button>
+        }
+        <a routerLink="/calendar/history" class="back-link" id="req-hist-link"> View history </a>
+      </div>
+    }
+
+    <span class="footnote">
+      The requester sees “Withdraw” instead while the request is Pending.
+    </span>
+  </section>
+
+  @if (showConfirmDialog() || request()?.status === 'Approved') {
+    <section class="confirm-dialog-card" role="dialog" aria-labelledby="confirm-dialog-heading">
+      <h2 id="confirm-dialog-heading" class="dialog-title">Confirm approval</h2>
+      <p class="dialog-summary">
+        {{ request()?.childNames?.join(', ') }} will be with Elena Rivera from
+        {{ formatPeriod(request()?.changeStartAt, request()?.changeEndAt) }}, and with you from
+        {{ formatPeriod(request()?.tradeStartAt, request()?.tradeEndAt) }}.
+      </p>
+
+      <div class="impact-box">
+        Calendar impact: 2 parenting-time entries will update automatically.
+      </div>
+
+      @if (request()?.status === 'Pending') {
+        <div class="actions-row">
+          <button
+            type="button"
+            class="btn-primary"
+            (click)="confirmApproval()"
+            id="req-confirm-btn"
+          >
+            Confirm approval
+          </button>
+          <button
+            type="button"
+            class="btn-secondary"
+            (click)="cancelConfirmDialog()"
+            id="req-cancel-confirm-btn"
+          >
+            Cancel
+          </button>
+        </div>
+      }
+
+      <hr class="divider" />
+
+      @if (request()?.status === 'Approved') {
+        <div class="undo-status-bar" role="status">
+          <span class="undo-status-text">
+            Approved. Takes effect in {{ undoTimeRemaining() }}
+          </span>
+          <button type="button" class="btn-undo" (click)="undoApproval()" id="req-undo-btn">
+            Undo approval
+          </button>
+        </div>
+      }
+
+      <span class="footnote">
+        Undo window: 10 minutes. The log records who approved, when, and from which device.
+      </span>
+    </section>
+  }
+</div>

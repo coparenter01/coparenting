@@ -1,0 +1,133 @@
+<div class="builder-layout">
+  <a routerLink="/calendar" class="back-link">← Calendar (week view)</a>
+
+  <div class="header-block">
+    <h1 class="page-title">Schedule builder</h1>
+  </div>
+
+  @if (successMessage()) {
+    <div class="success-message" role="status">{{ successMessage() }}</div>
+  }
+
+  <div class="panels-row">
+    <section class="templates-panel">
+      <h2 class="panel-title">Templates</h2>
+      <div class="radio-group">
+        <label class="radio-option">
+          <input
+            type="radio"
+            name="selectedPattern"
+            value="alternating_weeks"
+            [(ngModel)]="pattern"
+            (change)="onPatternChange()"
+            id="tmpl-alt-weeks"
+          />
+          Alternating weeks
+        </label>
+        <label class="radio-option">
+          <input
+            type="radio"
+            name="selectedPattern"
+            value="2_2_3"
+            [(ngModel)]="pattern"
+            (change)="onPatternChange()"
+            id="tmpl-2-2-3"
+          />
+          2-2-3
+        </label>
+        <label class="radio-option">
+          <input
+            type="radio"
+            name="selectedPattern"
+            value="2_2_5_5"
+            [(ngModel)]="pattern"
+            (change)="onPatternChange()"
+            id="tmpl-2-2-5-5"
+          />
+          2-2-5-5
+        </label>
+        <label class="radio-option">
+          <input
+            type="radio"
+            name="selectedPattern"
+            value="3_4_4_3"
+            [(ngModel)]="pattern"
+            (change)="onPatternChange()"
+            id="tmpl-3-4-4-3"
+          />
+          3-4-4-3
+        </label>
+        <label class="radio-option">
+          <input
+            type="radio"
+            name="selectedPattern"
+            value="every_other_weekend"
+            [(ngModel)]="pattern"
+            (change)="onPatternChange()"
+            id="tmpl-eow"
+          />
+          Every other weekend
+        </label>
+        <label class="radio-option">
+          <input
+            type="radio"
+            name="selectedPattern"
+            value="custom"
+            [(ngModel)]="pattern"
+            (change)="onPatternChange()"
+            id="tmpl-custom"
+          />
+          Custom
+        </label>
+      </div>
+    </section>
+
+    <section class="builder-panel">
+      <div class="dates-grid">
+        <label class="field-label">
+          Start date
+          <input
+            type="date"
+            class="date-input"
+            [(ngModel)]="startDate"
+            name="startDate"
+            id="tmpl-start-date"
+          />
+        </label>
+        <label class="field-label">
+          Repeats until
+          <input
+            type="date"
+            class="date-input"
+            [(ngModel)]="repeatsUntil"
+            name="repeatsUntil"
+            id="tmpl-until-date"
+          />
+        </label>
+      </div>
+
+      <div class="preview-box">
+        <span class="preview-title"> 14-day schedule rotation preview ({{ patternTitle() }}) </span>
+        <div class="preview-grid">
+          @for (slot of previewSlots(); track slot.date) {
+            <div
+              class="preview-cell"
+              [class.parent-a]="slot.parentRole === 'Parent'"
+              [class.parent-b]="slot.parentRole === 'Co-parent'"
+            >
+              <span class="cell-day">{{ slot.dayOfWeek }}</span>
+              <span>{{ slot.parentRole === 'Parent' ? 'Elena' : 'David' }}</span>
+            </div>
+          }
+        </div>
+      </div>
+
+      <div class="actions-row">
+        <button type="button" class="btn-primary" (click)="proposeSchedule()" id="tmpl-propose-btn">
+          Propose schedule
+        </button>
+        <a routerLink="/calendar" class="btn-secondary" id="tmpl-cancel-btn"> Cancel </a>
+      </div>
+    </section>
+  </div>
+</div>

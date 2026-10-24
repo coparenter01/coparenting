@@ -1,0 +1,99 @@
+.health-container {
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.health-header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.health-cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.channel-card {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--pp-border-subtle, #d9dde1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.channel-card.ready {
+  border-left: 5px solid #2e7d32;
+}
+
+.channel-card.not-ready {
+  border-left: 5px solid #ffa000;
+}
+
+.channel-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.channel-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.channel-desc {
+  font-size: 13px;
+  color: var(--pp-text-secondary, #4e5966);
+}
+
+.badge-status {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.badge-status.granted,
+.badge-status.configured,
+.badge-status.verified {
+  background: #e8f5e9;
+  color: #1b5e20;
+}
+
+.badge-status.denied,
+.badge-status.default {
+  background: #fff3e0;
+  color: #e65100;
+}
+
+.test-section {
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  border: 1px solid var(--pp-border-subtle, #d9dde1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-primary {
+  padding: 10px 20px;
+  border-radius: 8px;
+  background: var(--pp-primary-600, #0e5a63);
+  color: #ffffff;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+}
+
+.test-status {
+  font-size: 13px;
+  color: #2e7d32;
+  font-weight: 600;
+}

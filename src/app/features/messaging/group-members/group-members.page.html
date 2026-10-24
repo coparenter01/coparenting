@@ -1,0 +1,47 @@
+<section class="members-container">
+  <div class="members-header">
+    <h1>Thread Participants & Roles</h1>
+  </div>
+
+  <div class="members-card">
+    <div class="member-item">
+      <div class="member-info">
+        <span class="member-name">Parent (You)</span>
+        <span class="member-role">Household Account &bull; Full posting permissions</span>
+      </div>
+      <span class="badge-role">Owner</span>
+    </div>
+
+    <div class="member-item">
+      <div class="member-info">
+        <span class="member-name">Co-Parent</span>
+        <span class="member-role">Linked Household &bull; Full posting permissions</span>
+      </div>
+      <span class="badge-role">Member</span>
+    </div>
+
+    @for (p of participants(); track p.id) {
+      <div class="member-item">
+        <div class="member-info">
+          <span class="member-name">Participant</span>
+          <span class="member-role">Joined: {{ p.joined_at | date: 'mediumDate' }}</span>
+        </div>
+        <span class="badge-role">{{ p.role }}</span>
+      </div>
+    }
+
+    <div class="add-member-section">
+      <input
+        type="email"
+        class="input-text"
+        placeholder="Enter email to add third-party (Attorney, Mediator)..."
+        [(ngModel)]="newMemberEmail"
+      />
+      <button type="button" class="btn-primary" (click)="onAddMember()">Add Member</button>
+    </div>
+
+    @if (isAdded()) {
+      <p>Invitation sent to member.</p>
+    }
+  </div>
+</section>

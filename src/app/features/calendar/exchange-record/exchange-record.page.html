@@ -1,0 +1,111 @@
+<div class="exchange-container">
+  <a routerLink="/calendar" class="back-link">← Calendar</a>
+
+  <div class="top-actions-row">
+    <a routerLink="/calendar/check-in" class="btn-outline-primary" id="exchange-top-checkin-btn">
+      📍 Check in
+    </a>
+  </div>
+
+  <div class="header-row">
+    <h1 class="page-title">Exchange record</h1>
+  </div>
+
+  <section class="exchange-card">
+    <div class="grid-details">
+      <span class="detail-label">Scheduled</span>
+      <span class="detail-value">{{
+        currentExchange()?.scheduledTimeDisplay || 'Today, 18:00'
+      }}</span>
+
+      <span class="detail-label">Location</span>
+      <span class="detail-value">Central Library Parking Lot, Main Entrance</span>
+
+      <span class="detail-label">Check-in</span>
+      <span class="detail-value">18:05 · Elena Rivera</span>
+
+      <span class="detail-label">Status</span>
+      <span class="detail-value">
+        <span
+          class="status-badge"
+          [class.late]="currentExchange()?.isLate"
+          [class.disputed]="currentExchange()?.status === 'Disputed'"
+        >
+          {{ currentExchange()?.isLate ? 'Late (>15m)' : 'On time' }} ·
+          {{ currentExchange()?.status }}
+        </span>
+      </span>
+
+      <span class="detail-label">Handover by</span>
+      <span class="detail-value">{{ currentExchange()?.handedOverByName || 'David Chen' }}</span>
+
+      <span class="detail-label">Received by</span>
+      <span class="detail-value">{{ currentExchange()?.receivedByName || 'Elena Rivera' }}</span>
+
+      <span class="detail-label">Note</span>
+      <span class="detail-value">{{ currentExchange()?.notes || 'No note added.' }}</span>
+    </div>
+
+    @if (isAddingNote()) {
+      <div class="note-box">
+        <textarea
+          rows="2"
+          class="textarea-input"
+          [(ngModel)]="noteText"
+          placeholder="Add an objective note about the handover"
+          id="exchange-note-input"
+        ></textarea>
+        <div class="actions-row">
+          <button
+            type="button"
+            class="btn-primary"
+            (click)="saveNote()"
+            id="exchange-save-note-btn"
+          >
+            Save note
+          </button>
+          <button
+            type="button"
+            class="btn-outline-neutral"
+            (click)="cancelNote()"
+            id="exchange-cancel-note-btn"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    }
+
+    <div class="actions-row">
+      <a routerLink="/calendar/check-in" class="btn-primary" id="exchange-checkin-btn">
+        Check in
+      </a>
+      <button
+        type="button"
+        class="btn-outline-primary"
+        (click)="toggleNote()"
+        id="exchange-add-note-btn"
+      >
+        Add note
+      </button>
+      @if (currentExchange()?.status === 'Unconfirmed') {
+        <button
+          type="button"
+          class="btn-outline-primary"
+          (click)="confirmExchange()"
+          id="exchange-confirm-btn"
+        >
+          Confirm exchange
+        </button>
+        <button
+          type="button"
+          class="btn-outline-neutral"
+          (click)="disputeExchange()"
+          id="exchange-dispute-btn"
+        >
+          Dispute exchange
+        </button>
+      }
+    </div>
+  </section>
+</div>

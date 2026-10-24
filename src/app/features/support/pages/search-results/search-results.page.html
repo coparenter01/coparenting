@@ -1,0 +1,55 @@
+<div class="search-results-page" data-testid="search-results-page">
+  <a routerLink="/help" class="back-link">← Help</a>
+
+  <header class="page-header">
+    <h1 class="page-title">Search results</h1>
+  </header>
+
+  <div class="filter-row">
+    <label for="search-input">
+      Search
+      <input
+        id="search-input"
+        type="search"
+        [value]="query()"
+        (input)="onQueryChange($event)"
+        placeholder="Search articles..."
+      />
+    </label>
+
+    <label for="topic-select">
+      Topic
+      <select id="topic-select" [value]="selectedTopic()" (change)="onTopicChange($event)">
+        <option value="">All topics</option>
+        @for (topic of topics; track topic.id) {
+          <option [value]="topic.id">{{ topic.label }}</option>
+        }
+      </select>
+    </label>
+  </div>
+
+  <p class="results-count" data-testid="results-count">
+    {{ filteredArticles().length }} results
+    @if (query()) {
+      for &ldquo;{{ query() }}&rdquo;
+    }
+  </p>
+
+  @if (filteredArticles().length > 0) {
+    <section class="results-list" aria-label="Matching articles">
+      @for (art of filteredArticles(); track art.articleId) {
+        <a [routerLink]="['/help/article', art.articleId]" class="article-item">
+          <strong>{{ art.title }}</strong>
+          <span>{{ art.summary }}</span>
+        </a>
+      }
+    </section>
+  } @else {
+    <div class="no-results-banner" role="status" data-testid="no-results-notice">
+      No articles match your search. You can contact support for assistance.
+    </div>
+    <div>
+      <a routerLink="/help/request" class="pp-button pp-button--outline"> Contact support </a>
+    </div>
+  }
+</div>

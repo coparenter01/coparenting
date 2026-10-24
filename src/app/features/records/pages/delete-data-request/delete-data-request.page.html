@@ -1,0 +1,119 @@
+<div class="delete-request-page">
+  <header class="page-header">
+    <div class="header-left">
+      <a routerLink="/records" class="back-link">&larr; Records home</a>
+      <h1>Ask to delete data</h1>
+      <p class="subtitle">
+        Request the erasure of personal account data and eligible non-evidentiary files.
+      </p>
+    </div>
+    <div class="header-actions">
+      <a routerLink="/records/retention" class="btn btn-outline">Retention policy</a>
+    </div>
+  </header>
+
+  @if (errorMessage()) {
+    <div class="alert alert-danger" role="alert">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  @if (activeLegalHold(); as hold) {
+    <div class="alert alert-warning" role="alert">
+      <strong>Legal Hold Active:</strong> Deletion requests cannot be executed while a legal hold is
+      in place (Case #{{ hold.caseNumber || 'N/A' }}).
+    </div>
+  }
+
+  <section class="card request-card">
+    <div class="explanation-box">
+      <h3>Data Deletion & Legal Retention Disclosure</h3>
+      <p>
+        In accordance with Family Court compliance standards, when you submit a deletion request:
+      </p>
+      <ul>
+        <li>
+          <strong>Deleted:</strong> Account login sessions, cached media drafts, local client
+          preferences, and non-certified temporary work files.
+        </li>
+        <li>
+          <strong>Kept:</strong> Certified export logs, court-admissible message threads, parenting
+          schedule history, financial ledger transactions, and audit records. These records are held
+          for the mandatory retention window (7 years or until all minor children reach age 26).
+        </li>
+      </ul>
+      <p class="export-reminder">
+        We strongly recommend downloading an authoritative export archive before requesting
+        deletion.
+      </p>
+    </div>
+
+    <label class="confirm-checkbox">
+      <input
+        type="checkbox"
+        [checked]="confirmed()"
+        (change)="toggleConfirmed()"
+        [disabled]="isSubmitting() || !!activeLegalHold()"
+      />
+      <span
+        >I understand this cannot be undone and that statutory court records must be retained.</span
+      >
+    </label>
+
+    <div class="card-actions">
+      <a routerLink="/records/export" class="btn btn-secondary">Export my data first</a>
+      <button
+        type="button"
+        class="btn btn-danger"
+        [disabled]="!confirmed() || isSubmitting() || !!activeLegalHold()"
+        (click)="submitDeletion()"
+      >
+        @if (isSubmitting()) {
+          Submitting request...
+        } @else {
+          Send deletion request
+        }
+      </button>
+    </div>
+  </section>
+
+  <section class="history-section">
+    <h2>Submitted deletion requests</h2>
+    <div class="table-container">
+      <table class="requests-table">
+        <thead>
+          <tr>
+            <th>Request ID</th>
+            <th>Sent</th>
+            <th>Status</th>
+            <th>Retained Scope</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (req of deletionRequests(); track req.deletionId) {
+            <tr>
+              <td class="cell-id">
+                <code>{{ req.deletionId }}</code>
+              </td>
+              <td>{{ req.requestedAt | date: 'medium' }}</td>
+              <td>
+                <span
+                  class="status-badge"
+                  [class.badge-requested]="req.status === 'requested'"
+                  [class.badge-completed]="req.status === 'completed'"
+                >
+                  {{ req.status }}
+                </span>
+              </td>
+              <td class="cell-summary">{{ req.keptSummary }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="4" class="empty-cell">No prior deletion requests.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

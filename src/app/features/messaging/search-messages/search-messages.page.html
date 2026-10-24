@@ -1,0 +1,46 @@
+<section class="search-container">
+  <div class="search-header">
+    <h1>Search Messages</h1>
+  </div>
+
+  <div class="search-controls-card">
+    <div class="inputs-row">
+      <input
+        type="search"
+        class="keyword-input"
+        placeholder="Enter search keywords or phrase..."
+        [(ngModel)]="keyword"
+        (keyup.enter)="onSearch()"
+      />
+      <select class="category-select" [(ngModel)]="category">
+        <option value="All">All Categories</option>
+        <option value="General">General</option>
+        <option value="Medical">Medical</option>
+        <option value="School">School</option>
+        <option value="Schedule">Schedule</option>
+        <option value="Expenses">Expenses</option>
+      </select>
+      <button type="button" class="btn-primary" (click)="onSearch()">Search</button>
+    </div>
+  </div>
+
+  <div class="results-list">
+    @for (msg of searchResults(); track msg.id) {
+      <a [routerLink]="['/messages', msg.thread_id]" class="result-item">
+        <div class="result-meta">
+          <span>Match found in message</span>
+          <span>{{ msg.sent_at | date: 'medium' }}</span>
+        </div>
+        <div class="result-snippet">
+          {{ msg.body }}
+        </div>
+      </a>
+    } @empty {
+      @if (hasSearched()) {
+        <div class="empty-results">
+          <p>No messages match "{{ keyword }}".</p>
+        </div>
+      }
+    }
+  </div>
+</section>

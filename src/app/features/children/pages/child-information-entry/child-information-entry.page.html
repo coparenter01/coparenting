@@ -1,0 +1,117 @@
+<div class="entry-form-container">
+  <a routerLink="/children/info" class="back-link">← Child information</a>
+
+  <h1 class="page-title">Add information</h1>
+
+  <form
+    class="entry-form-card"
+    [formGroup]="entryForm"
+    (ngSubmit)="saveEntry()"
+    aria-label="Child information entry form"
+  >
+    <div class="grid-two-col">
+      <label class="field-group">
+        Section
+        <select formControlName="section" class="field-select">
+          <option value="Medical">Medical</option>
+          <option value="School">School</option>
+          <option value="Contacts">Contacts</option>
+          <option value="Activities">Activities</option>
+          <option value="Other">Other</option>
+        </select>
+        <span class="field-hint">Cannot change after saving</span>
+      </label>
+
+      <label class="field-group">
+        Entry type
+        <select formControlName="entryType" class="field-select">
+          <option value="Allergy">Allergy</option>
+          <option value="Medication">Medication</option>
+          <option value="Condition">Condition</option>
+          <option value="Doctor or clinic">Doctor or clinic</option>
+          <option value="Insurance">Insurance</option>
+          <option value="Immunization">Immunization</option>
+          <option value="Teacher">Teacher</option>
+          <option value="Schedule">Schedule</option>
+          <option value="Contact">Contact</option>
+          <option value="Other">Other</option>
+        </select>
+        <span class="field-hint">Cannot change after saving</span>
+      </label>
+    </div>
+
+    <label class="field-group">
+      Child
+      <select formControlName="childId" class="field-select">
+        <option [value]="''">All children</option>
+        @for (c of children(); track c.id) {
+          <option [value]="c.id">{{ c.first_name }} {{ c.last_name }}</option>
+        }
+      </select>
+    </label>
+
+    <label class="field-group">
+      Title
+      <input type="text" formControlName="title" class="field-input" maxlength="100" required />
+      <span class="field-hint">1 to 100 characters</span>
+    </label>
+
+    <label class="field-group">
+      Details
+      <textarea
+        formControlName="details"
+        class="field-textarea"
+        maxlength="2000"
+        rows="4"
+      ></textarea>
+      <span class="field-hint">Up to 2,000 characters · required for some entry types</span>
+    </label>
+
+    <fieldset class="contact-fieldset">
+      <legend class="fieldset-legend">Contact details (Optional / Contacts section)</legend>
+      <div class="grid-two-col">
+        <label class="field-group">
+          Contact name
+          <input type="text" formControlName="contactName" class="field-input" maxlength="100" />
+        </label>
+        <label class="field-group">
+          Contact email
+          <input type="email" formControlName="contactEmail" class="field-input" />
+        </label>
+        <label class="field-group">
+          Contact phone
+          <input type="tel" formControlName="contactPhone" class="field-input" />
+        </label>
+        <label class="field-group">
+          Address
+          <input type="text" formControlName="contactAddress" class="field-input" maxlength="200" />
+        </label>
+      </div>
+    </fieldset>
+
+    <fieldset class="contact-fieldset">
+      <legend class="fieldset-legend">Visibility</legend>
+      <div class="radio-group">
+        <label class="radio-label">
+          <input type="radio" formControlName="visibility" value="Shared" />
+          Shared — your co-parent can see it
+        </label>
+        <label class="radio-label">
+          <input type="radio" formControlName="visibility" value="Private" />
+          Private — only you
+        </label>
+      </div>
+    </fieldset>
+
+    <p class="info-note">
+      A Private entry can later be shared, but a Shared entry cannot be made private again. In Solo
+      Mode new entries are Private. In Safety Mode, address and contact details stay hidden from the
+      other parent until you share them.
+    </p>
+
+    <div class="button-row">
+      <button type="submit" class="btn-primary" [disabled]="entryForm.invalid">Save</button>
+      <a routerLink="/children/info" class="btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>

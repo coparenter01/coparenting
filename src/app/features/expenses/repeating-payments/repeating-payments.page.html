@@ -1,0 +1,128 @@
+<div class="recurring-container">
+  <div class="header-row">
+    <div>
+      <h1 class="page-title">Scheduled & Repeating Payments</h1>
+      <p class="page-subtitle">Automate recurring child support, tuition, and activity dues</p>
+    </div>
+    <div class="action-buttons">
+      <a routerLink="/expenses" class="btn btn-secondary">← Expenses</a>
+      <button type="button" (click)="openAddModal()" class="btn btn-primary">+ New Schedule</button>
+    </div>
+  </div>
+
+  <div class="cards-grid">
+    @for (item of recurringPayments(); track item.id) {
+      <div class="recurring-card" [class.paused-card]="item.status === 'Paused'">
+        <div class="card-top">
+          <div>
+            <h2 class="item-title">{{ item.title }}</h2>
+            <span class="freq-tag">{{ item.frequency }}</span>
+          </div>
+          <strong class="item-amount">{{ formatCents(item.amountCents) }}</strong>
+        </div>
+
+        <div class="meta-row">
+          <div class="meta-item">
+            <span class="meta-label">Next Due:</span>
+            <span class="meta-val">{{ item.nextDueDate }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Auto-Pay:</span>
+            <span class="meta-val">{{ item.autoPay ? 'Enabled' : 'Manual' }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Status:</span>
+            <span class="status-badge" [class.status-active]="item.status === 'Active'">
+              {{ item.status }}
+            </span>
+          </div>
+        </div>
+
+        <div class="card-footer">
+          <button type="button" (click)="toggleStatus(item.id)" class="btn btn-text">
+            {{ item.status === 'Active' ? 'Pause Schedule' : 'Resume Schedule' }}
+          </button>
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (showAddModal()) {
+    <div class="modal-backdrop">
+      <div class="modal-card">
+        <h3 class="modal-title">New Repeating Payment Schedule</h3>
+        <p class="modal-subtitle">
+          Setup a recurring schedule with optional automatic payment authorization.
+        </p>
+
+        @if (errorMessage()) {
+          <div class="alert alert-error">{{ errorMessage() }}</div>
+        }
+
+        <div class="form-group">
+          <label for="rec-title" class="form-label">Payment Title *</label>
+          <input
+            id="rec-title"
+            type="text"
+            [(ngModel)]="title"
+            name="title"
+            placeholder="e.g. Monthly Child Support, Daycare Tuition"
+            class="form-input"
+            required
+          />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="rec-amount" class="form-label">Amount (USD) *</label>
+            <input
+              id="rec-amount"
+              type="text"
+              inputmode="decimal"
+              [(ngModel)]="amountStr"
+              name="amountStr"
+              placeholder="0.00"
+              class="form-input"
+              required
+            />
+          </div>
+
+          <div class="form-group flex-1">
+            <label for="rec-freq" class="form-label">Frequency *</label>
+            <select id="rec-freq" [(ngModel)]="frequency" name="frequency" class="form-input">
+              <option value="Weekly">Weekly</option>
+              <option value="Bi-weekly">Bi-weekly</option>
+              <option value="Monthly">Monthly</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="rec-due" class="form-label">Next Due Date *</label>
+          <input
+            id="rec-due"
+            type="date"
+            [(ngModel)]="nextDueDate"
+            name="nextDueDate"
+            class="form-input"
+            required
+          />
+        </div>
+
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" [(ngModel)]="autoPay" name="autoPay" />
+            <span>Enable Auto-Pay (processes automatically on due date in Test Mode)</span>
+          </label>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" (click)="saveRecurring()" class="btn btn-primary">
+            Create Schedule
+          </button>
+          <button type="button" (click)="closeAddModal()" class="btn btn-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

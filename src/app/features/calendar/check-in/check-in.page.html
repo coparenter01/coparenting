@@ -1,0 +1,58 @@
+<div class="checkin-container">
+  <a routerLink="/calendar/exchanges" class="back-link">← Exchange</a>
+
+  <div class="header-row">
+    <h1 class="page-title">Check in</h1>
+  </div>
+
+  @if (isSafetyMode()) {
+    <div class="safety-alert" role="alert">
+      <strong>Safety Mode Active:</strong> Location check-ins are disabled while Safety Mode is
+      turned on to protect your private location (FR-CAL-09-04).
+    </div>
+  }
+
+  @if (successMessage()) {
+    <div class="success-badge" role="status">
+      {{ successMessage() }}
+    </div>
+  }
+
+  <section class="checkin-card">
+    <div class="grid-summary">
+      <span class="label-text">Exchange</span>
+      <span class="value-text">Today, 18:00</span>
+
+      <span class="label-text">Location</span>
+      <span class="value-text">Central Library Parking Lot, Main Entrance</span>
+    </div>
+
+    <label class="field-label">
+      Note (optional)
+      <textarea
+        rows="3"
+        class="textarea-input"
+        [(ngModel)]="note"
+        placeholder="Add any context regarding arrival or conditions at the exchange"
+        id="checkin-note-input"
+      ></textarea>
+    </label>
+
+    <div class="actions-row">
+      <button
+        type="button"
+        class="btn-primary"
+        [disabled]="isSafetyMode() || isLoading()"
+        (click)="checkInNow()"
+        id="checkin-submit-btn"
+      >
+        {{ isLoading() ? 'Reading GPS location...' : 'Check in now' }}
+      </button>
+    </div>
+
+    <p class="privacy-note">
+      ParentPath only reads your location at the exact moment you choose "Check in now" and never
+      tracks your location in the background (FR-CAL-09-02).
+    </p>
+  </section>
+</div>

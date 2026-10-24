@@ -1,0 +1,156 @@
+<div class="affidavit-reviews-container">
+  <div class="ops-header-bar">
+    <div class="ops-title-group">
+      <span class="ops-badge">2-step verified</span>
+      <span class="staff-info">Operations Staff · Records Verification</span>
+    </div>
+    <a routerLink="/records" class="exit-link">Exit to Records</a>
+  </div>
+
+  <main class="main-content">
+    <header class="page-header">
+      <h1 class="page-title">Affidavit reviews</h1>
+      <p class="page-subtitle">
+        Staff verification portal for certifying business records affidavits. Staff cannot read
+        private message contents.
+      </p>
+    </header>
+
+    <div class="table-card">
+      <table class="review-table">
+        <thead>
+          <tr>
+            <th>Select</th>
+            <th>Case number</th>
+            <th>Record ID</th>
+            <th>Requested</th>
+            <th>Delivery</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of affidavitRequests(); track item.requestId) {
+            <tr
+              [class.selected-row]="selectedRequest()?.requestId === item.requestId"
+              (click)="selectRequest(item)"
+              [id]="'review-row-' + item.requestId"
+            >
+              <td>
+                <input
+                  type="radio"
+                  name="selectedAffidavit"
+                  [checked]="selectedRequest()?.requestId === item.requestId"
+                />
+              </td>
+              <td>
+                <strong>{{ item.caseNumber }}</strong>
+              </td>
+              <td>
+                <code>{{ item.recordId }}</code>
+              </td>
+              <td>{{ item.createdAt | date: 'short' }}</td>
+              <td>{{ item.delivery | titlecase }}</td>
+              <td>
+                <span
+                  class="status-chip"
+                  [class.status-submitted]="item.status === 'submitted'"
+                  [class.status-ready]="item.status === 'ready' || item.status === 'delivered'"
+                  [class.status-declined]="item.status === 'declined'"
+                >
+                  {{ item.status | titlecase }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if (selectedRequest(); as selected) {
+      <section class="review-detail-card" id="selected-affidavit-detail">
+        <h2 class="detail-card-title">Review Request: {{ selected.caseNumber }}</h2>
+        <div class="detail-grid">
+          <span class="detail-label">Record ID:</span>
+          <span
+            ><code>{{ selected.recordId }}</code></span
+          >
+
+          <span class="detail-label">Page count:</span>
+          <span>{{ selected.pageCount }} pages</span>
+
+          <span class="detail-label">Record types:</span>
+          <span>{{ formatRecordTypes(selected.recordTypes) }}</span>
+
+          <span class="detail-label">Date range:</span>
+          <span>{{ selected.dateRange }}</span>
+
+          @if (selected.mailingAddress) {
+            <span class="detail-label">Mailing address:</span>
+            <span>{{ selected.mailingAddress }}</span>
+          }
+
+          @if (selected.note) {
+            <span class="detail-label">Requester note:</span>
+            <span>{{ selected.note }}</span>
+          }
+        </div>
+
+        @if (isDeclining()) {
+          <div class="decline-box">
+            <label class="decline-label" for="decline-reason-input">
+              Reason for decline (will be shown to parent):
+              <textarea
+                id="decline-reason-input"
+                rows="3"
+                maxlength="500"
+                class="reason-textarea"
+                [value]="declineReason()"
+                (input)="onReasonChange($event)"
+                placeholder="Explain why this affidavit request cannot be certified..."
+              ></textarea>
+            </label>
+            <div class="decline-actions">
+              <button
+                type="button"
+                class="btn-danger-confirm"
+                (click)="confirmDecline()"
+                id="btn-confirm-decline"
+              >
+                Confirm decline
+              </button>
+              <button
+                type="button"
+                class="btn-subtle"
+                (click)="cancelDecline()"
+                id="btn-cancel-decline"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        } @else {
+          <div class="review-actions">
+            <button
+              type="button"
+              class="btn-approve"
+              [disabled]="selected.status === 'ready'"
+              (click)="onApprove()"
+              id="btn-approve-affidavit"
+            >
+              Approve &amp; Notarize
+            </button>
+            <button
+              type="button"
+              class="btn-decline"
+              [disabled]="selected.status === 'declined'"
+              (click)="startDecline()"
+              id="btn-start-decline"
+            >
+              Decline
+            </button>
+          </div>
+        }
+      </section>
+    }
+  </main>
+</div>

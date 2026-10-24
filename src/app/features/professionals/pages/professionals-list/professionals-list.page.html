@@ -1,0 +1,60 @@
+<div class="pro-page-container">
+  <main class="pro-main">
+    <div class="pro-header">
+      <div class="pro-header-title">
+        <h1 class="pro-title">My professionals</h1>
+      </div>
+      <div class="pro-header-actions">
+        <a routerLink="/professionals/invite" class="btn btn-primary">Invite a professional</a>
+      </div>
+    </div>
+
+    <div class="pro-toolbar">
+      <a routerLink="/professionals/message" class="btn btn-secondary">Send message</a>
+      <a routerLink="/professionals/access-log" class="btn btn-secondary">Access log</a>
+      <a routerLink="/professionals/share" class="btn btn-secondary">Share item</a>
+    </div>
+
+    <div class="table-card">
+      <table class="pro-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th>Access</th>
+            <th>Ends</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (access of accesses(); track access.id) {
+            <tr>
+              <td>
+                <a [routerLink]="['/professionals', access.id]" class="pro-name-link">
+                  {{ access.professional.name }}
+                </a>
+                @if (access.professional.organization) {
+                  <span class="pro-org">{{ access.professional.organization }}</span>
+                }
+              </td>
+              <td>
+                <span class="badge badge-neutral">{{ access.professional.type }}</span>
+              </td>
+              <td>
+                <span [class]="'badge badge-' + access.status.toLowerCase()">
+                  {{ access.status }}
+                </span>
+              </td>
+              <td class="pro-date">{{ access.accessEndsAt }}</td>
+              <td>
+                <a [routerLink]="['/professionals', access.id]" class="btn btn-outline btn-sm">
+                  Manage
+                </a>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>

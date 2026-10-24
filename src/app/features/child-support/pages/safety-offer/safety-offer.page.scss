@@ -1,0 +1,144 @@
+.css-page-container {
+  padding: 32px;
+  max-width: 680px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family:
+    'Public Sans',
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: #17212b;
+}
+
+.top-nav {
+  display: flex;
+  align-items: center;
+}
+
+.back-link {
+  color: #0e5a63;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 15px;
+  color: #4e5966;
+}
+
+.offer-card {
+  box-sizing: border-box;
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #d9dde1;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.shield-icon {
+  font-size: 36px;
+}
+
+.offer-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #17212b;
+}
+
+.offer-desc {
+  margin: 0;
+  font-size: 14px;
+  color: #4e5966;
+  line-height: 1.5;
+}
+
+.confidential-box {
+  padding: 14px 16px;
+  border-radius: 8px;
+  background: #e3f0f0;
+  color: #0a4a51;
+  border: 1px solid #bfe3e3;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.safety-features-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #f5f6f3;
+  padding: 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  color: #2b3540;
+}
+
+.feature-bullet {
+  line-height: 1.4;
+}
+
+.offer-actions {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 6px;
+}
+
+.btn-primary {
+  min-height: 44px;
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: none;
+  background: #0e5a63;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: #09434a;
+  }
+
+  &:disabled {
+    background: #c7cdd3;
+    cursor: default;
+  }
+}
+
+.btn-subtle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #4e5966;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 12px;
+
+  &:hover {
+    color: #17212b;
+  }
+}

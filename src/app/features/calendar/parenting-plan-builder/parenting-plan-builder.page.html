@@ -1,0 +1,185 @@
+<div class="plan-builder-container">
+  <a routerLink="/calendar" class="back-link">← Calendar (week view)</a>
+
+  <div class="header-block">
+    <h1 class="page-title">Parenting plan builder</h1>
+  </div>
+
+  <div class="disclaimer-box">
+    <strong>Legal Notice:</strong> ParentPath is a record-keeping and coordination tool and does not
+    provide legal advice. Custody plans should be reviewed by legal counsel or confirmed by a family
+    court order (FR-CAL-08-04).
+  </div>
+
+  <div class="panels-row">
+    <nav class="sections-nav-panel" aria-label="Plan sections">
+      <h2 class="panel-title">Sections</h2>
+      <button
+        type="button"
+        class="nav-item"
+        [class.active]="activeSection() === 1"
+        (click)="setSection(1)"
+        id="plan-sec-1-btn"
+      >
+        1. Schedule & Routine
+      </button>
+      <button
+        type="button"
+        class="nav-item"
+        [class.active]="activeSection() === 2"
+        (click)="setSection(2)"
+        id="plan-sec-2-btn"
+      >
+        2. Holidays & Vacations
+      </button>
+      <button
+        type="button"
+        class="nav-item"
+        [class.active]="activeSection() === 3"
+        (click)="setSection(3)"
+        id="plan-sec-3-btn"
+      >
+        3. Exchanges & Transport
+      </button>
+      <button
+        type="button"
+        class="nav-item"
+        [class.active]="activeSection() === 4"
+        (click)="setSection(4)"
+        id="plan-sec-4-btn"
+      >
+        4. Decisions & Communication
+      </button>
+    </nav>
+
+    <section class="section-form-panel">
+      @if (activeSection() === 1) {
+        <h2 class="panel-title">1. Schedule & Routine</h2>
+        <label class="field-label">
+          What is your agreed regular parenting schedule?
+          <textarea
+            rows="3"
+            class="textarea-input"
+            [(ngModel)]="scheduleRoutine"
+            id="plan-q1-input"
+          ></textarea>
+        </label>
+
+        <label class="field-label">
+          School pickup & drop-off handover routine
+          <textarea
+            rows="2"
+            class="textarea-input"
+            [(ngModel)]="handoverRoutine"
+            id="plan-q2-input"
+          ></textarea>
+        </label>
+      }
+
+      @if (activeSection() === 2) {
+        <h2 class="panel-title">2. Holidays & Vacations</h2>
+        <label class="field-label">
+          How will major national holidays be divided?
+          <select class="select-input" [(ngModel)]="holidayApproach" id="plan-q3-select">
+            <option value="Alternating odd/even years">Alternating odd/even years</option>
+            <option value="Split holidays evenly">Split each holiday (half-day each)</option>
+            <option value="Fixed holiday assignments">Fixed holiday assignments</option>
+          </select>
+        </label>
+
+        <label class="field-label">
+          Notice required for out-of-state travel (days)
+          <input
+            type="number"
+            class="text-input"
+            [(ngModel)]="travelNoticeDays"
+            id="plan-q4-input"
+          />
+        </label>
+      }
+
+      @if (activeSection() === 3) {
+        <h2 class="panel-title">3. Exchanges & Transport</h2>
+        <label class="field-label">
+          Agreed physical exchange location(s)
+          <textarea
+            rows="2"
+            class="textarea-input"
+            [(ngModel)]="exchangeLocations"
+            id="plan-q5-input"
+          ></textarea>
+        </label>
+
+        <label class="field-label">
+          Who provides transportation for handovers?
+          <textarea
+            rows="2"
+            class="textarea-input"
+            [(ngModel)]="transportation"
+            id="plan-q6-input"
+          ></textarea>
+        </label>
+      }
+
+      @if (activeSection() === 4) {
+        <h2 class="panel-title">4. Decisions & Communication</h2>
+        <label class="field-label">
+          Communication method guidelines
+          <textarea
+            rows="2"
+            class="textarea-input"
+            [(ngModel)]="communicationRules"
+            id="plan-q7-input"
+          ></textarea>
+        </label>
+
+        <label class="field-label">
+          Major healthcare & medical consultation approach
+          <textarea
+            rows="2"
+            class="textarea-input"
+            [(ngModel)]="medicalDecisions"
+            id="plan-q8-input"
+          ></textarea>
+        </label>
+      }
+
+      @if (showPreview()) {
+        <div class="preview-modal-card">
+          <strong>Document Preview:</strong>
+          <p>Schedule: {{ scheduleRoutine }}</p>
+          <p>Holidays: {{ holidayApproach }} ({{ travelNoticeDays }} days travel notice)</p>
+          <p>Exchanges: {{ exchangeLocations }}</p>
+          <p>Decisions: {{ medicalDecisions }}</p>
+        </div>
+      }
+
+      <div class="actions-row">
+        <button
+          type="button"
+          class="btn-primary"
+          (click)="saveAndContinue()"
+          id="plan-continue-btn"
+        >
+          Save and continue
+        </button>
+        <button
+          type="button"
+          class="btn-outline-primary"
+          (click)="togglePreview()"
+          id="plan-preview-btn"
+        >
+          {{ showPreview() ? 'Hide preview' : 'Preview plan' }}
+        </button>
+        <button
+          type="button"
+          class="btn-outline-primary"
+          (click)="exportPdf()"
+          id="plan-export-btn"
+        >
+          Export PDF
+        </button>
+      </div>
+    </section>
+  </div>
+</div>

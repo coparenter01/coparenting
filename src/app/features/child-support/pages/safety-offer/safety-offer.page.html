@@ -1,0 +1,63 @@
+<div class="css-page-container">
+  <div class="top-nav">
+    <a routerLink="/child-support" class="back-link" id="link-back-css">← Child support</a>
+  </div>
+
+  <header class="header">
+    <h1 class="title">Offer of Safety Mode</h1>
+    <p class="subtitle">
+      Confidential safeguard options detected from your official agency case record.
+    </p>
+  </header>
+
+  <div class="card offer-card">
+    <div class="shield-icon" aria-hidden="true">🛡️</div>
+
+    <h2 class="offer-title">A family violence indicator was noted on your agency record</h2>
+
+    <p class="offer-desc">
+      When linking with the state child support agency, a family violence or protective indicator
+      was detected on your file. Would you like to review and turn on ParentPath Safety Mode?
+    </p>
+
+    <div class="confidential-box">
+      <strong>Confidentiality guarantee:</strong>
+      This notice is completely private to you. Your co-parent is not notified, receives no alerts,
+      and cannot see that this indicator exists on your record.
+    </div>
+
+    <div class="safety-features-list">
+      <div class="feature-bullet">
+        <strong>Quick exit button:</strong> Immediately replace screen with neutral weather content.
+      </div>
+      <div class="feature-bullet">
+        <strong>Mask location data:</strong> Strip address metadata and photo GPS coordinates.
+      </div>
+      <div class="feature-bullet">
+        <strong>Passcode protection:</strong> Require a separate 6-digit PIN to turn off or modify.
+      </div>
+    </div>
+
+    <div class="offer-actions">
+      <button
+        type="button"
+        class="btn-primary"
+        id="btn-accept-safety"
+        [disabled]="isProcessing()"
+        (click)="onAccept()"
+      >
+        {{ isProcessing() ? 'Enabling...' : 'Turn on Safety Mode' }}
+      </button>
+
+      <button
+        type="button"
+        class="btn-subtle"
+        id="btn-decline-safety"
+        [disabled]="isProcessing()"
+        (click)="onDecline()"
+      >
+        Not now
+      </button>
+    </div>
+  </div>
+</div>

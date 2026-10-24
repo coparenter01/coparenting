@@ -1,0 +1,121 @@
+<div class="accept-page-container">
+  <header class="public-header">
+    <span class="brand-title">ParentPath</span>
+    <nav class="public-nav" aria-label="Public resources">
+      <a routerLink="/safety/resources" class="public-link">Safety resources</a>
+      <a routerLink="/help" class="public-link">Help</a>
+    </nav>
+  </header>
+
+  <main class="accept-main">
+    <div class="cards-layout">
+      <!-- Main acceptance card -->
+      <form class="accept-card" [formGroup]="acceptForm" (ngSubmit)="onSubmit()">
+        @if (isValidInvite()) {
+          <div class="card-intro">
+            <span class="invite-badge">You’re invited</span>
+            <h1 class="invite-title">
+              {{ inviterName() }} invited you to join their household on ParentPath
+            </h1>
+            <p class="invite-description">
+              Create your account to share messages, the calendar and expenses as co-parents.
+            </p>
+          </div>
+
+          <label class="form-field">
+            <span class="field-label">Email</span>
+            <input
+              type="email"
+              formControlName="email"
+              class="text-input"
+              autocomplete="email"
+              placeholder="you@example.com"
+            />
+          </label>
+
+          <label class="form-field">
+            <span class="field-label">Display name</span>
+            <input
+              type="text"
+              maxlength="60"
+              formControlName="displayName"
+              class="text-input"
+              autocomplete="name"
+              placeholder="Your name"
+            />
+          </label>
+
+          <label class="form-field">
+            <span class="field-label">Password</span>
+            <input
+              type="password"
+              formControlName="password"
+              class="text-input"
+              autocomplete="new-password"
+              placeholder="••••••••"
+            />
+            <span class="field-hint">At least 8 characters.</span>
+          </label>
+
+          @if (errorMessage()) {
+            <div class="status-box error" role="alert">
+              {{ errorMessage() }}
+            </div>
+          }
+
+          <button type="submit" class="btn-primary" [disabled]="isSubmitting()">
+            {{ isSubmitting() ? 'Accepting...' : 'Accept invite and continue to verification' }}
+          </button>
+        } @else {
+          <div class="invalid-state-box" role="alert">
+            <h2 class="invalid-title">Invalid invite state</h2>
+            <p class="invalid-desc">
+              This invite is no longer valid. Ask the sender for a new invite.
+            </p>
+            <a routerLink="/sign-in" class="btn-secondary"> Sign in to ParentPath </a>
+          </div>
+        }
+      </form>
+
+      <!-- Side info / Match children section -->
+      <section class="side-info-card" aria-label="Invite details">
+        <p class="side-text">You are invited as: <strong>Co-parent</strong></p>
+
+        <p class="side-text">
+          Already have a ParentPath account?
+          <a routerLink="/sign-in" class="inline-link">Sign in to accept</a>
+        </p>
+
+        @if (hasExistingChildren()) {
+          <div class="children-matching-section">
+            <h2 class="matching-title">Match your children</h2>
+            <p class="matching-desc">
+              You both already have children in ParentPath. Choose the same child so each child
+              appears once. Your earlier records stay private until you share them.
+            </p>
+
+            <label class="match-field">
+              <span class="field-label">Emma (in your list)</span>
+              <select class="match-select">
+                <option value="same">Same as Emma (in their list)</option>
+                <option value="separate">Keep as a separate child</option>
+              </select>
+            </label>
+
+            <label class="match-field">
+              <span class="field-label">Liam (in your list)</span>
+              <select class="match-select">
+                <option value="separate">Keep as a separate child</option>
+                <option value="same">Same as Liam (in their list)</option>
+              </select>
+            </label>
+
+            <span class="children-note">
+              Shown only when both accounts already have children.
+            </span>
+          </div>
+        }
+      </section>
+    </div>
+  </main>
+</div>

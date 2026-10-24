@@ -1,0 +1,113 @@
+<div class="records-home-container">
+  <header class="page-header">
+    <div class="header-titles">
+      <h1 class="page-title">Records</h1>
+      <p class="page-subtitle">Your journal, exports and export history in one place.</p>
+    </div>
+  </header>
+
+  <nav class="quick-nav" aria-label="Records quick navigation">
+    <a routerLink="/records/affidavit" class="nav-pill" id="rec-nav-affidavits">
+      Affidavit requests
+    </a>
+    <a routerLink="/records/delete-data" class="nav-pill" id="rec-nav-delete"> Delete my data </a>
+    <a routerLink="/records/legal-hold" class="nav-pill" id="rec-nav-legal-hold">
+      Legal hold
+      @if (activeLegalHold()) {
+        <span class="active-hold-badge">Active</span>
+      }
+    </a>
+  </nav>
+
+  <div class="cards-grid">
+    <section class="hub-card" id="card-journal">
+      <div class="card-icon">📖</div>
+      <div class="card-content">
+        <h2 class="card-title">Journal</h2>
+        <p class="card-description">
+          Private notes and incident documentation with timestamps and optional attachments. Only
+          you can see them.
+        </p>
+      </div>
+      <div class="card-actions">
+        <a routerLink="/records/journal" class="btn-secondary" id="btn-open-journal">
+          Open journal
+        </a>
+      </div>
+    </section>
+
+    <section class="hub-card featured-card" id="card-export">
+      <div class="card-icon">⚖️</div>
+      <div class="card-content">
+        <h2 class="card-title">Export records</h2>
+        <p class="card-description">
+          Generate tamper-evident certified court-ready PDFs with Record IDs, standard PDFs, or data
+          portability CSVs.
+        </p>
+      </div>
+      <div class="card-actions">
+        <a routerLink="/records/export" class="btn-primary" id="btn-create-export">
+          Create export
+        </a>
+      </div>
+    </section>
+
+    <section class="hub-card" id="card-history">
+      <div class="card-icon">🗂️</div>
+      <div class="card-content">
+        <h2 class="card-title">Export history</h2>
+        <p class="card-description">
+          Download previous exports, copy Record IDs, request notarized business affidavits, and
+          review statuses.
+        </p>
+      </div>
+      <div class="card-actions">
+        <a routerLink="/records/history" class="btn-secondary" id="btn-view-history">
+          View history
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <section class="info-section">
+    <h3 class="info-title">Public Verification & Legal Guidance</h3>
+    <div class="links-row">
+      <a routerLink="/records/verify" class="link-item" id="rec-link-verify">
+        <span class="link-icon">🔍</span>
+        <div>
+          <strong>Public Record Verification</strong>
+          <span class="link-desc"
+            >Verify authentic 16-character Record IDs and compare PDF fingerprints</span
+          >
+        </div>
+      </a>
+      <a routerLink="/records/court-notes" class="link-item" id="rec-link-notes">
+        <span class="link-icon">🏛️</span>
+        <div>
+          <strong>Court Notes by State</strong>
+          <span class="link-desc"
+            >Review admissibility guidance and evidence rules across jurisdictions</span
+          >
+        </div>
+      </a>
+      <a routerLink="/records/model-order" class="link-item" id="rec-link-model">
+        <span class="link-icon">📜</span>
+        <div>
+          <strong>Model Order Language</strong>
+          <span class="link-desc"
+            >Neutral stipulations accepted by family law courts that avoid vendor lock-in</span
+          >
+        </div>
+      </a>
+      <a routerLink="/records/retention-policy" class="link-item" id="rec-link-retention">
+        <span class="link-icon">🛡️</span>
+        <div>
+          <strong>Retention Policy</strong>
+          <span class="link-desc"
+            >Understand evidentiary record rules, 7-year storage, and non-record purging</span
+          >
+        </div>
+      </a>
+    </div>
+  </section>
+</div>

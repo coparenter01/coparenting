@@ -1,0 +1,136 @@
+<div class="export-history-container">
+  <div class="top-nav">
+    <a routerLink="/records/export" class="back-link" id="link-back-export">← Export records</a>
+    <a routerLink="/records/affidavit/request" class="btn-subtle" id="link-request-affidavit">
+      Request affidavit
+    </a>
+  </div>
+
+  <header class="page-header">
+    <div class="header-titles">
+      <h1 class="page-title">Export history</h1>
+      <p class="page-subtitle">
+        Your earlier exports. Certified exports can be downloaded again and checked on the public
+        verification page.
+      </p>
+    </div>
+    <a routerLink="/records/export" class="btn-primary" id="btn-new-export">New export</a>
+  </header>
+
+  <div class="filter-bar">
+    <label class="filter-label" for="select-format-filter">
+      Filter
+      <select
+        id="select-format-filter"
+        class="filter-select"
+        [value]="filterFormat()"
+        (change)="onFilterChange($event)"
+      >
+        <option value="all">All formats</option>
+        <option value="certified_pdf">Certified PDF</option>
+        <option value="pdf">PDF</option>
+        <option value="csv">CSV</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="table-container">
+    <table class="history-table">
+      <thead>
+        <tr>
+          <th>Format</th>
+          <th>Record types</th>
+          <th>Date range</th>
+          <th>Created at</th>
+          <th>Status</th>
+          <th>Record ID</th>
+          <th>Pages</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of filteredExports(); track item.exportId) {
+          <tr [id]="'export-row-' + item.exportId">
+            <td>
+              <span class="badge" [class.badge-certified]="item.format === 'certified_pdf'">
+                @if (item.format === 'certified_pdf') {
+                  Certified PDF
+                } @else if (item.format === 'pdf') {
+                  PDF
+                } @else {
+                  CSV
+                }
+              </span>
+            </td>
+            <td class="types-cell">
+              {{ formatRecordTypes(item.recordTypes) }}
+            </td>
+            <td class="range-cell">{{ item.dateFrom }} – {{ item.dateTo }}</td>
+            <td class="date-cell">{{ item.createdAt | date: 'short' }}</td>
+            <td>
+              <span
+                class="status-chip"
+                [class.status-ready]="item.status === 'ready'"
+                [class.status-preparing]="item.status === 'preparing'"
+                [class.status-failed]="item.status === 'failed'"
+              >
+                {{ item.status | titlecase }}
+              </span>
+            </td>
+            <td class="record-id-cell">
+              @if (item.recordId) {
+                <code class="record-code">{{ item.recordId }}</code>
+              } @else {
+                <span class="non-certified">— <small>(not certified)</small></span>
+              }
+            </td>
+            <td class="pages-cell">{{ item.pageCount ?? '—' }}</td>
+            <td class="actions-cell">
+              @if (item.status === 'ready') {
+                <div class="row-actions">
+                  <button
+                    type="button"
+                    class="btn-row-action"
+                    (click)="download(item)"
+                    [id]="'btn-download-' + item.exportId"
+                  >
+                    Download
+                  </button>
+
+                  @if (item.recordId) {
+                    <a
+                      [routerLink]="['/records/verify']"
+                      [queryParams]="{ recordId: item.recordId }"
+                      class="btn-row-action secondary"
+                      [id]="'btn-verify-' + item.exportId"
+                    >
+                      Verify
+                    </a>
+                    <a
+                      [routerLink]="['/records/affidavit/request']"
+                      [queryParams]="{ recordId: item.recordId }"
+                      class="btn-row-action secondary"
+                      [id]="'btn-affidavit-' + item.exportId"
+                    >
+                      Request affidavit
+                    </a>
+                  }
+                </div>
+              } @else if (item.status === 'preparing') {
+                <button type="button" class="btn-row-action disabled" disabled>Download</button>
+              } @else {
+                <span class="failed-message">
+                  {{ item.errorMessage || 'Export failed. No record ID was issued.' }}
+                </span>
+              }
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="8" class="empty-cell">No exports found for this filter.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,110 @@
+<div class="safety-container">
+  <div class="safety-header">
+    <h1 class="safety-title">Privacy and safety</h1>
+  </div>
+
+  <nav class="safety-nav" aria-label="Privacy and safety sections">
+    <a routerLink="/safety" class="safety-nav-link">Safety Mode</a>
+    <a
+      routerLink="/safety/alerts-images"
+      class="safety-nav-link safety-nav-link--active"
+      aria-current="page"
+    >
+      Alerts and images
+    </a>
+    <a routerLink="/safety/ai-data" class="safety-nav-link">AI and your data</a>
+  </nav>
+
+  <section class="safety-card">
+    <h2 class="card-title">Alert preview level</h2>
+    <p class="section-desc">
+      Choose how much detail appears in push notifications on your device screen.
+    </p>
+
+    <div class="preview-options" role="radiogroup" aria-label="Alert preview level">
+      <label class="preview-option" [class.preview-option--selected]="previewLevel() === 'none'">
+        <input
+          type="radio"
+          name="previewLevel"
+          value="none"
+          [checked]="previewLevel() === 'none'"
+          (change)="onSelectLevel('none')"
+        />
+        <div class="option-details">
+          <strong>No text (Discreet)</strong>
+          <span
+            >Notifications show "New ParentPath message" without sender or message content.
+            Recommended for safety.</span
+          >
+        </div>
+      </label>
+
+      <label
+        class="preview-option"
+        [class.preview-option--selected]="previewLevel() === 'name_only'"
+      >
+        <input
+          type="radio"
+          name="previewLevel"
+          value="name_only"
+          [checked]="previewLevel() === 'name_only'"
+          (change)="onSelectLevel('name_only')"
+        />
+        <div class="option-details">
+          <strong>Sender name only</strong>
+          <span>Shows who sent the message, but keeps the message body hidden.</span>
+        </div>
+      </label>
+
+      <label
+        class="preview-option"
+        [class.preview-option--selected]="previewLevel() === 'name_and_text'"
+      >
+        <input
+          type="radio"
+          name="previewLevel"
+          value="name_and_text"
+          [checked]="previewLevel() === 'name_and_text'"
+          (change)="onSelectLevel('name_and_text')"
+        />
+        <div class="option-details">
+          <strong>Name and message text</strong>
+          <span>Shows sender name and the first 100 characters of the message.</span>
+        </div>
+      </label>
+    </div>
+  </section>
+
+  <section class="safety-card">
+    <h2 class="card-title">Image and media masking</h2>
+    <p class="section-desc">
+      Mask photo attachments in message threads until you tap to view them.
+    </p>
+
+    <div class="switch-row">
+      <div class="switch-info">
+        <strong>Mask incoming images</strong>
+        <span>Replaces incoming photos with a neutral placeholder until tapped.</span>
+      </div>
+
+      <button
+        type="button"
+        role="switch"
+        class="switch-control"
+        [class.switch-control--active]="maskImages()"
+        [attr.aria-checked]="maskImages()"
+        aria-label="Toggle incoming image masking"
+        (click)="onToggleMaskImages()"
+      >
+        <span class="switch-thumb"></span>
+      </button>
+    </div>
+
+    <div class="preview-link-row">
+      <a routerLink="/safety/hidden-image" class="text-link">
+        <span class="material-symbols-rounded" aria-hidden="true">visibility</span>
+        View hidden image placeholder demo
+      </a>
+    </div>
+  </section>
+</div>

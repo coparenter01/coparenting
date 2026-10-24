@@ -1,0 +1,185 @@
+<div class="legal-hold-page">
+  <header class="page-header">
+    <div class="header-left">
+      <a routerLink="/records" class="back-link">&larr; Records home</a>
+      <h1>Legal hold</h1>
+      <p class="subtitle">
+        Preserve all electronic records and suspend deletion routines during active litigation or
+        discovery.
+      </p>
+    </div>
+  </header>
+
+  @if (errorMessage()) {
+    <div class="alert alert-danger" role="alert">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  @if (activeLegalHold(); as hold) {
+    <div class="status-banner active-banner">
+      <div class="status-icon" aria-hidden="true">&#9888;</div>
+      <div class="status-content">
+        <h3>Legal Hold Active</h3>
+        <p>
+          All automated data purging and manual account deletion requests are frozen. All
+          communication records and audit logs are permanently locked for discovery.
+        </p>
+      </div>
+    </div>
+
+    <section class="card hold-details-card">
+      <h2>Active Hold Details</h2>
+      <div class="details-grid">
+        <span class="detail-label">Status</span>
+        <span class="detail-value">
+          <span class="badge badge-active">On (Active)</span>
+        </span>
+
+        <span class="detail-label">Case number</span>
+        <span class="detail-value">
+          <strong>{{ hold.caseNumber || 'Not specified' }}</strong>
+        </span>
+
+        <span class="detail-label">Placed</span>
+        <span class="detail-value">{{ hold.setAt | date: 'medium' }}</span>
+
+        <span class="detail-label">Placed by</span>
+        <span class="detail-value">
+          <span class="by-badge">{{ hold.setBy }}</span>
+        </span>
+
+        <span class="detail-label">Reason</span>
+        <span class="detail-value">{{ hold.reason }}</span>
+      </div>
+
+      <div class="card-actions">
+        @if (hold.setBy === 'parent') {
+          <button
+            type="button"
+            class="btn btn-secondary"
+            [disabled]="isSubmitting()"
+            (click)="releaseHold(hold.holdId)"
+          >
+            Release legal hold
+          </button>
+        } @else {
+          <p class="counsel-note">
+            <em
+              >This legal hold was placed by legal counsel or the court and can only be released by
+              authorized legal representatives.</em
+            >
+          </p>
+        }
+      </div>
+    </section>
+  } @else {
+    <div class="status-banner inactive-banner">
+      <div class="status-icon" aria-hidden="true">&#10003;</div>
+      <div class="status-content">
+        <h3>No Active Legal Hold</h3>
+        <p>
+          Standard data retention and disposition rules are currently operating without suspension.
+        </p>
+      </div>
+    </div>
+
+    <section class="card form-card">
+      <h2>Place a Legal Hold</h2>
+      <p class="card-desc">
+        If you are engaged in active court proceedings, pending motions, or discovery, you can place
+        a legal hold to ensure all parenting logs, messages, and financial ledgers remain frozen.
+      </p>
+
+      <form [formGroup]="holdForm" (ngSubmit)="placeHold()" class="hold-form">
+        <div class="form-group">
+          <label for="caseNumber">Court Case / Docket Number <span class="required">*</span></label>
+          <input
+            id="caseNumber"
+            type="text"
+            formControlName="caseNumber"
+            placeholder="e.g. FAM-2026-4491-DR"
+            class="form-control"
+          />
+          @if (holdForm.get('caseNumber')?.touched && holdForm.get('caseNumber')?.errors) {
+            <span class="field-error">Please enter a valid case or docket number.</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="reason">Reason for Legal Hold <span class="required">*</span></label>
+          <textarea
+            id="reason"
+            rows="3"
+            formControlName="reason"
+            placeholder="Describe the litigation proceedings, court order, or pending hearing..."
+            class="form-control"
+          ></textarea>
+          @if (holdForm.get('reason')?.touched && holdForm.get('reason')?.errors) {
+            <span class="field-error">Please provide a clear reason (minimum 10 characters).</span>
+          }
+        </div>
+
+        <div class="form-actions">
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="isSubmitting() || holdForm.invalid"
+          >
+            @if (isSubmitting()) {
+              Applying hold...
+            } @else {
+              Place legal hold
+            }
+          </button>
+        </div>
+      </form>
+    </section>
+  }
+
+  <section class="history-section">
+    <h2>Legal hold history</h2>
+    <div class="table-container">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Status</th>
+            <th>Case Number</th>
+            <th>Placed By</th>
+            <th>Placed Date</th>
+            <th>Released Date</th>
+            <th>Reason</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (hold of legalHolds(); track hold.holdId) {
+            <tr>
+              <td>
+                <span
+                  class="badge"
+                  [class.badge-active]="hold.status === 'on'"
+                  [class.badge-released]="hold.status === 'released'"
+                >
+                  {{ hold.status }}
+                </span>
+              </td>
+              <td>
+                <strong>{{ hold.caseNumber || 'N/A' }}</strong>
+              </td>
+              <td>
+                <span class="by-badge">{{ hold.setBy }}</span>
+              </td>
+              <td>{{ hold.setAt | date: 'shortDate' }}</td>
+              <td>{{ hold.releasedAt ? (hold.releasedAt | date: 'shortDate') : '—' }}</td>
+              <td class="cell-reason">{{ hold.reason }}</td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" class="empty-cell">No history of legal holds.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>

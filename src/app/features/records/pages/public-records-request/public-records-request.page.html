@@ -1,0 +1,119 @@
+<div class="public-request-container">
+  <header class="public-nav-header">
+    <span class="brand-title">ParentPath</span>
+    <nav class="public-nav-links" aria-label="Public menu">
+      <a routerLink="/safety/resources" class="nav-link">Safety resources</a>
+      <a routerLink="/support" class="nav-link">Help</a>
+      <a routerLink="/auth/sign-in" class="nav-link">Sign in</a>
+    </nav>
+  </header>
+
+  <main class="request-main">
+    <header class="page-header">
+      <h1 class="page-title">Records requests</h1>
+      <p class="page-subtitle">
+        Official submission portal for attorneys, courts, and agency subpoenas.
+      </p>
+    </header>
+
+    <div class="legal-notice-box">
+      <strong>Evidentiary Service Requirements:</strong>
+      <p>
+        ParentPath produces certified business records pursuant to a valid judicial subpoena, court
+        order, or authorized agency request. The subpoena must name the account email address,
+        specified date range, and record types. ParentPath is an impartial technology provider and
+        is not a party to your case.
+      </p>
+    </div>
+
+    @if (submittedSuccess()) {
+      <div class="success-banner" role="status" id="subpoena-success-alert">
+        <strong>Subpoena submission received.</strong> Our legal operations department will review
+        the service within 5 business days and respond to the contact email provided.
+      </div>
+    } @else {
+      <form class="request-form" (ngSubmit)="onSubmit()">
+        @if (errorMessage()) {
+          <div class="alert-error" role="alert" id="subpoena-error-alert">
+            {{ errorMessage() }}
+          </div>
+        }
+
+        <label class="field-label" for="input-req-name">
+          Requester name
+          <input
+            id="input-req-name"
+            type="text"
+            class="text-input"
+            placeholder="Attorney or Officer name"
+            [value]="requesterName()"
+            (input)="onNameChange($event)"
+          />
+        </label>
+
+        <label class="field-label" for="input-org-name">
+          Organization
+          <input
+            id="input-org-name"
+            type="text"
+            class="text-input"
+            placeholder="Law firm, court division, or agency"
+            [value]="organization()"
+            (input)="onOrgChange($event)"
+          />
+        </label>
+
+        <label class="field-label" for="input-req-email">
+          Email
+          <input
+            id="input-req-email"
+            type="email"
+            class="text-input"
+            placeholder="official@lawfirm.com"
+            [value]="email()"
+            (input)="onEmailChange($event)"
+          />
+        </label>
+
+        <label class="field-label" for="input-subpoena-file">
+          Subpoena (PDF)
+          <input
+            id="input-subpoena-file"
+            type="file"
+            accept="application/pdf"
+            class="file-input"
+            (change)="onFileChange($event)"
+          />
+          <span class="field-hint">PDF file of formal subpoena duces tecum, up to 25 MB.</span>
+        </label>
+
+        <label class="field-label" for="input-subpoena-notes">
+          Notes / Case Number (optional)
+          <textarea
+            id="input-subpoena-notes"
+            rows="3"
+            class="textarea-input"
+            placeholder="Cause number, jurisdiction, or special delivery instructions..."
+            [value]="notes()"
+            (input)="onNotesChange($event)"
+          ></textarea>
+        </label>
+
+        <div class="actions-row">
+          <button
+            type="submit"
+            class="btn-primary"
+            [disabled]="isSubmitting()"
+            id="btn-submit-subpoena"
+          >
+            @if (isSubmitting()) {
+              Submitting…
+            } @else {
+              Submit
+            }
+          </button>
+        </div>
+      </form>
+    }
+  </main>
+</div>

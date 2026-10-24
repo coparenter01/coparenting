@@ -1,0 +1,183 @@
+<div class="expense-detail-container">
+  <div class="detail-header">
+    <a routerLink="/expenses" class="back-link">← All Expenses</a>
+    <div class="title-row">
+      <div>
+        <h1 class="page-title">{{ expense()?.description }}</h1>
+        <div class="meta-tags">
+          <span class="category-badge">{{ expense()?.category }}</span>
+          <span
+            class="visibility-badge"
+            [class.private-badge]="expense()?.visibility === 'Private'"
+          >
+            {{ expense()?.visibility }}
+          </span>
+          <span class="status-badge" [class.status-voided]="expense()?.status === 'Voided'">
+            {{ expense()?.status }}
+          </span>
+        </div>
+      </div>
+      <div class="amount-card">
+        <span class="amount-label">Amount</span>
+        <span class="amount-value">{{ formattedAmount() }}</span>
+      </div>
+    </div>
+  </div>
+
+  @if (actionMessage()) {
+    <div class="alert alert-info">{{ actionMessage() }}</div>
+  }
+
+  <div class="content-grid">
+    <div class="primary-card">
+      <h2 class="card-title">Expense Summary</h2>
+      <div class="info-grid">
+        <div class="info-item">
+          <span class="info-label">Expense Date</span>
+          <span class="info-value">{{ expense()?.expenseDate }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Paid By</span>
+          <span class="info-value">{{ expense()?.paidByName }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Created By</span>
+          <span class="info-value">{{ expense()?.createdByName }}</span>
+        </div>
+        <div class="info-item">
+          <span class="info-label">Children</span>
+          <span class="info-value">
+            @for (c of expense()?.children; track c.id) {
+              <span class="child-chip">{{ c.name }}</span>
+            }
+          </span>
+        </div>
+      </div>
+
+      @if (expense()?.note) {
+        <div class="note-box">
+          <span class="info-label">Note</span>
+          <p class="note-text">{{ expense()?.note }}</p>
+        </div>
+      }
+
+      <div class="action-bar">
+        @if (expense()?.status === 'Active') {
+          <a [routerLink]="['/expenses', expense()?.id, 'request']" class="btn btn-primary">
+            Request Reimbursement
+          </a>
+          <a [routerLink]="['/expenses', expense()?.id, 'dispute']" class="btn btn-secondary">
+            Dispute Expense
+          </a>
+
+          @if (expense()?.visibility === 'Private') {
+            <button type="button" (click)="openShareModal()" class="btn btn-secondary">
+              Share with Co-Parent
+            </button>
+          }
+
+          <button type="button" (click)="openVoidModal()" class="btn btn-danger">
+            Void Expense
+          </button>
+        } @else {
+          <div class="voided-notice">
+            This expense has been voided and is excluded from running balance totals.
+          </div>
+        }
+      </div>
+    </div>
+
+    <div class="secondary-column">
+      <div class="sidebar-card">
+        <div class="sidebar-header">
+          <h2 class="card-title">Receipt Attachments</h2>
+          <label for="detail-receipt-upload" class="add-receipt-btn">
+            + Add
+            <input
+              id="detail-receipt-upload"
+              type="file"
+              accept="image/jpeg,image/png,application/pdf"
+              (change)="onFileSelected($event)"
+              class="hidden-file-input"
+            />
+          </label>
+        </div>
+
+        @if ((expense()?.attachments?.length ?? 0) === 0) {
+          <p class="empty-hint">No receipt attached yet.</p>
+        } @else {
+          <div class="attachment-list">
+            @for (att of expense()?.attachments; track att.id) {
+              <div class="attachment-item">
+                <span class="att-icon">📎</span>
+                <div class="att-info">
+                  <span class="att-name">{{ att.fileName }}</span>
+                  <span class="att-meta"
+                    >{{ (att.fileSizeBytes / 1024).toFixed(0) }} KB · Added by
+                    {{ att.uploadedByName }}</span
+                  >
+                </div>
+              </div>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="sidebar-card">
+        <h2 class="card-title">Version & Audit History</h2>
+        <div class="version-timeline">
+          @for (v of expense()?.versions; track v.id) {
+            <div class="version-item">
+              <div class="ver-marker">v{{ v.versionNumber }}</div>
+              <div class="ver-details">
+                <div class="ver-header">
+                  <strong>{{ v.changedByName }}</strong>
+                  <span class="ver-date">{{ v.createdAt | slice: 0 : 10 }}</span>
+                </div>
+                <div class="ver-amount">{{ formatCents(v.amountCents) }} · {{ v.description }}</div>
+                <div class="ver-device">{{ v.deviceInfo }}</div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+    </div>
+  </div>
+
+  @if (showVoidModal()) {
+    <div class="modal-backdrop">
+      <div class="modal-card">
+        <h3 class="modal-title">Void this expense?</h3>
+        <p class="modal-text">
+          Voiding removes this expense from running balances and reimbursement totals. In accordance
+          with family law standards, the record and receipt are preserved in the permanent audit
+          trail and cannot be deleted.
+        </p>
+        <div class="modal-actions">
+          <button type="button" (click)="confirmVoid()" class="btn btn-danger">Confirm Void</button>
+          <button type="button" (click)="closeVoidModal()" class="btn btn-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+  }
+
+  @if (showShareModal()) {
+    <div class="modal-backdrop">
+      <div class="modal-card">
+        <h3 class="modal-title">Share with Co-Parent?</h3>
+        <p class="modal-text">
+          Once shared, your co-parent will be able to see the description, receipts, and request
+          reimbursement. A shared expense cannot be made private again.
+        </p>
+        <div class="modal-actions">
+          <button type="button" (click)="confirmShare()" class="btn btn-primary">
+            Confirm Share
+          </button>
+          <button type="button" (click)="closeShareModal()" class="btn btn-secondary">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

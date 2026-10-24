@@ -1,0 +1,67 @@
+<section class="threads-container">
+  <div class="action-bar">
+    <div class="title-section">
+      <h1>Messages</h1>
+    </div>
+    <div class="header-buttons">
+      <a routerLink="/messages/drafts" class="btn-secondary">Drafts</a>
+      <a routerLink="/messages/new" class="btn-primary">New message</a>
+    </div>
+  </div>
+
+  <div class="filter-tabs">
+    <a routerLink="/messages/search" class="btn-secondary">Search</a>
+    <a routerLink="/messages/folders" class="btn-secondary">Folders</a>
+    <a routerLink="/messages/attachments" class="btn-secondary">Attachments</a>
+    <a routerLink="/messages/ai-settings" class="btn-secondary">AI & Shield</a>
+    <a routerLink="/messages/ai-coach" class="btn-secondary">AI Coach</a>
+    <a routerLink="/messages/mediation" class="btn-secondary">Mediation</a>
+  </div>
+
+  <label class="search-field">
+    Search messages
+    <input
+      type="search"
+      class="search-input"
+      placeholder="Filter by keyword or category..."
+      [(ngModel)]="searchQuery"
+    />
+  </label>
+
+  <ul class="threads-card">
+    @for (thread of filteredThreads; track thread.id) {
+      <li class="thread-item">
+        <a [routerLink]="['/messages', thread.id]" class="thread-link">
+          <span class="unread-dot" aria-label="Thread status"></span>
+          <div class="thread-content">
+            <div class="thread-header">
+              <strong class="thread-subject">
+                <span class="badge-category">{{ thread.category }}</span>
+                {{ thread.subject }}
+              </strong>
+              <span class="thread-time">{{ thread.updated_at | date: 'short' }}</span>
+            </div>
+            <div class="thread-snippet">Click to view message history and updates</div>
+          </div>
+        </a>
+      </li>
+    } @empty {
+      <li class="empty-threads">
+        @if (isLoading()) {
+          <p>Loading messages...</p>
+        } @else {
+          <p>No active conversations yet.</p>
+          <a routerLink="/messages/new" class="btn-primary">Start a new thread</a>
+        }
+      </li>
+    }
+  </ul>
+
+  <p class="guidance-text">
+    Newest activity first. Messages cannot be edited or deleted after they are sent. In Solo Mode,
+    use
+    <a routerLink="/household/contact-non-app" class="guidance-link"
+      >Message co-parent outside the app</a
+    >.
+  </p>
+</section>

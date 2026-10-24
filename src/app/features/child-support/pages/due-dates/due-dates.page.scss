@@ -1,0 +1,146 @@
+.css-page-container {
+  padding: 32px;
+  max-width: 760px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family:
+    'Public Sans',
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: #17212b;
+}
+
+.top-nav {
+  display: flex;
+  align-items: center;
+}
+
+.back-link {
+  color: #0e5a63;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 15px;
+  color: #4e5966;
+}
+
+.alert-success {
+  padding: 12px 16px;
+  border-radius: 8px;
+  background-color: #e3f0f0;
+  color: #0a4a51;
+  font-size: 14px;
+  font-weight: 500;
+  border: 1px solid #c2e2e2;
+}
+
+.card {
+  box-sizing: border-box;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #d9dde1;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.card-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+  border-bottom: 1px solid #eef1f4;
+  padding-bottom: 8px;
+}
+
+.schedule-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.due-label {
+  font-size: 13px;
+  color: #4e5966;
+}
+
+.due-date {
+  font-size: 20px;
+  font-weight: 700;
+  color: #17212b;
+}
+
+.due-amount {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0e5a63;
+}
+
+.schedule-meta {
+  font-size: 13px;
+  color: #6c7885;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: #2b3540;
+  cursor: pointer;
+}
+
+.checkbox-input {
+  width: 18px;
+  height: 18px;
+  accent-color: #0e5a63;
+}
+
+.form-actions {
+  margin-top: 8px;
+}
+
+.btn-primary {
+  min-height: 44px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  background: #0e5a63;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: #09434a;
+  }
+}

@@ -1,0 +1,72 @@
+<div class="credit-container">
+  <div class="header-row">
+    <div>
+      <h1 class="page-title">Credit Building Settings</h1>
+      <p class="page-subtitle">
+        Report on-time child support and shared expenses to credit bureaus
+      </p>
+    </div>
+    <a routerLink="/expenses" class="btn btn-secondary">← Expenses</a>
+  </div>
+
+  <div class="credit-card">
+    <div class="status-header">
+      <div class="icon-circle">📈</div>
+      <div>
+        <h2 class="card-title">Credit Bureau Reporting (Simulated)</h2>
+        <span class="status-pill" [class.enrolled-pill]="settings().isEnabled">
+          {{ settings().isEnabled ? 'Enrolled · Reporting Active' : 'Not Enrolled' }}
+        </span>
+      </div>
+    </div>
+
+    <p class="disclaimer-text">
+      When enabled, verified on-time child support payments and settled reimbursement shares are
+      formatted and transmitted to credit bureau data partners (Experian, TransUnion, Equifax
+      simulator) each monthly cycle.
+    </p>
+
+    <div class="features-list">
+      <div class="feature-item">
+        <span class="feat-icon">✓</span>
+        <span>Build positive credit history with payments you already make</span>
+      </div>
+      <div class="feature-item">
+        <span class="feat-icon">✓</span>
+        <span>Late or disputed expense shares are never reported negatively</span>
+      </div>
+      <div class="feature-item">
+        <span class="feat-icon">✓</span>
+        <span>You can pause or opt-out anytime with no penalty</span>
+      </div>
+    </div>
+
+    <div class="toggle-box">
+      <div>
+        <strong>{{
+          settings().isEnabled
+            ? 'Credit reporting is currently active'
+            : 'Enroll in credit building'
+        }}</strong>
+        <p class="toggle-sub">
+          @if (settings().isEnabled) {
+            Enrolled since {{ settings().enrolledAt | slice: 0 : 10 }}. Verified payments are sent
+            on the 1st of each month.
+          } @else {
+            Opt-in to begin reporting your verified parenting payments.
+          }
+        </p>
+      </div>
+
+      <button
+        type="button"
+        (click)="toggleEnrollment()"
+        class="btn"
+        [class.btn-primary]="!settings().isEnabled"
+        [class.btn-secondary]="settings().isEnabled"
+      >
+        {{ settings().isEnabled ? 'Disable Credit Reporting' : 'Enable Credit Reporting' }}
+      </button>
+    </div>
+  </div>
+</div>

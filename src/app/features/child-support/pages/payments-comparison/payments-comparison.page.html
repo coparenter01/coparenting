@@ -1,0 +1,120 @@
+<div class="css-page-container">
+  <div class="top-nav">
+    <a routerLink="/child-support" class="back-link" id="link-back-css">← Child support</a>
+  </div>
+
+  <header class="header">
+    <h1 class="title">Payments side by side</h1>
+    <p class="subtitle">
+      Direct comparison between state agency payment ledger and your ParentPath expense records.
+    </p>
+  </header>
+
+  @if (exportSuccess()) {
+    <div class="alert-success" role="status" id="alert-export-success">
+      Payment comparison export generated successfully.
+    </div>
+  }
+
+  <div class="table-container">
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th scope="col">Date</th>
+          <th scope="col">Agency record</th>
+          <th scope="col">Your record</th>
+          <th scope="col">Status flag</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of paymentMatches(); track row.matchId) {
+          <tr>
+            <td class="cell-date">{{ row.date }}</td>
+            <td class="cell-amount">{{ formatAmount(row.agencyAmountCents) }}</td>
+            <td class="cell-amount">{{ formatAmount(row.appAmountCents) }}</td>
+            <td>
+              <span class="badge" [class]="getBadgeClass(row.status, row.flagDismissed)">
+                {{ getBadgeLabel(row.status, row.flagDismissed) }}
+              </span>
+              @if (row.flagDismissed && row.dismissedReason) {
+                <div class="dismiss-reason-text">Note: {{ row.dismissedReason }}</div>
+              }
+            </td>
+            <td>
+              @if (row.status !== 'matched' && !row.flagDismissed) {
+                <button
+                  type="button"
+                  class="btn-table-action"
+                  [id]="'btn-dismiss-' + row.matchId"
+                  (click)="openDismissModal(row.matchId)"
+                >
+                  Dismiss flag
+                </button>
+              } @else {
+                <span class="text-muted">—</span>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <div class="footer-actions">
+    <button
+      type="button"
+      class="btn-secondary"
+      id="btn-export-comparison"
+      (click)="exportComparison()"
+    >
+      Export comparison
+    </button>
+  </div>
+
+  @if (dismissingMatchId()) {
+    <div
+      class="modal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-dismiss-title"
+    >
+      <div class="modal-card">
+        <h2 id="modal-dismiss-title" class="modal-title">Dismiss reconciliation flag</h2>
+        <p class="modal-desc">
+          Add an explanatory note for why this discrepancy is expected (e.g. direct bank transfer,
+          cashiers check pending agency processing).
+        </p>
+        <div class="form-group">
+          <label for="dismiss-note-input" class="form-label">Note / Reason</label>
+          <input
+            type="text"
+            id="dismiss-note-input"
+            class="form-control"
+            placeholder="e.g. Paid directly by bank transfer"
+            [value]="dismissReason()"
+            (input)="onReasonChange($event)"
+          />
+        </div>
+        <div class="modal-actions">
+          <button
+            type="button"
+            class="btn-primary"
+            id="btn-confirm-dismiss"
+            (click)="confirmDismiss()"
+          >
+            Save & dismiss
+          </button>
+          <button
+            type="button"
+            class="btn-subtle"
+            id="btn-cancel-dismiss"
+            (click)="closeDismissModal()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

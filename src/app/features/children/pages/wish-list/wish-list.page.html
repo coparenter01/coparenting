@@ -1,0 +1,146 @@
+<div class="wish-container">
+  <a routerLink="/children/info" class="back-link">← Child information</a>
+
+  <div class="top-row">
+    <h1 class="page-title">Wish list</h1>
+    <button type="button" class="btn-primary" (click)="toggleAddForm()">
+      {{ showAddForm() ? 'Close' : 'Add item' }}
+    </button>
+  </div>
+
+  @if (showAddForm()) {
+    <section class="form-card" aria-label="Add wish item form">
+      <h2 class="page-title">Add wish list item</h2>
+      <div class="field-group">
+        <label for="wish-title">Item name</label>
+        <input
+          id="wish-title"
+          type="text"
+          class="field-input"
+          [value]="newTitle()"
+          (input)="updateField('title', $event)"
+          placeholder="e.g. LEGO Space Station, Winter boots"
+        />
+      </div>
+
+      <div class="form-grid">
+        <div class="field-group">
+          <label for="wish-child">For child</label>
+          <select
+            id="wish-child"
+            class="field-select"
+            [value]="selectedChildId()"
+            (change)="updateChild($event)"
+          >
+            <option value="">All / Shared</option>
+            @for (child of children(); track child.id) {
+              <option [value]="child.id">{{ child.first_name }} {{ child.last_name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="wish-cost">Estimated cost ($)</label>
+          <input
+            id="wish-cost"
+            type="number"
+            min="0"
+            step="0.01"
+            class="field-input"
+            [value]="newCost()"
+            (input)="updateField('cost', $event)"
+            placeholder="0.00"
+          />
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="wish-url">Product link (optional)</label>
+        <input
+          id="wish-url"
+          type="url"
+          class="field-input"
+          [value]="newUrl()"
+          (input)="updateField('url', $event)"
+          placeholder="https://..."
+        />
+      </div>
+
+      <div class="field-group">
+        <label for="wish-notes">Notes (optional)</label>
+        <input
+          id="wish-notes"
+          type="text"
+          class="field-input"
+          [value]="newNotes()"
+          (input)="updateField('notes', $event)"
+          placeholder="Size, color, store preferences"
+        />
+      </div>
+
+      <div class="button-row">
+        <button
+          type="button"
+          class="btn-primary"
+          [disabled]="!newTitle().trim()"
+          (click)="saveItem()"
+        >
+          Save item
+        </button>
+        <button type="button" class="btn-cancel" (click)="toggleAddForm()">Cancel</button>
+      </div>
+    </section>
+  }
+
+  <div class="table-wrapper">
+    <table class="wish-table">
+      <thead>
+        <tr>
+          <th>Item</th>
+          <th>For</th>
+          <th>Link</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of items(); track item.id) {
+          <tr>
+            <td>
+              <strong>{{ item.title }}</strong>
+              @if (item.notes) {
+                <div class="back-link">{{ item.notes }}</div>
+              }
+            </td>
+            <td>{{ getChildName(item.child_id) }}</td>
+            <td>
+              @if (item.url) {
+                <a [href]="item.url" target="_blank" rel="noopener noreferrer" class="item-link"
+                  >Link ↗</a
+                >
+              } @else {
+                —
+              }
+            </td>
+            <td>
+              @if (item.reserved_by) {
+                <span class="badge-claimed">Claimed</span>
+              } @else {
+                <span class="badge-open">Open</span>
+              }
+            </td>
+            <td>
+              <button type="button" class="btn-claim" (click)="toggleClaim(item.id)">
+                {{ item.reserved_by ? 'Unclaim' : 'Claim' }}
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5">No wish list items found. Click "Add item" to create one.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

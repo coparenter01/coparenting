@@ -1,0 +1,48 @@
+:root {
+  /* Brand Primary - Calm, trustworthy Teal */
+  --pp-primary-700: #0b4a52;
+  --pp-primary-600: #0e5a63; /* Brand core color */
+  --pp-primary-500: #127380;
+  --pp-primary-100: #d5ecec;
+  --pp-primary-50: #eaf5f4;
+
+  /* Accent - Warm Apricot (illustrations, logo, highlights - never text) */
+  --pp-accent-500: #f4a582;
+  --pp-accent-700: #b4532f; /* Accent text/icons on white (4.5:1 contrast) */
+  --pp-accent-50: #fdf0e9;
+
+  /* Neutrals & Surfaces */
+  --pp-ink: #16232e; /* Main text */
+  --pp-ink-2: #4e5966; /* Secondary text */
+  --pp-ink-3: #6b7580; /* Hints, placeholders */
+  --pp-border: #d9dde1;
+  --pp-surface: #ffffff;
+  --pp-bg: #f5f6f3; /* Warm off-white */
+
+  /* Semantic Feedback */
+  --pp-success: #1e7b4f;
+  --pp-success-bg: #e5f4ec;
+  --pp-warning: #8a5a00;
+  --pp-warning-bg: #fff4de;
+  --pp-danger: #b3261e;
+  --pp-danger-bg: #fce8e6;
+  --pp-info: #234e8c;
+  --pp-info-bg: #e6ecf6;
+
+  /* Calendar and 'Who' tokens */
+  --pp-who-you-fill: #d5ecec;
+  --pp-who-you-text: #0b4a52;
+  --pp-who-coparent-fill: #fbe3d6;
+  --pp-who-coparent-text: #8f3e1f;
+  --pp-who-shared-fill: #e3e6f7;
+  --pp-who-shared-text: #2f3a8f;
+  --pp-who-agency-fill: #e6ecf6;
+  --pp-who-agency-text: #234e8c;
+
+  /* Geometry & Spacing base */
+  --pp-radius-sm: 8px;
+  --pp-radius-md: 12px;
+  --pp-radius-lg: 16px;
+  --pp-radius-full: 9999px;
+  --pp-card-shadow: 0 1px 2px rgb(22 35 46 / 6%);
+}

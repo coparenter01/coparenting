@@ -1,0 +1,90 @@
+<section class="thread-view-container">
+  <div class="thread-nav-bar">
+    <a routerLink="/messages" class="back-link"> &larr; Back to messages </a>
+    <div class="thread-actions">
+      <a [routerLink]="['/messages', threadId, 'members']" class="btn-secondary">Members</a>
+      <button type="button" (click)="openExportModal()" class="btn-secondary">Export thread</button>
+      <a routerLink="/messages/ai-coach" class="btn-secondary">AI Coach</a>
+      <a routerLink="/messages/mediation" class="btn-secondary">Request mediation</a>
+    </div>
+  </div>
+
+  <div class="thread-title-area">
+    <h1>Conversation</h1>
+  </div>
+
+  <div class="messages-list">
+    @for (msg of messages(); track msg.id) {
+      <div
+        class="message-bubble"
+        [class.mine]="msg.sender_id === currentUserId()"
+        [class.other]="msg.sender_id !== currentUserId()"
+        [class.held]="msg.held_by_shield && !msg.shield_unhidden_at"
+      >
+        <div class="msg-header">
+          <span class="msg-sender">
+            {{ msg.sender_id === currentUserId() ? 'You' : 'Co-Parent' }}
+          </span>
+          @if (msg.is_urgent) {
+            <span class="badge-urgent">URGENT</span>
+          }
+          <span>{{ msg.sent_at | date: 'shortTime' }}</span>
+        </div>
+
+        @if (msg.held_by_shield && !msg.shield_unhidden_at) {
+          <div class="msg-body"><em>Message held by Shield</em>: {{ msg.held_reason }}</div>
+          <button type="button" class="unhide-btn" (click)="onUnhide(msg)">
+            View original message
+          </button>
+        } @else {
+          <div class="msg-body">{{ msg.body }}</div>
+        }
+
+        <div class="msg-footer">
+          <span class="msg-status-tag">Status: {{ msg.status }}</span>
+          @if (msg.sender_id !== currentUserId()) {
+            <button type="button" class="report-link" (click)="onReport(msg.id)">
+              Report message
+            </button>
+          }
+        </div>
+      </div>
+    } @empty {
+      <p>No messages in this thread yet. Send a message below.</p>
+    }
+  </div>
+
+  <div class="reply-box-card">
+    <textarea
+      class="reply-textarea"
+      placeholder="Type your reply (calm, child-focused)..."
+      [(ngModel)]="replyBody"
+      maxlength="10000"
+    ></textarea>
+    <div class="reply-actions">
+      <div class="left-controls">
+        <label class="urgent-toggle">
+          <input type="checkbox" [(ngModel)]="isUrgent" />
+          Mark Urgent
+        </label>
+        <span class="char-counter">{{ replyBody.length }} / 10000</span>
+      </div>
+      <button type="button" class="btn-primary" (click)="onSendReply()">Send reply</button>
+    </div>
+  </div>
+
+  @if (isExportModalOpen()) {
+    <div class="export-modal-backdrop">
+      <div class="export-modal">
+        <h2>Certified Thread Export Preview</h2>
+        <textarea class="export-preview" readonly [value]="exportText()"></textarea>
+        <div class="reply-actions">
+          <button type="button" class="btn-secondary" (click)="closeExportModal()">Close</button>
+          <button type="button" class="btn-primary" (click)="closeExportModal()">
+            Download Certified PDF
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</section>

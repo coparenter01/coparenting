@@ -1,0 +1,67 @@
+<div class="court-notes-container">
+  <header class="public-nav-header">
+    <span class="brand-title">ParentPath</span>
+    <nav class="public-nav-links" aria-label="Public menu">
+      <a routerLink="/safety/resources" class="nav-link">Safety resources</a>
+      <a routerLink="/support" class="nav-link">Help</a>
+      <a routerLink="/auth/sign-in" class="nav-link">Sign in</a>
+    </nav>
+  </header>
+
+  <main class="notes-main">
+    <header class="page-header">
+      <h1 class="page-title">Court notes by state</h1>
+      <p class="page-subtitle">
+        Jurisdiction-specific guidance on how family courts handle co-parenting digital
+        communications and records.
+      </p>
+    </header>
+
+    <div class="top-nav-links">
+      <a routerLink="/model-order" class="btn-subtle" id="link-model-order">
+        Model order language
+      </a>
+    </div>
+
+    <div class="general-disclaimer-box" role="note" id="general-court-disclaimer">
+      <strong>Important Legal Notice:</strong>
+      <p>
+        ParentPath records are court-ready by architectural design with tamper-evident digital
+        timestamps and self-authenticating Record IDs. However, each presiding judge and court
+        retains ultimate authority regarding what evidence is admitted. This overview does not
+        constitute legal counsel.
+      </p>
+    </div>
+
+    <div class="state-selector-card">
+      <label class="state-label" for="select-state">
+        Select State
+        <select
+          id="select-state"
+          class="state-select"
+          [value]="selectedState()"
+          (change)="onStateChange($event)"
+        >
+          @for (note of availableNotes(); track note.contentId) {
+            <option [value]="note.state">{{ note.state }}</option>
+          }
+        </select>
+      </label>
+    </div>
+
+    @if (currentNote(); as note) {
+      <section class="note-card" id="state-note-card">
+        <h2 class="state-title">{{ note.state }}</h2>
+        <h3 class="statute-title">{{ note.title }}</h3>
+        <p class="note-text">{{ note.text }}</p>
+        <span class="review-date"
+          >Last reviewed on {{ note.lastReviewedOn | date: 'longDate' }}</span
+        >
+      </section>
+    } @else {
+      <div class="empty-note-card" id="empty-state-note">
+        <p>No jurisdiction-specific note is currently published for this selection.</p>
+      </div>
+    }
+  </main>
+</div>

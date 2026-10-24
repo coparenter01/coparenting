@@ -1,0 +1,133 @@
+<div class="invite-page-container">
+  <header class="invite-header">
+    <h1 class="page-title">Invite your co-parent</h1>
+    <p class="page-subtitle">
+      One invite is valid at a time. It expires 7 days after you send it. Every invite is saved in
+      your contact-attempt log.
+    </p>
+  </header>
+
+  <form class="invite-form-card" [formGroup]="inviteForm" (ngSubmit)="onSubmit()">
+    <fieldset class="channel-fieldset">
+      <legend class="fieldset-legend">How do you want to send it?</legend>
+      <div class="channel-options">
+        <label class="channel-pill" [class.active]="selectedChannel() === 'Email'">
+          <input
+            type="radio"
+            name="channel"
+            value="Email"
+            (change)="setChannel('Email')"
+            formControlName="channel"
+          />
+          Email
+        </label>
+
+        <label class="channel-pill" [class.active]="selectedChannel() === 'Text'">
+          <input
+            type="radio"
+            name="channel"
+            value="Text"
+            (change)="setChannel('Text')"
+            formControlName="channel"
+          />
+          Text message
+        </label>
+
+        <label class="channel-pill" [class.active]="selectedChannel() === 'Link'">
+          <input
+            type="radio"
+            name="channel"
+            value="Link"
+            (change)="setChannel('Link')"
+            formControlName="channel"
+          />
+          Link I share myself
+        </label>
+      </div>
+    </fieldset>
+
+    @if (selectedChannel() === 'Email') {
+      <label class="form-field">
+        <span class="field-label">Co-parent’s email</span>
+        <input
+          type="email"
+          formControlName="email"
+          placeholder="coparent@example.com"
+          class="text-input"
+          autocomplete="email"
+        />
+      </label>
+    } @else {
+      <label class="form-field disabled-field">
+        <span class="field-label"
+          >Co-parent’s email <span class="subtle-note">(shown when Email is chosen)</span></span
+        >
+        <input type="email" disabled class="text-input" />
+      </label>
+    }
+
+    @if (selectedChannel() === 'Text') {
+      <label class="form-field">
+        <span class="field-label">Co-parent’s mobile number</span>
+        <input
+          type="tel"
+          formControlName="mobileNumber"
+          placeholder="+1 (555) 000-0000"
+          class="text-input"
+          autocomplete="tel"
+        />
+      </label>
+    } @else {
+      <label class="form-field disabled-field">
+        <span class="field-label"
+          >Co-parent’s mobile number
+          <span class="subtle-note">(shown when Text message is chosen)</span></span
+        >
+        <input type="tel" disabled class="text-input" />
+      </label>
+    }
+
+    @if (selectedChannel() === 'Link') {
+      <div class="link-generator-box">
+        <span class="field-label">Invite link</span>
+        <div class="link-input-row">
+          <input
+            type="text"
+            readonly
+            [value]="generatedLink()"
+            class="text-input link-input"
+            aria-label="Generated invite link"
+          />
+          <button type="button" class="btn-secondary" (click)="copyLink()">Copy link</button>
+        </div>
+        @if (copyFeedback()) {
+          <span class="copy-success" role="status">{{ copyFeedback() }}</span>
+        }
+      </div>
+    }
+
+    @if (errorMessage()) {
+      <div class="status-box error" role="alert">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    @if (activeInvite()) {
+      <div class="status-box warning" role="status">
+        You already have an active invite sent on {{ activeInvite()?.sent_at }}.
+        <button type="button" class="link-btn" (click)="cancelActiveInvite()">
+          Cancel current invite
+        </button>
+        to send a new one now.
+      </div>
+    }
+
+    <div class="form-actions-row">
+      <button type="submit" class="btn-primary" [disabled]="isSubmitting()">
+        {{ isSubmitting() ? 'Sending...' : 'Send invite' }}
+      </button>
+
+      <a routerLink="/accounts/invites" class="secondary-link"> View invite status </a>
+    </div>
+  </form>
+</div>

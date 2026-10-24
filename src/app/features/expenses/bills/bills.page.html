@@ -1,0 +1,130 @@
+<div class="bills-container">
+  <div class="header-row">
+    <div>
+      <h1 class="page-title">Household Bills</h1>
+      <p class="page-subtitle">Track upcoming shared expenses before they are billed or paid</p>
+    </div>
+    <div class="action-buttons">
+      <a routerLink="/expenses" class="btn btn-secondary">← Expenses</a>
+      <button type="button" (click)="openAddModal()" class="btn btn-primary">+ Add Bill</button>
+    </div>
+  </div>
+
+  <div class="bills-grid">
+    @for (b of bills(); track b.id) {
+      <div class="bill-card" [class.paid-card]="b.status === 'Paid'">
+        <div class="bill-top">
+          <div>
+            <h2 class="payee-title">{{ b.payeeName }}</h2>
+            <span class="category-tag">{{ b.category }}</span>
+          </div>
+          <strong class="bill-amount">{{ formatCents(b.amountCents) }}</strong>
+        </div>
+
+        <div class="bill-meta">
+          <div class="meta-row">
+            <span class="meta-label">Due Date:</span>
+            <span class="meta-val">{{ b.dueDate }}</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Shared Split:</span>
+            <span class="meta-val">{{ b.isSplit ? 'Split 50/50' : 'Individual' }}</span>
+          </div>
+          <div class="meta-row">
+            <span class="meta-label">Status:</span>
+            <span class="status-badge" [class.status-paid]="b.status === 'Paid'">
+              {{ b.status }}
+            </span>
+          </div>
+        </div>
+
+        <div class="bill-footer">
+          @if (b.status !== 'Paid') {
+            <button type="button" (click)="markPaid(b.id)" class="btn btn-primary btn-sm">
+              Mark as Paid
+            </button>
+          } @else {
+            <span class="paid-check">✓ Paid</span>
+          }
+        </div>
+      </div>
+    }
+  </div>
+
+  @if (showAddModal()) {
+    <div class="modal-backdrop">
+      <div class="modal-card">
+        <h3 class="modal-title">Track an Upcoming Bill</h3>
+        <p class="modal-subtitle">
+          Log an expected child-related cost with due date and split option.
+        </p>
+
+        @if (errorMessage()) {
+          <div class="alert alert-error">{{ errorMessage() }}</div>
+        }
+
+        <div class="form-group">
+          <label for="bill-payee" class="form-label">Payee / Organization *</label>
+          <input
+            id="bill-payee"
+            type="text"
+            [(ngModel)]="payeeName"
+            name="payeeName"
+            placeholder="e.g. Oakridge Daycare, Dr. Miller Orthodontics"
+            class="form-input"
+            required
+          />
+        </div>
+
+        <div class="form-row">
+          <div class="form-group flex-1">
+            <label for="bill-amount" class="form-label">Amount (USD) *</label>
+            <input
+              id="bill-amount"
+              type="text"
+              inputmode="decimal"
+              [(ngModel)]="amountStr"
+              name="amountStr"
+              placeholder="0.00"
+              class="form-input"
+              required
+            />
+          </div>
+
+          <div class="form-group flex-1">
+            <label for="bill-due" class="form-label">Due Date *</label>
+            <input
+              id="bill-due"
+              type="date"
+              [(ngModel)]="dueDate"
+              name="dueDate"
+              class="form-input"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="bill-category" class="form-label">Category *</label>
+          <select id="bill-category" [(ngModel)]="category" name="category" class="form-input">
+            @for (cat of categories; track cat) {
+              <option [value]="cat">{{ cat }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" [(ngModel)]="isSplit" name="isSplit" />
+            <span>Split this bill with co-parent per household split rule</span>
+          </label>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" (click)="saveBill()" class="btn btn-primary">Save Bill</button>
+          <button type="button" (click)="closeAddModal()" class="btn btn-secondary">Cancel</button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

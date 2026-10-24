@@ -1,0 +1,40 @@
+<div class="public-page-wrapper">
+  <header class="public-header">
+    <a routerLink="/" class="brand-title">ParentPath</a>
+    <nav aria-label="Public" class="public-nav">
+      <a routerLink="/safety" class="nav-link">Safety resources</a>
+      <a routerLink="/help" class="nav-link">Help</a>
+      <a routerLink="/auth/login" class="nav-link">Sign in</a>
+    </nav>
+  </header>
+
+  <main class="public-main">
+    <h1 class="page-title">Shared file</h1>
+
+    @if (isAvailable()) {
+      <section class="share-card" aria-label="Shared document details">
+        <h2 class="file-title">{{ fileName() }}</h2>
+        <p class="file-meta">
+          Shared by {{ uploaderName() }} · available until {{ expiresAt() | date: 'medium' }}
+        </p>
+        <div class="preview-box" aria-label="File preview">
+          <span class="preview-icon" aria-hidden="true">📄</span>
+          <span>[File preview]</span>
+          <span>{{ fileType() }} ({{ formatBytes(fileSize()) }})</span>
+        </div>
+        <button type="button" class="btn-download" (click)="triggerDownload()">Download</button>
+        @if (downloadMessage()) {
+          <p class="download-status" role="status">{{ downloadMessage() }}</p>
+        }
+      </section>
+    } @else {
+      <section class="error-card" aria-label="Expired link notice">
+        <h2 class="error-title">Link expired or unavailable</h2>
+        <p class="error-text">
+          This share link has expired, was revoked by the sender, or does not exist.
+        </p>
+        <a routerLink="/auth/login" class="nav-link">Sign in to ParentPath →</a>
+      </section>
+    }
+  </main>
+</div>

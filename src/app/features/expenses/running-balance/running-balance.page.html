@@ -1,0 +1,67 @@
+<div class="balance-container">
+  <div class="header-row">
+    <div>
+      <h1 class="page-title">Running Balance</h1>
+      <p class="page-subtitle">Net balance calculated from accepted shares and recorded payments</p>
+    </div>
+    <a routerLink="/expenses" class="btn btn-secondary">← Back to Expenses</a>
+  </div>
+
+  <div class="hero-balance-card">
+    <span class="hero-eyebrow">Current Net Balance</span>
+    <div class="hero-highlight">
+      @if (balance().netBalanceCents === 0) {
+        <strong class="zero-balance">All settled up ($0.00)</strong>
+        <p class="hero-summary">Neither parent owes the other for accepted expense shares.</p>
+      } @else {
+        <strong class="hero-amount">{{ netAmountFormatted() }}</strong>
+        <p class="hero-summary">
+          <strong>{{ balance().netDebtorName }}</strong> owes
+          <strong>{{ balance().netCreditorName }}</strong>
+        </p>
+      }
+    </div>
+
+    <div class="breakdown-columns">
+      <div class="col-card">
+        <span class="col-title">{{ balance().parentAName }}</span>
+        <span class="col-sub">Share owed by David</span>
+        <strong class="col-value">{{ parentAOwedFormatted() }}</strong>
+      </div>
+      <div class="col-divider"></div>
+      <div class="col-card">
+        <span class="col-title">{{ balance().parentBName }}</span>
+        <span class="col-sub">Share owed by Elena</span>
+        <strong class="col-value">{{ parentBOwedFormatted() }}</strong>
+      </div>
+    </div>
+
+    <div class="card-actions">
+      <a routerLink="/expenses/requests" class="btn btn-primary">View Reimbursement Requests</a>
+      <a routerLink="/expenses/child-support" class="btn btn-secondary">Child Support Ledger</a>
+    </div>
+  </div>
+
+  <div class="ledger-card">
+    <h2 class="ledger-title">Recent Settlements & Requests</h2>
+    <div class="ledger-list">
+      @for (req of requests(); track req.id) {
+        <div class="ledger-item">
+          <div class="item-left">
+            <span class="item-desc">{{ req.expenseDescription }}</span>
+            <span class="item-meta"
+              >{{ req.dueDate }} · {{ req.requestedByName }} requested
+              {{ req.splitPercentage }}%</span
+            >
+          </div>
+          <div class="item-right">
+            <span class="item-amount">{{ formatCents(req.amountCents) }}</span>
+            <span class="item-status" [class.status-accepted]="req.status === 'Accepted'">{{
+              req.status
+            }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  </div>
+</div>

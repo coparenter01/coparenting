@@ -1,0 +1,79 @@
+<div class="dispute-container">
+  <div class="form-header">
+    <a [routerLink]="['/expenses', expense()?.id]" class="back-link">← Expense Detail</a>
+    <h1 class="page-title">Dispute Expense</h1>
+    <p class="page-subtitle">
+      File a documented challenge to this expense for household review or legal records
+    </p>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="alert alert-error">{{ errorMessage() }}</div>
+  }
+
+  <div class="disputed-item-card">
+    <div class="item-info">
+      <span class="card-eyebrow">Challenged Expense</span>
+      <h2 class="item-title">{{ expense()?.description }}</h2>
+      <span class="item-meta"
+        >{{ expense()?.category }} · {{ expense()?.expenseDate }} · Paid by
+        {{ expense()?.paidByName }}</span
+      >
+    </div>
+    <div class="item-amount">{{ formattedAmount() }}</div>
+  </div>
+
+  <form (ngSubmit)="submitDispute()" class="dispute-form-card">
+    <div class="form-group">
+      <label for="dispute-reason-category" class="form-label">Reason for Dispute *</label>
+      <select
+        id="dispute-reason-category"
+        [(ngModel)]="reasonCategory"
+        name="reasonCategory"
+        class="form-input"
+        required
+      >
+        <option value="Receipt missing">Receipt or proof of payment missing</option>
+        <option value="Not a child expense">Not an eligible child-related cost</option>
+        <option value="Amount incorrect">Amount does not match the actual bill/receipt</option>
+        <option value="Duplicate">Duplicate entry of an already recorded expense</option>
+        <option value="No prior agreement">
+          No prior agreement for extracurricular/elective cost
+        </option>
+        <option value="Other">Other reason</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="dispute-explanation" class="form-label">Detailed Explanation *</label>
+      <textarea
+        id="dispute-explanation"
+        [(ngModel)]="explanation"
+        name="explanation"
+        rows="4"
+        maxlength="500"
+        placeholder="Explain clearly why this expense is contested. This note is preserved in certified court exports."
+        class="form-textarea"
+        required
+      ></textarea>
+      <span class="field-hint">{{ explanation.length }} / 500 characters (min 10)</span>
+    </div>
+
+    <div class="mediation-banner">
+      <span class="banner-icon">🤝</span>
+      <div>
+        <strong>Need neutral assistance?</strong>
+        <p class="banner-text">
+          If you and your co-parent cannot reach agreement on this item, you can submit a
+          <a routerLink="/messages/mediation" class="banner-link">Mediation Request</a>
+          to our neutral staff queue.
+        </p>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-danger">Submit Dispute</button>
+      <a [routerLink]="['/expenses', expense()?.id]" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>

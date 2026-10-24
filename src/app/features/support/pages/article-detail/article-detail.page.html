@@ -1,0 +1,71 @@
+<div class="article-detail-page" data-testid="article-detail-page">
+  <a routerLink="/help/search" class="back-link">← Back to search</a>
+
+  @if (article(); as art) {
+    <div class="article-layout">
+      <article class="article-main">
+        <h1>{{ art.title }}</h1>
+        <p class="last-updated">Last updated {{ art.updatedAt | slice: 0 : 10 }}</p>
+
+        <div class="article-content">
+          <p>{{ art.body }}</p>
+        </div>
+
+        <div class="feedback-section" aria-labelledby="feedback-prompt">
+          <span id="feedback-prompt">Was this article helpful?</span>
+          @if (!feedbackSent()) {
+            <div class="feedback-buttons">
+              <button
+                type="button"
+                id="feedback-yes-btn"
+                class="pp-button pp-button--outline pp-button--sm"
+                (click)="onRate(true)"
+              >
+                Yes
+              </button>
+              <button
+                type="button"
+                id="feedback-no-btn"
+                class="pp-button pp-button--outline pp-button--sm"
+                (click)="onRate(false)"
+              >
+                No
+              </button>
+            </div>
+          } @else {
+            <span class="feedback-thanks" data-testid="feedback-thanks-notice">
+              Thank you for your feedback!
+            </span>
+          }
+        </div>
+      </article>
+
+      <aside class="article-sidebar">
+        <h2>Related articles</h2>
+        <ul>
+          @for (rel of relatedArticles(); track rel.articleId) {
+            <li>
+              <a [routerLink]="['/help/article', rel.articleId]">
+                {{ rel.title }}
+              </a>
+            </li>
+          }
+        </ul>
+
+        <h2>Still need help?</h2>
+        <div>
+          <a
+            id="article-contact-support-btn"
+            routerLink="/help/request"
+            class="pp-button pp-button--primary"
+          >
+            Contact support
+          </a>
+        </div>
+      </aside>
+    </div>
+  } @else {
+    <p>Article not found.</p>
+    <a routerLink="/help" class="pp-button pp-button--outline">Return to Help</a>
+  }
+</div>

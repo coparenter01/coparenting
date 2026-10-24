@@ -1,0 +1,31 @@
+<section class="rewrite-container">
+  <div class="rewrite-header">
+    <h1>AI Rewrite Assistant</h1>
+    <p>Compare your original message with an objective, child-focused alternative.</p>
+  </div>
+
+  <div class="comparison-grid">
+    <div class="comparison-card">
+      <span class="card-title">Original Draft</span>
+      <div class="draft-box">{{ originalDraft }}</div>
+    </div>
+
+    <div class="comparison-card suggested">
+      <span class="card-title suggested-title">Calmer Rewrite Suggestion</span>
+      <div class="draft-box">{{ suggestedRewrite }}</div>
+    </div>
+  </div>
+
+  <div class="rationale-box">
+    <strong>De-escalation Rationale:</strong> The revision removes accusations ("always fail",
+    "unacceptable") and replaces demands with a polite, specific scheduling confirmation that
+    maintains boundaries while preventing conflict.
+  </div>
+
+  <div class="actions-row">
+    <a routerLink="/messages/new" class="btn-secondary">Keep Original Draft</a>
+    <button type="button" class="btn-primary" (click)="onAcceptRewrite()">
+      Apply Calmer Rewrite
+    </button>
+  </div>
+</section>

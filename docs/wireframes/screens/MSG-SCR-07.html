@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MSG-SCR-07 · Report a message</title>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+body{margin:0;font-family:'Public Sans',system-ui,sans-serif;color:#17212B}
+a{color:#0E5A63}a:hover{color:#09434A}
+input,textarea,button{font:inherit}
+</style>
+</head>
+<body>
+<div style="width: 720px; height: 600px; box-sizing: border-box; background: rgba(23,33,43,0.55); display: flex; align-items: center; justify-content: center; padding: 20px">
+<form aria-labelledby="t" aria-modal="true" role="dialog" style="width: 560px; box-sizing: border-box; padding: 24px; background: #FFFFFF; border-radius: 14px; display: flex; flex-direction: column; gap: 12px">
+<h1 id="t" style="margin: 0; font-size: 21px; font-weight: 700">Report this message</h1>
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><a href="MSG-SCR-02.html" style="min-height: 40px; box-sizing: border-box; padding: 8px 14px; border-radius: 8px; border: 1px solid #0E5A63; color: #0E5A63; background: #FFFFFF; font-weight: 600; font-size: 14px; text-decoration: none; display: inline-flex; align-items: center">Back to thread</a></div><p style="margin: 0; padding: 10px 12px; border-radius: 8px; background: #F5F6F3; font-size: 14px; color: #2B3540">“[Reported message preview…]”</p>
+<fieldset style="margin: 0; padding: 0; border: 0; display: flex; flex-wrap: wrap; gap: 14px">
+<legend style="font-size: 14px; font-weight: 600; margin-bottom: 8px">Reason</legend>
+<label style="display: flex; gap: 8px; font-size: 15px"><input checked="" name="r" type="radio"/> Threat</label>
+<label style="display: flex; gap: 8px; font-size: 15px"><input name="r" type="radio"/> Harassment</label>
+<label style="display: flex; gap: 8px; font-size: 15px"><input name="r" type="radio"/> Other</label>
+</fieldset>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600">Note (optional, up to 500 characters)<textarea maxlength="500" rows="2" style="padding: 10px; border: 1px solid #C7CDD3; border-radius: 8px"></textarea></label>
+<div style="padding: 10px 12px; border-radius: 8px; background: #FBEDE6; color: #6B260A; font-size: 13px">If you are in danger, call 911. [Help and support links]</div>
+<span style="font-size: 12px; color: #4E5966">Only you see this report. Your co-parent is not told. It is kept with the message in your exports and is not sent to ParentPath staff.</span>
+<div style="display: flex; justify-content: flex-end; gap: 10px">
+<button style="min-height: 44px; padding: 10px 16px; border: 1px solid #C7CDD3; border-radius: 8px; background: #FFFFFF; font-weight: 600; cursor: pointer" type="button">Cancel</button>
+<button style="min-height: 44px; padding: 10px 16px; border: 0; border-radius: 8px; background: #0E5A63; color: #FFFFFF; font-weight: 600; cursor: pointer" type="button">Submit report</button>
+</div>
+</form>
+</div>
+<div class="pp-wf-bar" style="position: fixed; right: 12px; bottom: 12px; z-index: 50; display: flex; gap: 12px; align-items: center; padding: 8px 12px; border-radius: 10px; background: #17212B; color: #FFFFFF; font: 13px 'Public Sans', system-ui, sans-serif; box-shadow: 0 4px 16px rgba(0,0,0,.2)"><strong>MSG-SCR-07</strong><a href="../index.html" style="color:#BFE3E3">Index</a><a style="color:#BFE3E3" href="MSG-SCR-06.html">← Previous</a><a style="color:#BFE3E3" href="MSG-SCR-08.html">Next →</a></div>
+</body>
+</html>

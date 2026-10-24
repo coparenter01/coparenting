@@ -1,0 +1,95 @@
+<div class="journal-detail-container">
+  <a routerLink="/records/journal" class="back-link" id="link-back-journal">← Journal</a>
+
+  @if (entry(); as item) {
+    <header class="detail-header">
+      <h1 class="entry-title" [class.voided-title]="item.status === 'voided'">
+        @if (item.status === 'voided') {
+          <s>{{ item.title }}</s>
+        } @else {
+          {{ item.title }}
+        }
+      </h1>
+      <span class="badge-private">Private</span>
+    </header>
+
+    <div class="detail-columns">
+      <section class="main-card">
+        <div class="meta-grid">
+          <span class="meta-label">Date and time</span>
+          <span class="meta-value">{{ item.happenedAt | date: 'medium' }}</span>
+
+          <span class="meta-label">Author</span>
+          <span class="meta-value">You</span>
+
+          <span class="meta-label">Status</span>
+          <span class="meta-value status-badge" [class.voided]="item.status === 'voided'">
+            {{ item.status | titlecase }}
+          </span>
+        </div>
+
+        <h2 class="section-title">Details</h2>
+        <p class="details-body">{{ item.details }}</p>
+
+        @if (item.attachments.length) {
+          <h2 class="section-title">Attachments</h2>
+          <div class="attachments-row">
+            @for (att of item.attachments; track att.attachmentId) {
+              <button
+                type="button"
+                class="btn-file-pill"
+                (click)="openFile(att.fileName)"
+                [id]="'att-btn-' + att.attachmentId"
+              >
+                📎 {{ att.fileName }}
+              </button>
+            }
+          </div>
+        }
+
+        @if (item.status !== 'voided') {
+          <div class="actions-row">
+            <a
+              [routerLink]="['/records/journal', item.entryId, 'edit']"
+              class="btn-edit"
+              id="btn-edit-entry"
+            >
+              Edit
+            </a>
+            <button type="button" class="btn-void" (click)="onVoidEntry()" id="btn-void-entry">
+              Void
+            </button>
+          </div>
+          <p class="void-notice">Voided notes stay in your history and cannot be changed.</p>
+        } @else {
+          <div class="voided-alert" role="alert" id="voided-entry-alert">
+            This entry was marked as voided. It is permanently preserved in your audit history and
+            cannot be modified.
+          </div>
+        }
+      </section>
+
+      <section class="history-card">
+        <h2 class="section-title">Version history</h2>
+        <ol class="timeline-list">
+          @for (ver of item.versions; track ver.versionId; let first = $first) {
+            <li class="timeline-item" [class.current]="first">
+              <span class="version-badge">
+                Version {{ ver.versionNumber }}{{ first ? ' · current' : '' }}
+              </span>
+              <span class="version-meta">
+                {{ ver.createdAt | date: 'short' }} ·
+                {{ first && item.versions.length > 1 ? 'edited by you' : 'created by you' }}
+              </span>
+            </li>
+          }
+        </ol>
+      </section>
+    </div>
+  } @else {
+    <div class="empty-state">
+      <p>Journal entry not found.</p>
+      <a routerLink="/records/journal" class="btn-subtle">Return to journal</a>
+    </div>
+  }
+</div>

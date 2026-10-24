@@ -1,0 +1,107 @@
+<div class="request-form-container">
+  <div class="form-header">
+    <a [routerLink]="['/expenses', expense()?.id]" class="back-link">← Expense Detail</a>
+    <h1 class="page-title">Request Reimbursement</h1>
+    <p class="page-subtitle">Propose a shared split with your co-parent</p>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="alert alert-error">{{ errorMessage() }}</div>
+  }
+
+  <div class="expense-card">
+    <span class="card-eyebrow">Selected Expense</span>
+    <div class="expense-row">
+      <div>
+        <h2 class="expense-title">{{ expense()?.description }}</h2>
+        <span class="expense-meta">{{ expense()?.category }} · {{ expense()?.expenseDate }}</span>
+      </div>
+      <div class="total-col">
+        <span class="total-label">Full Amount</span>
+        <span class="total-amount">${{ ((expense()?.amountCents ?? 0) / 100).toFixed(2) }}</span>
+      </div>
+    </div>
+  </div>
+
+  <form (ngSubmit)="sendRequest()" class="split-form-card">
+    <div class="form-group">
+      <span class="form-label">Co-Parent Split Share</span>
+      <div class="pct-presets">
+        <button
+          type="button"
+          (click)="setPresetPercentage(50)"
+          class="pct-btn"
+          [class.active-pct]="splitPercentage === 50"
+        >
+          50 / 50
+        </button>
+        <button
+          type="button"
+          (click)="setPresetPercentage(60)"
+          class="pct-btn"
+          [class.active-pct]="splitPercentage === 60"
+        >
+          60% (Co-parent)
+        </button>
+        <button
+          type="button"
+          (click)="setPresetPercentage(40)"
+          class="pct-btn"
+          [class.active-pct]="splitPercentage === 40"
+        >
+          40% (Co-parent)
+        </button>
+      </div>
+
+      <div class="custom-pct-row">
+        <label for="split-input" class="inline-label">Custom Percentage:</label>
+        <input
+          id="split-input"
+          type="number"
+          min="1"
+          max="100"
+          [(ngModel)]="splitPercentage"
+          name="splitPercentage"
+          class="pct-input"
+        />
+        <span class="pct-symbol">%</span>
+      </div>
+    </div>
+
+    <div class="calculated-box">
+      <span class="calc-label">Requested from Co-Parent:</span>
+      <strong class="calc-value">{{ calculatedShareFormatted() }}</strong>
+    </div>
+
+    <div class="form-group">
+      <label for="due-date-input" class="form-label">Respond / Pay by Date</label>
+      <input
+        id="due-date-input"
+        type="date"
+        [(ngModel)]="dueDate"
+        name="dueDate"
+        class="form-input"
+        required
+      />
+      <span class="field-hint">Court standard recommends at least 7 days for review.</span>
+    </div>
+
+    <div class="form-group">
+      <label for="req-note" class="form-label">Note to Co-Parent (optional)</label>
+      <textarea
+        id="req-note"
+        [(ngModel)]="note"
+        name="note"
+        rows="2"
+        maxlength="500"
+        placeholder="e.g. As discussed for Maya's dental checkup"
+        class="form-textarea"
+      ></textarea>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Send Reimbursement Request</button>
+      <a [routerLink]="['/expenses', expense()?.id]" class="btn btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>

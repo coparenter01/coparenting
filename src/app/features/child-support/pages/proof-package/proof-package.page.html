@@ -1,0 +1,68 @@
+<div class="css-page-container">
+  <div class="top-nav">
+    <a routerLink="/child-support" class="back-link" id="link-back-css">← Child support</a>
+    <a routerLink="/child-support/send-proof" class="btn-subtle" id="link-send-another"
+      >Submit another receipt</a
+    >
+  </div>
+
+  <header class="header">
+    <h1 class="title">Proof package</h1>
+    <p class="subtitle">
+      Compiled submission packet with verification certificate for direct payments.
+    </p>
+  </header>
+
+  @if (latestProof(); as proof) {
+    <section class="card package-card">
+      <div class="package-header">
+        <div>
+          <span class="badge-status">{{ proof.status }}</span>
+          <h2 class="record-id">{{ proof.verificationRecordId }}</h2>
+        </div>
+        <div class="submitted-date">Submitted {{ formatDate(proof.createdAt) }}</div>
+      </div>
+
+      <div class="details-grid">
+        <div class="detail-block">
+          <span class="lbl">Payment date:</span>
+          <span class="val">{{ proof.paymentDate }}</span>
+        </div>
+        <div class="detail-block">
+          <span class="lbl">Amount verified:</span>
+          <span class="val highlight">{{ formatAmount(proof.amountCents) }}</span>
+        </div>
+        <div class="detail-block">
+          <span class="lbl">Method:</span>
+          <span class="val">{{ proof.paymentMethod }}</span>
+        </div>
+        <div class="detail-block">
+          <span class="lbl">Reference #:</span>
+          <span class="val">{{ proof.referenceNumber ?? 'N/A' }}</span>
+        </div>
+      </div>
+
+      <div class="verification-meta">
+        <p class="meta-note">
+          This record ID is cryptographically signed and stored in the certified proof ledger. It
+          can be verified on the public verification page or in court proceedings.
+        </p>
+      </div>
+
+      <div class="package-actions">
+        <a [href]="proof.fileUrl" target="_blank" class="btn-primary" id="btn-download-proof-pdf">
+          Download certified receipt PDF
+        </a>
+        <a routerLink="/records/verify" class="btn-secondary" id="btn-verify-proof">
+          Verify on court portal
+        </a>
+      </div>
+    </section>
+  } @else {
+    <div class="empty-notice">
+      No proof submissions recorded yet.
+      <br /><br />
+      <a routerLink="/child-support/send-proof" class="btn-primary">Submit proof now</a>
+    </div>
+  }
+</div>

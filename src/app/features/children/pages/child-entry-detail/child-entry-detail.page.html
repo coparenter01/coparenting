@@ -1,0 +1,93 @@
+<div class="entry-detail-container">
+  <a routerLink="/children/info" class="back-link">← Child information</a>
+
+  @if (entry(); as item) {
+    <div class="header-row">
+      <h1 class="entry-heading">{{ item.title }}</h1>
+      <div class="badge-row">
+        <span class="badge badge-neutral">{{ item.section }}</span>
+        <span class="badge badge-neutral">{{ item.entry_type }}</span>
+        <span class="badge badge-neutral">{{ item.visibility }}</span>
+        <span class="badge badge-active">Active</span>
+      </div>
+    </div>
+
+    <div class="content-columns">
+      <section class="main-detail-card" aria-label="Entry details">
+        <div class="details-grid">
+          <span class="grid-label">Child</span>
+          <span class="grid-value">{{ getChildName(item.child_id) }}</span>
+
+          <span class="grid-label">Details</span>
+          <span class="grid-value">{{ item.details || 'No additional details provided.' }}</span>
+
+          @if (item.contact_name) {
+            <span class="grid-label">Contact name</span>
+            <span class="grid-value">{{ item.contact_name }}</span>
+          }
+          @if (item.contact_email) {
+            <span class="grid-label">Contact email</span>
+            <span class="grid-value">{{ item.contact_email }}</span>
+          }
+          @if (item.contact_phone) {
+            <span class="grid-label">Contact phone</span>
+            <span class="grid-value">{{ item.contact_phone }}</span>
+          }
+          @if (item.contact_address) {
+            <span class="grid-label">Address</span>
+            <span class="grid-value">{{ item.contact_address }}</span>
+          }
+        </div>
+
+        <div class="safety-note-box">
+          What the other parent sees in Safety Mode: Contact details are hidden until you choose to
+          share them.
+        </div>
+
+        <h2 class="sub-heading">Linked documents</h2>
+        <div class="doc-chip-list">
+          @for (doc of documents(); track doc.id) {
+            <a [routerLink]="['/documents/detail', doc.id]" class="doc-chip">
+              📄 {{ doc.title }}
+            </a>
+          } @empty {
+            <span class="footnote">No documents linked to this entry.</span>
+          }
+        </div>
+
+        <div class="actions-row">
+          <a routerLink="/children/entry/new" class="btn-action btn-edit">Edit</a>
+          @if (item.visibility === 'Private') {
+            <button type="button" class="btn-action btn-share" (click)="shareEntry()">Share</button>
+          }
+          <button type="button" class="btn-action btn-archive" (click)="archiveEntry()">
+            Archive
+          </button>
+        </div>
+
+        <p class="footnote">
+          Share asks you to confirm: “Once you share this, your co-parent can see it and you cannot
+          make it private again.”
+        </p>
+      </section>
+
+      <section class="history-card" aria-label="Version history">
+        <h2 class="sub-heading">Version history</h2>
+        <p class="footnote">All revisions are preserved immutably.</p>
+
+        <ol class="history-list">
+          <li class="history-item">
+            <span class="history-ver">Version 2 · current</span>
+            <span class="history-meta">{{ item.updated_at | date: 'medium' }} · You</span>
+          </li>
+          <li class="history-item">
+            <span class="history-ver">Version 1</span>
+            <span class="history-meta">{{ item.created_at | date: 'medium' }} · Created</span>
+          </li>
+        </ol>
+      </section>
+    </div>
+  } @else {
+    <p>Entry not found.</p>
+  }
+</div>

@@ -1,0 +1,92 @@
+<section class="notif-settings-container">
+  <div class="notif-header">
+    <h1>Notification Preferences & Reminders</h1>
+  </div>
+
+  <div class="safety-notice">
+    <strong>Discreet Alerts in Safety Mode:</strong> If Safety Mode is active, notification previews
+    on your lock screen will hide sender names and message snippets to safeguard your privacy.
+  </div>
+
+  <div class="settings-card">
+    <div class="setting-row">
+      <div class="setting-info">
+        <span class="setting-title">SMS Escalation Wait Time</span>
+        <span class="setting-desc">
+          How long an unread message waits before sending an SMS text alert.
+        </span>
+      </div>
+      <select class="select-input" [(ngModel)]="smsWaitMinutes">
+        <option [value]="15">15 minutes</option>
+        <option [value]="30">30 minutes</option>
+        <option [value]="60">1 hour</option>
+        <option [value]="240">4 hours</option>
+      </select>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <span class="setting-title">Email Escalation Wait Time</span>
+        <span class="setting-desc">
+          How long an unread message waits before sending a fallback email alert.
+        </span>
+      </div>
+      <select class="select-input" [(ngModel)]="emailWaitMinutes">
+        <option [value]="60">1 hour</option>
+        <option [value]="120">2 hours</option>
+        <option [value]="240">4 hours</option>
+        <option [value]="1440">24 hours</option>
+      </select>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <span class="setting-title">Calendar Event Reminders</span>
+        <span class="setting-desc">
+          When to receive reminders for scheduled parenting exchanges and events.
+        </span>
+      </div>
+      <select class="select-input" [(ngModel)]="eventReminderMinutes">
+        <option [value]="120">2 hours before</option>
+        <option [value]="720">12 hours before</option>
+        <option [value]="1440">24 hours before</option>
+        <option [value]="2880">48 hours before</option>
+      </select>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <span class="setting-title">Court Hearing Reminders</span>
+        <span class="setting-desc">
+          Lead time for scheduled court hearings or legal deadlines.
+        </span>
+      </div>
+      <select class="select-input" [(ngModel)]="hearingReminderDays">
+        <option [value]="3">3 days before</option>
+        <option [value]="7">7 days before</option>
+        <option [value]="14">14 days before</option>
+      </select>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <span class="setting-title">Agency Due-Date Reminders</span>
+        <span class="setting-desc">
+          Reminders for child support payments and state agency filings.
+        </span>
+      </div>
+      <select class="select-input" [(ngModel)]="agencyReminderDays">
+        <option [value]="1">1 day before</option>
+        <option [value]="3">3 days before</option>
+        <option [value]="5">5 days before</option>
+      </select>
+    </div>
+
+    <div class="setting-row">
+      <button type="button" class="btn-primary" (click)="onSave()">Save Preferences</button>
+      @if (isSaved()) {
+        <span class="save-status">Preferences saved!</span>
+      }
+    </div>
+  </div>
+</section>

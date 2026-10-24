@@ -1,0 +1,64 @@
+<div class="cs-payments-container">
+  <div class="header-row">
+    <div>
+      <h1 class="page-title">Child Support Payments</h1>
+      <p class="page-subtitle">Documented payment records for legal and financial tracking</p>
+    </div>
+    <div class="action-buttons">
+      <a routerLink="/expenses" class="btn btn-secondary">← Expenses</a>
+      <a routerLink="/expenses/child-support/new" class="btn btn-primary">+ Record Payment</a>
+    </div>
+  </div>
+
+  <div class="total-banner">
+    <div class="banner-text">
+      <span class="banner-label">Total Documented Payments (Current Year)</span>
+      <strong class="banner-amount">{{ totalPaidYearFormatted() }}</strong>
+    </div>
+    <span class="court-notice"
+      >Records are tamper-evident and available for Certified Court Export.</span
+    >
+  </div>
+
+  <div class="table-card">
+    @if (payments().length === 0) {
+      <div class="empty-state">
+        <p class="empty-title">No child support payments recorded yet</p>
+        <p class="empty-hint">Use "Record Payment" to log child support disbursements.</p>
+      </div>
+    } @else {
+      <table class="cs-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Payer</th>
+            <th>Payee</th>
+            <th>Method</th>
+            <th>Reference #</th>
+            <th>Amount</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (p of payments(); track p.id) {
+            <tr>
+              <td class="date-cell">{{ p.paymentDate }}</td>
+              <td>{{ p.payerName }}</td>
+              <td>{{ p.payeeName }}</td>
+              <td>
+                <span class="method-chip">{{ p.paymentMethod }}</span>
+              </td>
+              <td class="ref-cell">{{ p.referenceNumber || '—' }}</td>
+              <td class="amount-cell">{{ formatCents(p.amountCents) }}</td>
+              <td>
+                <span class="status-badge" [class.verified-badge]="p.status === 'Verified'">
+                  {{ p.status }}
+                </span>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+</div>

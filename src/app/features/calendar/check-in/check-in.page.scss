@@ -1,0 +1,116 @@
+.checkin-container {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 720px;
+}
+
+.back-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pp-primary-600, #0e5a63);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.page-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--pp-on-surface, #17212b);
+}
+
+.checkin-card {
+  padding: 24px;
+  background: var(--pp-surface, #ffffff);
+  border: 1px solid var(--pp-outline-variant, #d9dde1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.grid-summary {
+  display: grid;
+  grid-template-columns: minmax(140px, auto) 1fr;
+  gap: 8px 24px;
+  font-size: 15px;
+}
+
+.label-text {
+  color: var(--pp-on-surface-variant, #4e5966);
+  font-weight: 500;
+}
+
+.value-text {
+  font-weight: 600;
+  color: var(--pp-on-surface, #17212b);
+}
+
+.field-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pp-on-surface, #17212b);
+}
+
+.textarea-input {
+  padding: 11px;
+  border: 1px solid var(--pp-outline-variant, #c7cdd3);
+  border-radius: 8px;
+  background: var(--pp-surface, #ffffff);
+  color: var(--pp-on-surface, #17212b);
+  font: inherit;
+}
+
+.btn-primary {
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: var(--pp-primary-600, #0e5a63);
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 15px;
+  border: 0;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--pp-primary-700, #09434a);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.safety-alert {
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: #fde8e8;
+  color: #9b1c1c;
+  font-size: 14px;
+  border: 1px solid #f8b4b4;
+  line-height: 1.5;
+}
+
+.success-badge {
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: #def7ec;
+  color: #03543f;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.privacy-note {
+  font-size: 13px;
+  color: var(--pp-on-surface-variant, #4e5966);
+  line-height: 1.5;
+}

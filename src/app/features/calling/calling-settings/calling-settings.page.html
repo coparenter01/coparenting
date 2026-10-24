@@ -1,0 +1,142 @@
+<section class="settings-container">
+  <a routerLink="/calls" class="back-link">&larr; Call log, recordings and transcripts</a>
+
+  <div class="header-row">
+    <h1>Calling settings</h1>
+  </div>
+
+  <div class="emergency-notice">
+    <strong>Important Safety & Emergency Notice</strong>
+    In-app audio and video calls connect directly through ParentPath over the internet. They cannot
+    reach emergency services (911). In any emergency, dial 911 directly from your mobile device.
+  </div>
+
+  <form class="settings-card" (ngSubmit)="onSave()">
+    <div class="toggle-item">
+      <div class="toggle-info">
+        <span class="toggle-label">Audio calls</span>
+        <span class="toggle-desc"
+          >Allow placing and receiving audio-only calls inside the app.</span
+        >
+      </div>
+      <button
+        type="button"
+        role="switch"
+        class="toggle-switch"
+        [class.active]="audioEnabled"
+        [attr.aria-checked]="audioEnabled"
+        aria-label="Audio calls"
+        (click)="audioEnabled = !audioEnabled"
+      >
+        <span class="thumb"></span>
+      </button>
+    </div>
+
+    <div class="toggle-item">
+      <div class="toggle-info">
+        <span class="toggle-label">Video calls</span>
+        <span class="toggle-desc"
+          >Allow placing and receiving video calls with camera streams.</span
+        >
+      </div>
+      <button
+        type="button"
+        role="switch"
+        class="toggle-switch"
+        [class.active]="videoEnabled"
+        [attr.aria-checked]="videoEnabled"
+        aria-label="Video calls"
+        (click)="videoEnabled = !videoEnabled"
+      >
+        <span class="thumb"></span>
+      </button>
+    </div>
+
+    <div class="toggle-item">
+      <div class="toggle-info">
+        <span class="toggle-label">Allow recording requests</span>
+        <span class="toggle-desc"
+          >Offer the option to record calls. Both parents must consent before any recording
+          starts.</span
+        >
+      </div>
+      <button
+        type="button"
+        role="switch"
+        class="toggle-switch"
+        [class.active]="recordingEnabled"
+        [attr.aria-checked]="recordingEnabled"
+        aria-label="Allow recording requests"
+        (click)="recordingEnabled = !recordingEnabled"
+      >
+        <span class="thumb"></span>
+      </button>
+    </div>
+
+    <div class="toggle-item">
+      <div class="toggle-info">
+        <span class="toggle-label">Transcripts</span>
+        <span class="toggle-desc"
+          >Automatically transcribe recorded calls using on-device machine speech recognition.</span
+        >
+      </div>
+      <button
+        type="button"
+        role="switch"
+        class="toggle-switch"
+        [class.active]="transcriptsEnabled"
+        [attr.aria-checked]="transcriptsEnabled"
+        aria-label="Transcripts"
+        (click)="transcriptsEnabled = !transcriptsEnabled"
+      >
+        <span class="thumb"></span>
+      </button>
+    </div>
+
+    <div class="input-field">
+      <label for="stateResidence">State of Residence (for Recording Consent Compliance)</label>
+      <input
+        id="stateResidence"
+        type="text"
+        placeholder="e.g. California, Texas, New York..."
+        [(ngModel)]="stateResidence"
+        name="stateResidence"
+      />
+    </div>
+
+    <div class="devices-grid">
+      <div class="input-field">
+        <label for="microphoneSelect">Microphone</label>
+        <select id="microphoneSelect" [(ngModel)]="selectedMicrophone" name="microphone">
+          <option value="default">[Default microphone]</option>
+          <option value="mic-internal">Built-in Microphone</option>
+          <option value="mic-headset">Headset Microphone</option>
+        </select>
+      </div>
+
+      <div class="input-field">
+        <label for="speakerSelect">Speaker</label>
+        <select id="speakerSelect" [(ngModel)]="selectedSpeaker" name="speaker">
+          <option value="default">[Default speaker]</option>
+          <option value="speaker-internal">Internal Speakers</option>
+          <option value="speaker-headphones">Headphones</option>
+        </select>
+      </div>
+
+      <div class="input-field">
+        <label for="cameraSelect">Camera</label>
+        <select id="cameraSelect" [(ngModel)]="selectedCamera" name="camera">
+          <option value="default">[Default camera]</option>
+          <option value="cam-front">Front Camera / HD Webcam</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="actions-save-row">
+      <button type="submit" class="btn-primary">Save Settings</button>
+      @if (isSaved()) {
+        <span class="save-success">&#10003; Settings updated and logged to consent record</span>
+      }
+    </div>
+  </form>
+</section>

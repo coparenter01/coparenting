@@ -1,0 +1,62 @@
+<div class="pro-page-container">
+  <main class="pro-main">
+    <a routerLink="/professionals" class="back-link">← My professionals</a>
+
+    <div class="pro-header">
+      <h1 class="pro-title">Share an item with a professional</h1>
+    </div>
+
+    @if (errorMessage()) {
+      <div class="alert alert-error" role="alert">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    @if (successMessage()) {
+      <div class="alert alert-success" role="status">
+        {{ successMessage() }}
+      </div>
+    }
+
+    <form class="pro-form" (ngSubmit)="onShare()">
+      <label class="form-label">
+        Item
+        <select
+          class="form-select"
+          name="item"
+          [value]="selectedItem()"
+          (change)="onItemChange($event)"
+        >
+          @for (item of availableItems; track item.id) {
+            <option [value]="item.id">{{ item.title }} ({{ item.type }})</option>
+          }
+        </select>
+      </label>
+
+      <label class="form-label">
+        Professional
+        <select
+          class="form-select"
+          name="professional"
+          [value]="selectedAccessId()"
+          (change)="onProfessionalChange($event)"
+        >
+          @for (access of activeAccesses(); track access.id) {
+            <option [value]="access.id">
+              {{ access.professional.name }} ({{ access.professional.type }})
+            </option>
+          }
+        </select>
+      </label>
+
+      <div class="confirm-notice">
+        {{ confirmNotice() }}
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Share</button>
+        <a routerLink="/professionals" class="btn btn-ghost">Cancel</a>
+      </div>
+    </form>
+  </main>
+</div>

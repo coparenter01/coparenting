@@ -1,0 +1,67 @@
+.attachments-container {
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.attachments-header h1 {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.attachments-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.attachment-card {
+  background: #ffffff;
+  padding: 16px;
+  border-radius: 12px;
+  border: 1px solid var(--pp-border-subtle, #d9dde1);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.file-icon {
+  font-size: 32px;
+}
+
+.file-name {
+  font-size: 15px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.file-meta {
+  font-size: 12px;
+  color: var(--pp-text-secondary, #4e5966);
+}
+
+.btn-download {
+  padding: 8px 12px;
+  border-radius: 6px;
+  background: #e3f0f0;
+  color: var(--pp-primary-800, #0a4a51);
+  font-weight: 600;
+  font-size: 13px;
+  text-decoration: none;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
+
+.empty-attachments {
+  text-align: center;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid var(--pp-border-subtle, #d9dde1);
+  color: var(--pp-text-secondary, #4e5966);
+}

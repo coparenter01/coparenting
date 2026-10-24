@@ -1,0 +1,138 @@
+.history-container {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 1100px;
+}
+
+.back-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pp-primary-600, #0e5a63);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.page-title {
+  margin: 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--pp-on-surface, #17212b);
+}
+
+.section-block {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--pp-on-surface, #17212b);
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.filter-label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--pp-on-surface, #17212b);
+}
+
+.select-input {
+  padding: 9px 12px;
+  border: 1px solid var(--pp-outline-variant, #c7cdd3);
+  border-radius: 8px;
+  background: var(--pp-surface, #ffffff);
+  color: var(--pp-on-surface, #17212b);
+  font: inherit;
+}
+
+.table-wrapper {
+  background: var(--pp-surface, #ffffff);
+  border: 1px solid var(--pp-outline-variant, #d9dde1);
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 720px;
+
+  th {
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--pp-on-surface-variant, #4e5966);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--pp-outline-variant, #d9dde1);
+    background: var(--pp-surface-variant, #f9fafb);
+  }
+
+  td {
+    font-size: 14px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--pp-surface-variant, #eef1f4);
+    color: var(--pp-on-surface, #17212b);
+    vertical-align: middle;
+  }
+
+  tr:last-child td {
+    border-bottom: 0;
+  }
+}
+
+.status-badge {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #fff7e8;
+  color: #5c3d06;
+
+  &.approved {
+    background: #def7ec;
+    color: #03543f;
+  }
+
+  &.declined {
+    background: #fde8e8;
+    color: #9b1c1c;
+  }
+
+  &.expired {
+    background: #f3f4f6;
+    color: #4b5563;
+  }
+}
+
+.original-box {
+  padding: 14px 16px;
+  background: var(--pp-surface, #ffffff);
+  border: 1px solid var(--pp-outline-variant, #d9dde1);
+  border-radius: 12px;
+  font-size: 14px;
+  color: var(--pp-on-surface, #17212b);
+  line-height: 1.5;
+}
+
+.footnote {
+  margin: 0;
+  font-size: 13px;
+  color: var(--pp-on-surface-variant, #4e5966);
+}

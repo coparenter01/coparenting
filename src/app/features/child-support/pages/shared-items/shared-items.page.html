@@ -1,0 +1,51 @@
+<div class="css-page-container">
+  <div class="top-nav">
+    <a routerLink="/child-support" class="back-link" id="link-back-css">← Child support</a>
+    <a routerLink="/child-support/share-item" class="btn-primary-sm" id="btn-share-new"
+      >Share an item</a
+    >
+  </div>
+
+  <header class="header">
+    <h1 class="title">Shared with you</h1>
+    <p class="subtitle">
+      Official agency records, hearing notices, and receipts shared by your co-parent.
+    </p>
+  </header>
+
+  <div class="items-list">
+    @for (item of sharedItems(); track item.shareId) {
+      <article class="card item-card">
+        <div class="item-header">
+          <div>
+            <span class="badge">{{ getItemBadge(item.itemType) }}</span>
+            <h2 class="item-title">{{ item.title }}</h2>
+          </div>
+          <span class="shared-meta">Shared on {{ formatDate(item.sharedAt) }}</span>
+        </div>
+
+        <div class="item-body">
+          <div class="meta-row">
+            <span class="meta-label">Shared by:</span>
+            <span class="meta-val">{{ item.sharedByName }}</span>
+          </div>
+
+          <div class="details-box">
+            @for (entry of item.sharedDetails | keyvalue; track entry.key) {
+              <div class="detail-line">
+                <span class="detail-k">{{ entry.key }}:</span>
+                <span class="detail-v">{{ entry.value }}</span>
+              </div>
+            }
+          </div>
+        </div>
+
+        <div class="item-footer">
+          <span class="read-only-badge">Read-only agency record</span>
+        </div>
+      </article>
+    } @empty {
+      <div class="empty-notice">No items have been shared with you yet.</div>
+    }
+  </div>
+</div>

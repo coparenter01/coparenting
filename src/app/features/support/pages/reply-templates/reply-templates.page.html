@@ -1,0 +1,124 @@
+<div class="staff-layout" data-testid="reply-templates-page">
+  <nav class="staff-nav" aria-label="Staff navigation">
+    <div class="nav-brand">ParentPath</div>
+    <div class="nav-sub">Support workspace</div>
+    <div class="nav-links-box">
+      <a routerLink="/staff/support">Queue</a>
+      <a routerLink="/staff/support/notices">Service notices</a>
+      <a routerLink="/staff/support/articles">Help articles</a>
+      <a routerLink="/staff/support/templates" class="active">Reply templates</a>
+      <a routerLink="/operations/support-measures">Support measures</a>
+    </div>
+  </nav>
+
+  <div class="staff-content">
+    <header class="staff-header">
+      <span class="header-left">Support workspace</span>
+      <div class="header-right">
+        <span class="two-step-badge">2-step verified</span>
+        <span>Taylor Lead &middot; Support Lead</span>
+      </div>
+    </header>
+
+    <main class="staff-main">
+      <div class="page-title-row">
+        <div>
+          <h1 class="page-title">Reply templates</h1>
+          <p class="page-subtitle">Only legally approved templates can be used in replies.</p>
+        </div>
+        <span class="role-badge">Support Lead manages</span>
+      </div>
+
+      <div class="table-card">
+        <table class="templates-table">
+          <thead>
+            <tr>
+              <th>Template</th>
+              <th>Category</th>
+              <th>Legal approval</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (tpl of templates(); track tpl.templateId) {
+              <tr>
+                <td>{{ tpl.title }}</td>
+                <td>{{ getCategoryLabel(tpl.category) }}</td>
+                <td>
+                  <span class="approval-tag" [class]="tpl.status">
+                    {{ tpl.status === 'approved' ? 'Approved' : 'Not approved' }}
+                  </span>
+                </td>
+                <td>
+                  <button
+                    type="button"
+                    class="pp-button pp-button--outline pp-button--sm"
+                    [disabled]="tpl.status !== 'approved'"
+                    (click)="onSelectTemplate(tpl)"
+                  >
+                    Use template
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <form class="form-card" (submit)="onSaveTemplate($event)">
+        <h2>New template</h2>
+
+        <div class="grid-two">
+          <div class="field-group">
+            <label for="template-title-input">Template name</label>
+            <input
+              id="template-title-input"
+              type="text"
+              required
+              [value]="newTitle()"
+              (input)="onTitleInput($event)"
+              placeholder="e.g. Certified Record Instructions"
+            />
+          </div>
+
+          <div class="field-group">
+            <label for="template-category-select">Category</label>
+            <select
+              id="template-category-select"
+              [value]="newCategory()"
+              (change)="onCategorySelect($event)"
+            >
+              @for (cat of categories; track cat.id) {
+                <option [value]="cat.id">{{ cat.label }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label for="template-body-textarea">Template text</label>
+          <textarea
+            id="template-body-textarea"
+            rows="5"
+            required
+            [value]="newBody()"
+            (input)="onBodyInput($event)"
+            placeholder="Template response text..."
+          ></textarea>
+          <span class="field-hint">Must not give legal advice</span>
+        </div>
+
+        <div class="field-group">
+          <span class="field-label">Legal approval status</span>
+          <span class="approval-tag pending">Pending legal review</span>
+        </div>
+
+        <div class="actions-row">
+          <button type="submit" id="save-template-btn" class="pp-button pp-button--primary">
+            Save template
+          </button>
+        </div>
+      </form>
+    </main>
+  </div>
+</div>

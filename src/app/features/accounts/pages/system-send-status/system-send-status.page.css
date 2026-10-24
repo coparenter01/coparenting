@@ -1,0 +1,123 @@
+.send-status-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  box-sizing: border-box;
+}
+
+.breadcrumb-nav {
+  display: flex;
+  align-items: center;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pp-primary-600, #0e5a63);
+  text-decoration: none;
+  min-height: 44px;
+}
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--pp-neutral-900, #17212b);
+}
+
+.page-subtitle {
+  margin: 0;
+  font-size: 15px;
+  color: var(--pp-neutral-600, #4e5966);
+  line-height: 1.5;
+}
+
+.status-card {
+  background: #ffffff;
+  border: 1px solid var(--pp-neutral-200, #d9dde1);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--pp-neutral-100, #eef1f4);
+}
+
+.row-label {
+  color: var(--pp-neutral-700, #3b4654);
+}
+
+.row-value {
+  color: var(--pp-neutral-900, #17212b);
+}
+
+.font-medium {
+  font-weight: 600;
+}
+
+.font-mono {
+  font-family: monospace;
+  letter-spacing: 0.5px;
+}
+
+.result-badge {
+  font-weight: 600;
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 13px;
+}
+
+.result-delivered {
+  background: var(--pp-primary-50, #e3f0f0);
+  color: var(--pp-primary-800, #0a4a51);
+}
+
+.text-muted {
+  color: var(--pp-neutral-500, #6b7480);
+}
+
+.status-footer {
+  padding-top: 12px;
+}
+
+.footer-note {
+  font-size: 13px;
+  color: var(--pp-neutral-600, #4e5966);
+  line-height: 1.4;
+}
+
+.log-link-row {
+  display: flex;
+  padding-top: 4px;
+}
+
+.contact-log-link {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--pp-primary-600, #0e5a63);
+  text-decoration: none;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}

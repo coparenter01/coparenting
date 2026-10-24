@@ -1,0 +1,89 @@
+<div class="css-page-container">
+  <div class="top-nav">
+    <a routerLink="/child-support" class="back-link" id="link-back-css">← Child support</a>
+  </div>
+
+  <header class="header">
+    <h1 class="title">Unlink & export</h1>
+    <p class="subtitle">
+      Discontinue state agency synchronization and download an archive of your synchronized history.
+    </p>
+  </header>
+
+  <div class="alert-warning" role="alert">
+    <strong>Notice:</strong> Unlinking halts all future synchronization immediately. Your
+    synchronized case records will be securely retained for 30 days before being permanently purged.
+  </div>
+
+  @if (exportDone()) {
+    <div class="alert-success" role="status" id="alert-export-archive-done">
+      Full case archive package downloaded successfully.
+    </div>
+  }
+
+  <section class="card section-card">
+    <h2 class="card-title">1. Download your synchronized records</h2>
+    <p class="card-desc">
+      Before unlinking, you may download a complete certified archive of all synchronized agency
+      ledgers, payment matches, and hearing entries.
+    </p>
+    <div>
+      <button
+        type="button"
+        class="btn-secondary"
+        id="btn-download-archive"
+        [disabled]="isExporting()"
+        (click)="downloadArchive()"
+      >
+        {{ isExporting() ? 'Preparing archive...' : 'Download archive (ZIP)' }}
+      </button>
+    </div>
+  </section>
+
+  <section class="card section-card danger-zone">
+    <h2 class="card-title danger-text">2. Unlink agency case</h2>
+    <p class="card-desc">
+      Connected case:
+      <strong>{{ currentCase()?.agencyCaseNumber }} ({{ currentCase()?.state }})</strong>. Revoking
+      consent disconnects your account from the state agency portal.
+    </p>
+    <div>
+      <button type="button" class="btn-danger" id="btn-prompt-unlink" (click)="promptUnlink()">
+        Unlink case
+      </button>
+    </div>
+  </section>
+
+  @if (showConfirmModal()) {
+    <div
+      class="modal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-unlink-title"
+    >
+      <div class="modal-card">
+        <h2 id="modal-unlink-title" class="modal-title danger-text">Confirm unlinking case?</h2>
+        <p class="modal-desc">
+          Are you sure you want to disconnect from
+          <strong>{{ currentCase()?.agencyCaseNumber }}</strong
+          >? ParentPath will cease all automated syncs and delete local cached records within 30
+          days.
+        </p>
+        <div class="modal-actions">
+          <button
+            type="button"
+            class="btn-danger"
+            id="btn-confirm-unlink"
+            [disabled]="isUnlinking()"
+            (click)="confirmUnlink()"
+          >
+            {{ isUnlinking() ? 'Unlinking...' : 'Yes, unlink case' }}
+          </button>
+          <button type="button" class="btn-subtle" id="btn-cancel-unlink" (click)="cancelUnlink()">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

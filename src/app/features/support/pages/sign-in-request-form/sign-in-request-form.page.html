@@ -1,0 +1,93 @@
+<div class="public-support-page" data-testid="sign-in-request-form-page">
+  <header class="public-header">
+    <span class="brand-title">ParentPath</span>
+    <nav aria-label="Public">
+      <a routerLink="/safety/resources">Safety resources</a>
+      <a routerLink="/help">Help</a>
+      <a routerLink="/auth/sign-in">Sign in</a>
+    </nav>
+  </header>
+
+  <main class="public-main">
+    <a routerLink="/auth/sign-in" class="back-link">← Back to sign in</a>
+
+    <header class="page-header">
+      <h1 class="page-title">Ask for help</h1>
+      <p class="page-subtitle">Use this if you cannot get into your account. We reply by email.</p>
+    </header>
+
+    <div class="warning-banner" role="note">
+      Do not write passwords, full Social Security numbers or card numbers in your request.
+    </div>
+
+    @if (errorMessage()) {
+      <div class="error-banner" role="alert" data-testid="form-error-banner">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    <form class="form-card" (submit)="onSubmit($event)">
+      <div class="field-group">
+        <label for="public-email">Email address</label>
+        <input
+          id="public-email"
+          type="email"
+          required
+          placeholder="your.email@example.com"
+          [value]="email()"
+          (input)="onEmailChange($event)"
+        />
+        <span class="field-hint">We use this to reply to you</span>
+      </div>
+
+      <div class="field-group">
+        <label for="public-category">Category</label>
+        <select id="public-category" [value]="category()" (change)="onCategoryChange($event)">
+          <option value="">Choose a category</option>
+          @for (cat of categories; track cat.id) {
+            <option [value]="cat.id">{{ cat.label }}</option>
+          }
+        </select>
+      </div>
+
+      <div class="field-group">
+        <label for="public-subject">Subject</label>
+        <input
+          id="public-subject"
+          type="text"
+          maxlength="120"
+          placeholder="Brief summary of your issue"
+          [value]="subject()"
+          (input)="onSubjectChange($event)"
+        />
+        <span class="field-hint">1 to 120 characters</span>
+      </div>
+
+      <div class="field-group">
+        <label for="public-description">Description</label>
+        <textarea
+          id="public-description"
+          rows="5"
+          maxlength="5000"
+          placeholder="Explain what is preventing you from signing in..."
+          [value]="description()"
+          (input)="onDescriptionChange($event)"
+        ></textarea>
+        <span class="field-hint">1 to 5,000 characters</span>
+      </div>
+
+      <div class="field-group">
+        <label for="public-attachments">Attachments (optional)</label>
+        <input id="public-attachments" type="file" multiple (change)="onFilesSelected($event)" />
+        <span class="field-hint">Up to 3 files, 10 MB in all &middot; JPG, PNG, PDF or DOCX</span>
+      </div>
+
+      <div class="actions-row">
+        <button type="submit" id="public-submit-btn" class="pp-button pp-button--primary">
+          Submit request
+        </button>
+        <a routerLink="/auth/sign-in" class="pp-button pp-button--outline"> Back to sign in </a>
+      </div>
+    </form>
+  </main>
+</div>

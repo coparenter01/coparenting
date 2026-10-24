@@ -1,0 +1,123 @@
+<div class="calendar-overview-container">
+  <pp-page-header
+    title="Shared Calendar"
+    subtitle="View parenting time schedules, upcoming appointments, school activities, and custody handovers."
+  />
+
+  <div class="quick-actions-bar" role="toolbar" aria-label="Calendar actions">
+    <a routerLink="/calendar/add-event" class="action-btn primary" id="cal-add-event-btn">
+      + Add Event
+    </a>
+    <a routerLink="/calendar/add-parenting-time" class="action-btn secondary" id="cal-add-pt-btn">
+      + Add Parenting Time
+    </a>
+    <a routerLink="/calendar/request-swap" class="action-btn" id="cal-swap-btn"> ⇄ Request Swap </a>
+    <a routerLink="/calendar/templates" class="action-btn" id="cal-templates-btn"> Templates </a>
+    <a routerLink="/calendar/holidays" class="action-btn" id="cal-holidays-btn"> Holidays </a>
+    <a routerLink="/calendar/sync" class="action-btn" id="cal-sync-btn"> Sync Settings </a>
+    <a routerLink="/calendar/exchanges" class="action-btn" id="cal-exchanges-btn">
+      Custody Exchanges
+    </a>
+    <a routerLink="/calendar/check-in" class="action-btn" id="cal-checkin-btn"> Check In </a>
+    <a routerLink="/calendar/compliance" class="action-btn" id="cal-compliance-btn">
+      Compliance View
+    </a>
+    <a routerLink="/calendar/plan-builder" class="action-btn" id="cal-plan-btn"> Parenting Plan </a>
+    <a routerLink="/calendar/pets" class="action-btn" id="cal-pets-btn"> Pets </a>
+  </div>
+
+  <div class="calendar-top-bar">
+    <div class="date-nav-group">
+      <button
+        type="button"
+        class="nav-btn"
+        (click)="prevWeek()"
+        aria-label="Previous week"
+        id="cal-prev-btn"
+      >
+        ‹
+      </button>
+      <h2 class="date-title">{{ currentWeekTitle() }}</h2>
+      <button
+        type="button"
+        class="nav-btn"
+        (click)="nextWeek()"
+        aria-label="Next week"
+        id="cal-next-btn"
+      >
+        ›
+      </button>
+    </div>
+
+    <div class="view-selector" role="group" aria-label="Calendar view">
+      <button
+        type="button"
+        class="view-btn"
+        [class.active]="selectedView() === 'day'"
+        (click)="setView('day')"
+        id="cal-view-day-btn"
+      >
+        Day
+      </button>
+      <button
+        type="button"
+        class="view-btn"
+        [class.active]="selectedView() === 'week'"
+        (click)="setView('week')"
+        id="cal-view-week-btn"
+      >
+        Week
+      </button>
+      <button
+        type="button"
+        class="view-btn"
+        [class.active]="selectedView() === 'month'"
+        (click)="setView('month')"
+        id="cal-view-month-btn"
+      >
+        Month
+      </button>
+    </div>
+  </div>
+
+  <div class="calendar-grid" role="region" aria-label="Week calendar grid">
+    @for (day of weekDays(); track day.date) {
+      <div class="day-column" [class.today]="day.isToday">
+        <div class="day-header">
+          <span class="day-name">{{ day.dayName }}</span>
+          <span class="day-number">{{ day.dayNumber }}</span>
+        </div>
+
+        <div
+          class="custody-banner"
+          [class.parent-a]="day.isParentA"
+          [class.parent-b]="!day.isParentA"
+          aria-label="Custody Assignment"
+        >
+          <span>{{ day.custodyParent }}</span>
+        </div>
+
+        <div class="events-list">
+          @for (item of day.events; track item.id) {
+            <div
+              class="event-card"
+              [class.cancelled]="item.status === 'Cancelled'"
+              [routerLink]="['/calendar/history']"
+              tabindex="0"
+              role="button"
+            >
+              <span class="event-time">{{ item.timeDisplay }}</span>
+              <p class="event-title">{{ item.title }}</p>
+              @if (item.location) {
+                <span class="event-location">📍 {{ item.location }}</span>
+              }
+              @if (item.childNames.length > 0) {
+                <span class="event-chip">{{ item.childNames.join(', ') }}</span>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,209 @@
+<div class="css-dashboard-container">
+  <header class="page-header">
+    <div class="header-titles">
+      <h1 class="title">Child support</h1>
+      <p class="subtitle">
+        Direct state agency synchronization, order tracking, and payment reconciliation.
+      </p>
+    </div>
+    <div class="header-actions">
+      @if (isLinked()) {
+        <button
+          type="button"
+          class="btn-secondary"
+          id="btn-sync-now"
+          [disabled]="isSyncing()"
+          (click)="triggerSync()"
+        >
+          {{ isSyncing() ? 'Syncing...' : 'Sync with agency' }}
+        </button>
+      } @else {
+        <a routerLink="/child-support/link" class="btn-primary" id="btn-link-case-header"
+          >Link a case</a
+        >
+      }
+    </div>
+  </header>
+
+  @if (isOutOfDate()) {
+    <div class="alert-warning" role="alert" id="banner-out-of-date">
+      <strong>Data out of date:</strong> Agency data was last updated more than 48 hours ago. Please
+      trigger a new sync.
+    </div>
+  }
+
+  @if (currentCase()?.familyViolenceFlag && !currentCase()?.safetyModeOffered) {
+    <div class="alert-safety" role="alert" id="banner-safety-offer">
+      <div class="safety-text">
+        <strong>Confidential safety notice:</strong> A family violence indicator exists on your
+        agency file.
+      </div>
+      <a routerLink="/child-support/safety-offer" class="btn-safety" id="link-safety-offer"
+        >Review Safety Mode</a
+      >
+    </div>
+  }
+
+  @if (isLinked()) {
+    <!-- Case summary card -->
+    <section class="card case-card" aria-label="Case summary">
+      <div class="case-header">
+        <div>
+          <span class="badge-status">Active</span>
+          <h2 class="case-number">
+            {{ currentCase()?.agencyCaseNumber }} ({{ currentCase()?.state }})
+          </h2>
+        </div>
+        <div class="sync-meta">
+          <span class="source-tag">Source: {{ currentCase()?.syncSource?.toUpperCase() }}</span>
+          <span class="sync-time">Updated: {{ lastSyncedFormatted() }}</span>
+        </div>
+      </div>
+
+      <div class="metrics-grid">
+        <div class="metric-box">
+          <span class="metric-label">Monthly order</span>
+          <span class="metric-value" id="val-monthly-order">{{ monthlyOrderFormatted() }}</span>
+          <span class="metric-sub">Assessed obligation</span>
+        </div>
+
+        <div class="metric-box">
+          <span class="metric-label">Current balance owed</span>
+          <span class="metric-value highlight" id="val-balance-owed">{{
+            balanceOwedFormatted()
+          }}</span>
+          <span class="metric-sub">Due this period</span>
+        </div>
+
+        <div class="metric-box">
+          <span class="metric-label">Arrears balance</span>
+          <span class="metric-value" id="val-arrears">{{ arrearsFormatted() }}</span>
+          <span class="metric-sub">Official agency ledger</span>
+        </div>
+
+        <div class="metric-box">
+          <span class="metric-label">Last payment</span>
+          <span class="metric-value small" id="val-last-payment">{{ lastPaymentFormatted() }}</span>
+          <span class="metric-sub">Recorded by agency</span>
+        </div>
+      </div>
+
+      @if (unmatchedCount() > 0) {
+        <div class="banner-reconciliation">
+          <span
+            >You have <strong>{{ unmatchedCount() }}</strong> payment discrepancy flag(s) needing
+            review.</span
+          >
+          <a
+            routerLink="/child-support/payments-comparison"
+            class="reconciliation-link"
+            id="link-review-flags"
+            >Review side-by-side →</a
+          >
+        </div>
+      }
+    </section>
+
+    <!-- Navigation Hub Grid -->
+    <section class="features-grid" aria-label="Child support features">
+      <div class="feature-card">
+        <h3 class="feature-title">Payments & Reconciliation</h3>
+        <p class="feature-desc">
+          Compare ParentPath expenses side-by-side with state agency disbursements.
+        </p>
+        <div class="card-links">
+          <a
+            routerLink="/child-support/payments-comparison"
+            class="feature-link"
+            id="nav-payments-comparison"
+            >Payments side-by-side</a
+          >
+          <a routerLink="/child-support/due-dates" class="feature-link" id="nav-due-dates"
+            >Due dates & reminders</a
+          >
+          <a routerLink="/child-support/send-proof" class="feature-link" id="nav-send-proof"
+            >Send proof to agency</a
+          >
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <h3 class="feature-title">Court & Agency Calendar</h3>
+        <p class="feature-desc">
+          Stay informed about hearings, administrative deadlines, and filings.
+        </p>
+        <div class="card-links">
+          <a
+            routerLink="/child-support/agency-calendar"
+            class="feature-link"
+            id="nav-agency-calendar"
+            >Agency calendar items</a
+          >
+          <a routerLink="/child-support/hearing-packet" class="feature-link" id="nav-hearing-packet"
+            >Court hearing packet</a
+          >
+          <a routerLink="/child-support/timeline" class="feature-link" id="nav-timeline"
+            >Sync timeline & history</a
+          >
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <h3 class="feature-title">Co-Parent Sharing & Notice</h3>
+        <p class="feature-desc">
+          Selectively share official records or invite co-parents via agency notice.
+        </p>
+        <div class="card-links">
+          <a routerLink="/child-support/share-item" class="feature-link" id="nav-share-item"
+            >Share an item</a
+          >
+          <a routerLink="/child-support/shared-items" class="feature-link" id="nav-shared-items"
+            >Shared with you</a
+          >
+          <a routerLink="/child-support/agency-invite" class="feature-link" id="nav-agency-invite"
+            >Invite via agency notice</a
+          >
+        </div>
+      </div>
+
+      <div class="feature-card">
+        <h3 class="feature-title">Settings & Safeguards</h3>
+        <p class="feature-desc">
+          Manage agency connection, export certified records, or unlink case.
+        </p>
+        <div class="card-links">
+          <a
+            routerLink="/child-support/unlink-export"
+            class="feature-link danger-link"
+            id="nav-unlink-export"
+            >Unlink & export</a
+          >
+          <a routerLink="/child-support/consent" class="feature-link" id="nav-consent-review"
+            >Review consent scope</a
+          >
+          <a routerLink="/child-support/load-log" class="feature-link" id="nav-load-log"
+            >Operations load log</a
+          >
+        </div>
+      </div>
+    </section>
+  } @else {
+    <!-- Unlinked State -->
+    <div class="empty-state-card">
+      <div class="empty-icon" aria-hidden="true">🏛️</div>
+      <h2 class="empty-title">No agency case connected</h2>
+      <p class="empty-desc">
+        Link your state child support case to view read-only order obligations, synchronize payment
+        disbursements, and match expenses automatically.
+      </p>
+      <div class="empty-actions">
+        <a routerLink="/child-support/link" class="btn-primary" id="btn-link-case-empty"
+          >Link your case</a
+        >
+        <a routerLink="/child-support/agency-invite" class="btn-secondary" id="btn-invite-empty"
+          >Invite via agency notice</a
+        >
+      </div>
+    </div>
+  }
+</div>

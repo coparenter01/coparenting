@@ -1,0 +1,123 @@
+<div class="expense-log-container">
+  <div class="header-row">
+    <div>
+      <h1 class="page-title">Expenses</h1>
+      <p class="page-subtitle">Track shared child costs, split balances, and receipts</p>
+    </div>
+    <div class="action-buttons">
+      <a routerLink="/expenses/requests" class="btn btn-secondary">Requests</a>
+      <a routerLink="/expenses/child-support" class="btn btn-secondary">Child Support</a>
+      <a routerLink="/expenses/new" class="btn btn-primary">+ Add Expense</a>
+    </div>
+  </div>
+
+  <div class="quick-nav-pills">
+    <a routerLink="/expenses/balance" class="nav-pill">Running Balance</a>
+    <a routerLink="/expenses/split-rules" class="nav-pill">Split Rules</a>
+    <a routerLink="/expenses/repeating" class="nav-pill">Recurring</a>
+    <a routerLink="/expenses/bills" class="nav-pill">Bills</a>
+    <a routerLink="/expenses/import" class="nav-pill">CSV Import</a>
+  </div>
+
+  <div class="filter-card">
+    <div class="filter-inputs">
+      <label class="filter-label">
+        <span>Category</span>
+        <select [(ngModel)]="selectedCategory" (change)="applyFilter()" class="filter-select">
+          <option value="All">All categories</option>
+          @for (cat of categories; track cat) {
+            <option [value]="cat">{{ cat }}</option>
+          }
+        </select>
+      </label>
+
+      <label class="filter-label">
+        <span>Child</span>
+        <select [(ngModel)]="selectedChild" (change)="applyFilter()" class="filter-select">
+          <option value="All">All children</option>
+          <option value="Maya Rivera">Maya Rivera</option>
+          <option value="Leo Rivera">Leo Rivera</option>
+        </select>
+      </label>
+
+      <label class="filter-label">
+        <span>Status</span>
+        <select [(ngModel)]="selectedStatus" (change)="applyFilter()" class="filter-select">
+          <option value="Active">Active</option>
+          <option value="Voided">Voided</option>
+          <option value="All">All statuses</option>
+        </select>
+      </label>
+
+      <button type="button" (click)="clearFilters()" class="btn-text">Clear filters</button>
+    </div>
+
+    <div class="total-badge">
+      <span class="total-label">Total Active Shown</span>
+      <span class="total-value">{{ totalActiveAmountFormatted() }}</span>
+    </div>
+  </div>
+
+  <div class="table-card">
+    @if (filteredExpenses().length === 0) {
+      <div class="empty-state">
+        <p class="empty-title">No expenses match your filters</p>
+        <p class="empty-hint">Try adjusting the filter criteria or add a new expense.</p>
+      </div>
+    } @else {
+      <table class="expense-table">
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Children</th>
+            <th>Paid By</th>
+            <th>Visibility</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of filteredExpenses(); track item.id) {
+            <tr [class.voided-row]="item.status === 'Voided'">
+              <td class="date-cell">{{ item.expenseDate }}</td>
+              <td class="desc-cell">
+                <a [routerLink]="['/expenses', item.id]" class="expense-link">{{
+                  item.description
+                }}</a>
+                @if (item.attachments.length > 0) {
+                  <span class="receipt-icon" title="Receipt attached">📎</span>
+                }
+              </td>
+              <td>
+                <span class="category-chip">{{ item.category }}</span>
+              </td>
+              <td>
+                @for (c of item.children; track c.id) {
+                  <span class="child-tag">{{ c.name }}</span>
+                }
+              </td>
+              <td>{{ item.paidByName }}</td>
+              <td>
+                <span class="visibility-tag" [class.private-tag]="item.visibility === 'Private'">
+                  {{ item.visibility }}
+                </span>
+              </td>
+              <td class="amount-cell">{{ formatAmount(item.amountCents) }}</td>
+              <td>
+                <span class="status-badge" [class.status-voided]="item.status === 'Voided'">
+                  {{ item.status }}
+                </span>
+              </td>
+              <td>
+                <a [routerLink]="['/expenses', item.id]" class="view-link">View</a>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+</div>

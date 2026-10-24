@@ -1,0 +1,70 @@
+<div class="css-page-container">
+  <div class="top-nav">
+    <a routerLink="/child-support" class="back-link" id="link-back-css">← Child support</a>
+  </div>
+
+  <header class="header">
+    <h1 class="title">Invite through agency notice</h1>
+    <p class="subtitle">
+      Invite your co-parent to connect using an official agency notice or court docket number.
+    </p>
+  </header>
+
+  @if (errorMessage()) {
+    <div class="alert-error" role="alert" id="alert-invite-error">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  @if (inviteSent()) {
+    <div class="alert-success" role="status" id="alert-invite-sent">
+      A neutral invitation referencing docket #{{ docketNotice() }} has been delivered.
+    </div>
+  }
+
+  <form class="card invite-form" (submit)="$event.preventDefault(); onSendInvite()">
+    <div class="form-group">
+      <label for="input-docket" class="form-label">Agency notice / Docket number</label>
+      <input
+        type="text"
+        id="input-docket"
+        class="form-control"
+        placeholder="e.g. DR-2024-8831"
+        [value]="docketNotice()"
+        (input)="onDocketChange($event)"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="input-contact" class="form-label">Co-parent email or mobile phone</label>
+      <input
+        type="text"
+        id="input-contact"
+        class="form-control"
+        placeholder="name@example.com or (555) 000-0000"
+        [value]="contact()"
+        (input)="onContactChange($event)"
+      />
+    </div>
+
+    <div class="preview-box">
+      <span class="preview-lbl">Standard invitation template:</span>
+      <p class="preview-text">
+        "Hello. You have been invited to collaborate on child support and shared schedule records
+        for matter {{ docketNotice() }} on ParentPath. Connect here: https://parentpath.app/join"
+      </p>
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn-primary"
+        id="btn-send-agency-invite"
+        [disabled]="isSending()"
+      >
+        {{ isSending() ? 'Sending...' : 'Send invitation' }}
+      </button>
+      <a routerLink="/child-support" class="btn-subtle" id="link-cancel-invite">Cancel</a>
+    </div>
+  </form>
+</div>

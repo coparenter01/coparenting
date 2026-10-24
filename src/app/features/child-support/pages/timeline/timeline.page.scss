@@ -1,0 +1,161 @@
+.css-page-container {
+  padding: 32px;
+  max-width: 800px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  font-family:
+    'Public Sans',
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: #17212b;
+}
+
+.top-nav {
+  display: flex;
+  align-items: center;
+}
+
+.back-link {
+  color: #0e5a63;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.header-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 15px;
+  color: #4e5966;
+}
+
+.filter-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4e5966;
+}
+
+.form-control-select {
+  padding: 8px 12px;
+  border: 1px solid #c7cdd3;
+  border-radius: 8px;
+  font-size: 13px;
+  background: #ffffff;
+}
+
+.timeline-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-left: 24px;
+  border-left: 2px solid #d9dde1;
+  margin-left: 12px;
+}
+
+.timeline-item {
+  position: relative;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: -31px;
+  top: 18px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #0e5a63;
+  border: 2px solid #ffffff;
+  box-shadow: 0 0 0 2px #0e5a63;
+}
+
+.card {
+  box-sizing: border-box;
+  padding: 16px 20px;
+  background: #ffffff;
+  border: 1px solid #d9dde1;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.timeline-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.badge {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: #e3f0f0;
+  color: #0a4a51;
+  margin-bottom: 4px;
+}
+
+.timeline-title {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #17212b;
+}
+
+.timeline-time {
+  font-size: 12px;
+  color: #6c7885;
+}
+
+.timeline-summary {
+  margin: 0;
+  font-size: 14px;
+  color: #2b3540;
+  line-height: 1.4;
+}
+
+.empty-notice {
+  padding: 32px;
+  text-align: center;
+  background: #ffffff;
+  border: 1px dashed #c7cdd3;
+  border-radius: 12px;
+  color: #6c7885;
+  font-size: 14px;
+}

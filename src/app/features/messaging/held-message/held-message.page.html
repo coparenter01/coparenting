@@ -1,0 +1,29 @@
+<section class="held-container">
+  <div class="held-card">
+    <div class="warning-icon">&#9888;&#65039;</div>
+    <h1>Message Held by Incoming Shield</h1>
+
+    <div class="held-reason-box">
+      <strong>Why was this held?</strong>
+      <p>
+        The Incoming Shield detected hostile, demanding, or abusive wording in this incoming
+        message. To support calm communication and avoid surprise conflict, this content is kept
+        hidden until you choose to read it.
+      </p>
+    </div>
+
+    @if (isRevealed() && targetMessage(); as msg) {
+      <div class="revealed-message">
+        <strong>Original Message Content:</strong>
+        <p>{{ msg.body }}</p>
+      </div>
+    }
+
+    <div class="actions-row">
+      @if (!isRevealed()) {
+        <button type="button" class="btn-reveal" (click)="onReveal()">Reveal Message Now</button>
+      }
+      <a routerLink="/messages" class="btn-secondary"> Return to Messages </a>
+    </div>
+  </div>
+</section>

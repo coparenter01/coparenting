@@ -1,0 +1,87 @@
+<div class="help-page" data-testid="help-center-page">
+  <header class="page-header">
+    <h1 class="page-title">Help</h1>
+  </header>
+
+  @if (activeNotice(); as notice) {
+    <div class="notice-banner" role="status" data-testid="service-notice-banner">
+      <strong>Service Notice:</strong> {{ notice.text }}
+    </div>
+  }
+
+  <section class="search-section" aria-labelledby="search-help-title">
+    <h2 id="search-help-title">Search help</h2>
+    <div class="search-row">
+      <input
+        id="help-search-input"
+        type="search"
+        placeholder="Search help articles"
+        [value]="searchQuery()"
+        (input)="onSearchInput($event)"
+        (keydown.enter)="onSearchSubmit()"
+      />
+      <button
+        id="help-search-button"
+        type="button"
+        class="pp-button pp-button--primary"
+        (click)="onSearchSubmit()"
+      >
+        Search
+      </button>
+    </div>
+
+    <h3>Topics</h3>
+    <div class="topics-grid">
+      @for (topic of topics; track topic.id) {
+        <a [routerLink]="['/help/search']" [queryParams]="{ topic: topic.id }" class="topic-card">
+          {{ topic.label }}
+        </a>
+      }
+    </div>
+  </section>
+
+  <div class="contact-layout">
+    <section class="contact-card" aria-labelledby="contact-support-title">
+      <div class="card-header">
+        <h2 id="contact-support-title">Contact support</h2>
+        <span class="status-badge" [class.open]="isOpen()" [class.closed]="!isOpen()">
+          {{ isOpen() ? 'Open' : 'Closed' }}
+        </span>
+      </div>
+
+      <p class="support-hours">
+        Monday to Friday, 8 am to 8 pm Eastern. Closed on US federal holidays.
+      </p>
+
+      @if (!isOpen()) {
+        <div class="closed-notice">
+          Support is closed now. We open on Monday at 8:00 AM Eastern. You can still send a request
+          anytime.
+        </div>
+      }
+
+      <div class="actions-row">
+        <a id="contact-support-btn" routerLink="/help/request" class="pp-button pp-button--primary">
+          Contact support
+        </a>
+        <a id="my-requests-btn" routerLink="/help/my-requests" class="pp-button pp-button--outline">
+          My requests
+        </a>
+      </div>
+    </section>
+
+    <section class="safety-card" aria-labelledby="safety-help-title">
+      <h2 id="safety-help-title">Need safety help?</h2>
+      <p>If you are in danger, please call 911 immediately.</p>
+      <div class="actions-row">
+        <a
+          id="safety-resources-link"
+          routerLink="/safety/resources"
+          class="pp-button pp-button--text"
+        >
+          Safety resources
+        </a>
+      </div>
+    </section>
+  </div>
+</div>

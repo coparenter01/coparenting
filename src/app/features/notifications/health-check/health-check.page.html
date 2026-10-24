@@ -1,0 +1,51 @@
+<section class="health-container">
+  <div class="health-header">
+    <h1>Notification Health Check</h1>
+    <p>Verify that important notifications and urgent co-parent messages can reliably reach you.</p>
+  </div>
+
+  @if (healthData(); as data) {
+    <div class="health-cards-grid">
+      <div
+        class="channel-card"
+        [class.ready]="data.push.isReady"
+        [class.not-ready]="!data.push.isReady"
+      >
+        <div class="channel-info">
+          <span class="channel-title">Web Push Notifications</span>
+          <span class="channel-desc">{{ data.push.details }}</span>
+        </div>
+        <span class="badge-status" [ngClass]="data.push.status.toLowerCase()">
+          {{ data.push.status }}
+        </span>
+      </div>
+
+      <div class="channel-card ready">
+        <div class="channel-info">
+          <span class="channel-title">SMS Outbox Alerts</span>
+          <span class="channel-desc">{{ data.sms.details }}</span>
+        </div>
+        <span class="badge-status configured">
+          {{ data.sms.status }}
+        </span>
+      </div>
+
+      <div class="channel-card ready">
+        <div class="channel-info">
+          <span class="channel-title">Email Notifications</span>
+          <span class="channel-desc">{{ data.email.details }}</span>
+        </div>
+        <span class="badge-status verified">
+          {{ data.email.status }}
+        </span>
+      </div>
+    </div>
+
+    <div class="test-section">
+      <button type="button" class="btn-primary" (click)="onSendTest()">Send Test Alert</button>
+      @if (testSent()) {
+        <span class="test-status">&#10003; Test notification dispatched successfully!</span>
+      }
+    </div>
+  }
+</section>

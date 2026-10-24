@@ -1,0 +1,28 @@
+<section class="drafts-container">
+  <div class="drafts-header">
+    <h1>Saved Drafts</h1>
+    <a routerLink="/messages/new" class="btn-secondary">New message</a>
+  </div>
+
+  <div class="drafts-list">
+    @for (draft of drafts(); track draft.id) {
+      <div class="draft-card">
+        <div class="draft-info">
+          <strong class="draft-subject">{{ draft.subject || '(No Subject)' }}</strong>
+          <span class="draft-snippet">{{ draft.body | slice: 0 : 80 }}...</span>
+          <span class="draft-time">Last modified: {{ draft.updated_at | date: 'short' }}</span>
+        </div>
+        <div class="draft-actions">
+          <button type="button" class="btn-secondary" (click)="onResumeDraft(draft)">
+            Resume editing
+          </button>
+          <button type="button" class="btn-delete" (click)="onDeleteDraft(draft.id)">Delete</button>
+        </div>
+      </div>
+    } @empty {
+      <div class="empty-state">
+        <p>No saved drafts. Start a draft from the New message page.</p>
+      </div>
+    }
+  </div>
+</section>

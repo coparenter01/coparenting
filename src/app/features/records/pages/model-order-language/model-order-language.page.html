@@ -1,0 +1,52 @@
+<div class="model-order-container">
+  <header class="public-nav-header">
+    <span class="brand-title">ParentPath</span>
+    <nav class="public-nav-links" aria-label="Public menu">
+      <a routerLink="/safety/resources" class="nav-link">Safety resources</a>
+      <a routerLink="/support" class="nav-link">Help</a>
+      <a routerLink="/auth/sign-in" class="nav-link">Sign in</a>
+    </nav>
+  </header>
+
+  <main class="order-main">
+    <header class="page-header">
+      <h1 class="page-title">Model order language</h1>
+      <p class="page-subtitle">
+        Neutral stipulations for parenting plans and court decrees that ensure evidentiary integrity
+        without forcing a single proprietary app.
+      </p>
+    </header>
+
+    <div class="downloads-bar">
+      <button type="button" class="btn-download" (click)="downloadDoc('word')" id="btn-dl-word">
+        Download Word (.docx)
+      </button>
+      <button type="button" class="btn-download" (click)="downloadDoc('pdf')" id="btn-dl-pdf">
+        Download PDF
+      </button>
+    </div>
+
+    <div class="clauses-list">
+      @for (clause of clauses(); track clause.contentId) {
+        <section class="clause-card" [id]="'clause-' + clause.contentId">
+          <h2 class="clause-title">{{ clause.title }}</h2>
+          <p class="clause-text">{{ clause.text }}</p>
+          <div class="card-action">
+            <button
+              type="button"
+              class="btn-copy"
+              (click)="copyClause(clause.text, clause.contentId)"
+              [id]="'btn-copy-' + clause.contentId"
+            >
+              @if (copiedId() === clause.contentId) {
+                Copied!
+              } @else {
+                Copy text
+              }
+            </button>
+          </div>
+        </section>
+      }
+    </div>
+  </main>
+</div>

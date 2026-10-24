@@ -1,0 +1,45 @@
+<div class="deleted-container">
+  <a routerLink="/documents" class="back-link">← Documents</a>
+
+  <div class="title-block">
+    <h1 class="page-title">Recently deleted</h1>
+    <p class="page-sub">
+      Documents in this folder are kept for 30 days before being permanently deleted.
+    </p>
+  </div>
+
+  <div class="table-card">
+    <table class="deleted-table" aria-label="Recently deleted documents table">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Category</th>
+          <th scope="col">Deleted at</th>
+          <th scope="col">Size</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (doc of recentlyDeleted(); track doc.id) {
+          <tr>
+            <td>
+              <strong>{{ doc.title }}</strong>
+            </td>
+            <td>{{ doc.category }}</td>
+            <td>{{ doc.deleted_at | date: 'medium' }}</td>
+            <td>{{ formatBytes(doc.file_size_bytes) }}</td>
+            <td>
+              <button type="button" class="btn-restore" (click)="restoreDoc(doc.id)">
+                Restore
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5">No recently deleted documents. The trash is empty.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

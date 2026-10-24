@@ -1,0 +1,159 @@
+<div class="change-request-container">
+  <a routerLink="/calendar" class="back-link">← Calendar</a>
+
+  <div class="header-block">
+    <h1 class="page-title">Request a schedule change</h1>
+    <p class="page-subtitle">
+      Your co-parent answers with a confirm step. Nothing changes on the calendar until it is
+      approved. Not available in Solo Mode.
+    </p>
+  </div>
+
+  <form class="form-card" (ngSubmit)="sendRequest()">
+    @if (errorMessage()) {
+      <div class="error-banner" role="alert">{{ errorMessage() }}</div>
+    }
+
+    <fieldset class="fieldset-block">
+      <legend class="fieldset-legend">Type of request</legend>
+      <label class="radio-label">
+        <input
+          type="radio"
+          name="requestType"
+          value="Swap days"
+          [(ngModel)]="requestType"
+          id="req-type-swap"
+        />
+        Swap days
+      </label>
+      <label class="radio-label">
+        <input
+          type="radio"
+          name="requestType"
+          value="Change of parenting time"
+          [(ngModel)]="requestType"
+          id="req-type-change"
+        />
+        Change of parenting time
+      </label>
+      <label class="radio-label">
+        <input
+          type="radio"
+          name="requestType"
+          value="Change of exchange time or place"
+          [(ngModel)]="requestType"
+          id="req-type-exchange"
+        />
+        Change of exchange time or place
+      </label>
+    </fieldset>
+
+    <fieldset class="fieldset-block">
+      <legend class="fieldset-legend">Children</legend>
+      <div class="checkbox-row">
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            [checked]="isChildSelected('child-1')"
+            (change)="toggleChild('child-1', 'Maya Rivera')"
+            id="req-child-cb-1"
+          />
+          Maya Rivera
+        </label>
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            [checked]="isChildSelected('child-2')"
+            (change)="toggleChild('child-2', 'Leo Rivera')"
+            id="req-child-cb-2"
+          />
+          Leo Rivera
+        </label>
+      </div>
+    </fieldset>
+
+    <div class="two-col-grid">
+      <label class="field-label">
+        Change from
+        <input
+          type="datetime-local"
+          class="text-input"
+          [(ngModel)]="changeStart"
+          name="changeStart"
+          required
+          id="req-change-from"
+        />
+      </label>
+      <label class="field-label">
+        Change to
+        <input
+          type="datetime-local"
+          class="text-input"
+          [(ngModel)]="changeEnd"
+          name="changeEnd"
+          required
+          id="req-change-to"
+        />
+      </label>
+
+      @if (requestType === 'Swap days') {
+        <label class="field-label">
+          Offered in return — from
+          <input
+            type="datetime-local"
+            class="text-input"
+            [(ngModel)]="tradeStart"
+            name="tradeStart"
+            required
+            id="req-trade-from"
+          />
+        </label>
+        <label class="field-label">
+          Offered in return — to
+          <input
+            type="datetime-local"
+            class="text-input"
+            [(ngModel)]="tradeEnd"
+            name="tradeEnd"
+            required
+            id="req-trade-to"
+          />
+        </label>
+      }
+    </div>
+
+    <label class="field-label">
+      Reason
+      <textarea
+        rows="3"
+        class="textarea-input"
+        [(ngModel)]="reason"
+        name="reason"
+        placeholder="Brief description of the request (e.g. Work travel, family wedding)"
+        required
+        id="req-reason-input"
+      ></textarea>
+    </label>
+
+    <label class="field-label">
+      Respond by
+      <input
+        type="datetime-local"
+        class="text-input"
+        [(ngModel)]="respondBy"
+        name="respondBy"
+        required
+        id="req-respond-by"
+      />
+      <span class="field-hint">
+        At least 24 hours from now. If not answered, the request expires and the calendar stays the
+        same.
+      </span>
+    </label>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" id="req-submit-btn">Send request</button>
+      <a routerLink="/calendar" class="btn-secondary" id="req-cancel-btn"> Cancel </a>
+    </div>
+  </form>
+</div>

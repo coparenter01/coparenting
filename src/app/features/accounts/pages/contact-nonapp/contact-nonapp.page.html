@@ -1,0 +1,141 @@
+<div class="contact-nonapp-container">
+  <div class="two-column-layout">
+    <!-- Send message section -->
+    <section class="compose-column" aria-labelledby="compose-heading">
+      <div class="column-intro">
+        <h1 id="compose-heading" class="page-title">Message your co-parent outside the app</h1>
+        <p class="page-subtitle">
+          Your co-parent is not on ParentPath. Your message goes by text or email and the whole
+          exchange is saved in your record. A sent message cannot be edited or deleted.
+        </p>
+      </div>
+
+      <form class="compose-card" [formGroup]="messageForm" (ngSubmit)="onSend()">
+        <fieldset class="channel-fieldset">
+          <legend class="fieldset-legend">Send by</legend>
+          <div class="channel-radios">
+            <label class="radio-label">
+              <input
+                type="radio"
+                name="channel"
+                value="Text"
+                (change)="setChannel('Text')"
+                formControlName="channel"
+              />
+              Text message
+            </label>
+            <label class="radio-label">
+              <input
+                type="radio"
+                name="channel"
+                value="Email"
+                (change)="setChannel('Email')"
+                formControlName="channel"
+              />
+              Email
+            </label>
+          </div>
+        </fieldset>
+
+        @if (selectedChannel() === 'Text') {
+          <label class="form-field">
+            <span class="field-label">Recipient mobile number</span>
+            <input
+              type="tel"
+              formControlName="mobileNumber"
+              class="text-input"
+              autocomplete="tel"
+            />
+          </label>
+        } @else {
+          <label class="form-field disabled-field">
+            <span class="field-label">Recipient mobile number</span>
+            <input type="tel" disabled class="text-input" />
+          </label>
+        }
+
+        @if (selectedChannel() === 'Email') {
+          <label class="form-field">
+            <span class="field-label">Recipient email</span>
+            <input
+              type="email"
+              formControlName="email"
+              placeholder="coparent@example.com"
+              class="text-input"
+              autocomplete="email"
+            />
+          </label>
+        } @else {
+          <label class="form-field disabled-field">
+            <span class="field-label"
+              >Recipient email <span class="subtle-note">(when Email is chosen)</span></span
+            >
+            <input type="email" disabled class="text-input" />
+          </label>
+        }
+
+        <label class="form-field">
+          <span class="field-label">Message</span>
+          <textarea
+            formControlName="message"
+            rows="5"
+            placeholder="Type your message here..."
+            class="textarea-input"
+          ></textarea>
+        </label>
+
+        @if (sendSuccess()) {
+          <div class="status-box success" role="status">
+            Message dispatched and logged to your records.
+          </div>
+        }
+
+        @if (sendError()) {
+          <div class="status-box error" role="alert">
+            {{ sendError() }}
+          </div>
+        }
+
+        <div class="actions-row">
+          <button type="submit" class="btn-primary" [disabled]="isSending()">
+            {{ isSending() ? 'Sending...' : 'Send' }}
+          </button>
+          <a routerLink="/accounts/contact-attempts" class="secondary-link"> View contact log </a>
+        </div>
+      </form>
+    </section>
+
+    <!-- Exchange history preview -->
+    <section class="exchange-column" aria-label="Exchange with co-parent">
+      <h2 class="exchange-title">Exchange with Co-parent</h2>
+
+      <div class="messages-stream">
+        @for (msg of messages(); track msg.id) {
+          <div
+            class="message-bubble"
+            [class.outgoing]="msg.direction === 'outgoing'"
+            [class.incoming]="msg.direction === 'incoming'"
+          >
+            <p class="bubble-text">{{ msg.text }}</p>
+            <div class="bubble-meta">
+              <span>{{ msg.channel }} · {{ msg.timestamp }}</span>
+              @if (msg.direction === 'outgoing') {
+                <span
+                  class="status-indicator"
+                  [class.status-failed]="msg.status === 'Failed'"
+                  [class.status-delivered]="msg.status === 'Delivered'"
+                >
+                  · {{ msg.status }}
+                </span>
+              }
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="delivery-notice" role="note">
+        Statuses are Sent, Delivered or Failed. No “Read” status is shown for text or email.
+      </div>
+    </section>
+  </div>
+</div>

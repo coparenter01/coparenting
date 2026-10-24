@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SUP-SCR-12 · Help article editor</title>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+body{margin:0;font-family:'Public Sans',system-ui,sans-serif;color:#17212B;background:#F5F6F3}
+a{color:#0E5A63}a:hover{color:#09434A}
+input,select,textarea,button{font:inherit}
+th{text-align:left;font-size:13px;font-weight:600;color:#4E5966;padding:10px 12px;border-bottom:1px solid #D9DDE1}
+td{font-size:14px;padding:12px;border-bottom:1px solid #EEF1F4;vertical-align:top}
+</style>
+</head>
+<body>
+<div style="display: flex; flex-wrap: wrap; min-height: 900px">
+<nav aria-label="Staff" style="flex: 0 0 232px; box-sizing: border-box; padding: 20px 12px; background: #17212B; display: flex; flex-direction: column; gap: 4px">
+<div style="padding: 4px 10px 6px; font-size: 18px; font-weight: 700; color: #FFFFFF">ParentPath</div>
+<div style="padding: 0 10px 18px; font-size: 13px; color: #C7CDD3">Support workspace</div>
+<div style="display: flex; flex-direction: column; gap: 4px; background: #FFFFFF; border-radius: 10px; padding: 6px">
+<a href="SUP-SCR-09.html" style="display: block; padding: 10px 12px; border-radius: 8px; font-size: 15px; text-decoration: none; color: #2B3540; font-weight: 500;">Queue</a>
+<a href="SUP-SCR-11.html" style="display: block; padding: 10px 12px; border-radius: 8px; font-size: 15px; text-decoration: none; color: #2B3540; font-weight: 500;">Service notices</a>
+<a href="SUP-SCR-12.html" style="display: block; padding: 10px 12px; border-radius: 8px; font-size: 15px; text-decoration: none; background: #E3F0F0; color: #0A4A51; font-weight: 600;">Help articles</a>
+<a href="SUP-SCR-13.html" style="display: block; padding: 10px 12px; border-radius: 8px; font-size: 15px; text-decoration: none; color: #2B3540; font-weight: 500;">Reply templates</a>
+</div>
+</nav>
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+<header style="min-height: 64px; box-sizing: border-box; padding: 12px 24px; background: #FFFFFF; border-bottom: 1px solid #D9DDE1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px">
+<span style="font-size: 15px; font-weight: 600">Support workspace</span>
+<span style="display: flex; align-items: center; gap: 10px; font-size: 14px"><span style="font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 999px; background: #E3F0F0; color: #0A4A51">2-step verified</span>[Staff name] · [Role]</span>
+</header>
+<main style="padding: 32px; display: flex; flex-direction: column; gap: 20px; max-width: 1160px">
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px"><div style="display: flex; flex-direction: column; gap: 6px"><h1 style="margin: 0; font-size: 28px; font-weight: 700">Edit help article</h1></div><div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 6px"><span style="display: inline-block; align-self: flex-start; font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: #E6ECF6; color: #234E8C; white-space: nowrap">Support Lead only</span><span style="display: inline-block; align-self: flex-start; font-size: 12px; font-weight: 600; padding: 3px 9px; border-radius: 999px; background: #EEF1F4; color: #2B3540; white-space: nowrap">Draft</span></div></div>
+<div style="display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: flex-start; gap: 24px"><form style="flex: 2 1 460px; box-sizing: border-box; padding: 24px; background: #FFFFFF; border: 1px solid #D9DDE1; border-radius: 12px; display: flex; flex-direction: column; gap: 14px">
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600">Title<input style="padding: 11px; border: 1px solid #C7CDD3; border-radius: 8px; background: #FFFFFF" type="text" value="[Article title]"/></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600">Topic<select style="padding: 11px; border: 1px solid #C7CDD3; border-radius: 8px; background: #FFFFFF"><option>Account and sign-in</option><option>Messages and calls</option><option>Calendar and expenses</option><option>Records and exports</option><option>Child support</option><option>Safety</option><option>Something else</option></select></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600">Body<div style="border: 1px solid #C7CDD3; border-radius: 8px; overflow: hidden"><div style="display:flex;gap:4px;padding:6px;background:#EEF1F4;font-size:13px"><b style="padding:4px 8px">B</b><i style="padding:4px 8px">I</i><span style="padding:4px 8px">• List</span><span style="padding:4px 8px">Link</span></div><div style="min-height:220px;padding:12px;font-size:15px;font-weight:400">[Article text]</div></div></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600">Status<select style="padding: 11px; border: 1px solid #C7CDD3; border-radius: 8px; background: #FFFFFF"><option>Draft</option><option>Published</option><option>Unpublished</option></select></label>
+<div style="padding: 12px 14px; border-radius: 8px; background: #FBEDE6; color: #7A2E0E; font-size: 14px; line-height: 1.5">Example error: Add a title and a text before you publish.</div>
+<div style="display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-start; gap: 10px"><button style="min-height: 44px; box-sizing: border-box; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 15px; border: 1px solid #0E5A63; background: #FFFFFF; color: #0E5A63; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center" type="button">Save draft</button><button style="min-height: 44px; box-sizing: border-box; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 15px; border: 0; background: #0E5A63; color: #FFFFFF; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center" type="button">Publish</button><button style="min-height: 44px; box-sizing: border-box; padding: 10px 18px; border-radius: 8px; font-weight: 600; font-size: 15px; border: 1px solid #8F2F12; background: #FFFFFF; color: #8F2F12; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center" type="button">Unpublish</button></div>
+</form><section style="flex: 1 1 260px; box-sizing: border-box; padding: 24px; background: #FFFFFF; border: 1px solid #D9DDE1; border-radius: 12px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 600">Version history</h2>
+<ol style="margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px"><li style="display: flex; flex-direction: column; gap: 2px; padding-left: 14px; border-left: 2px solid #D9DDE1"><span style="font-size: 14px; font-weight: 600">Version 3 · draft</span><span style="font-size: 13px; color: #4E5966">[Date, time] · [Lead]</span></li><li style="display: flex; flex-direction: column; gap: 2px; padding-left: 14px; border-left: 2px solid #D9DDE1"><span style="font-size: 14px; font-weight: 600">Version 2 · published</span><span style="font-size: 13px; color: #4E5966">[Date, time] · [Lead]</span></li><li style="display: flex; flex-direction: column; gap: 2px; padding-left: 14px; border-left: 2px solid #D9DDE1"><span style="font-size: 14px; font-weight: 600">Version 1</span><span style="font-size: 13px; color: #4E5966">[Date, time] · [Lead]</span></li></ol>
+</section></div>
+
+</main>
+</div>
+</div>
+<div class="pp-wf-bar" style="position: fixed; right: 12px; bottom: 12px; z-index: 50; display: flex; gap: 12px; align-items: center; padding: 8px 12px; border-radius: 10px; background: #17212B; color: #FFFFFF; font: 13px 'Public Sans', system-ui, sans-serif; box-shadow: 0 4px 16px rgba(0,0,0,.2)"><strong>SUP-SCR-12</strong><a href="../index.html" style="color:#BFE3E3">Index</a><a style="color:#BFE3E3" href="SUP-SCR-11.html">← Previous</a><a style="color:#BFE3E3" href="SUP-SCR-13.html">Next →</a></div>
+</body>
+</html>

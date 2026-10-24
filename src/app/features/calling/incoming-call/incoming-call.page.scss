@@ -1,0 +1,112 @@
+.incoming-overlay {
+  min-height: 80vh;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  font-family: var(--pp-font-family);
+}
+
+.incoming-card {
+  width: 560px;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 32px 24px;
+  background: var(--pp-white);
+  border: 1px solid var(--pp-neutral-300);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.header-row {
+  h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--pp-neutral-900);
+  }
+}
+
+.caller-display {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 24px 0;
+
+  .caller-avatar {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: var(--pp-primary-50);
+    border: 2px solid var(--pp-primary-200);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--pp-primary-700);
+  }
+
+  .caller-name {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--pp-neutral-900);
+  }
+
+  .call-type {
+    font-size: 14px;
+    color: var(--pp-neutral-600);
+  }
+}
+
+.actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.btn-decline {
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  border: 1px solid var(--pp-neutral-300);
+  background: var(--pp-white);
+  color: var(--pp-secondary-800);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+
+  &:hover {
+    background: var(--pp-secondary-50);
+    border-color: var(--pp-secondary-400);
+  }
+}
+
+.btn-answer {
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 15px;
+  border: 0;
+  background: var(--pp-primary-600);
+  color: var(--pp-white);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+
+  &:hover {
+    background: var(--pp-primary-700);
+  }
+}

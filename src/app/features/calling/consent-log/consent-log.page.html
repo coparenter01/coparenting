@@ -1,0 +1,52 @@
+<section class="consent-log-container">
+  <a routerLink="/calls" class="back-link">&larr; Calls</a>
+
+  <div class="header-row">
+    <h1>Recording consent log</h1>
+  </div>
+
+  <div class="audit-notice">
+    <strong>Immutable Audit Record:</strong> Every toggle of calling features, recording consent
+    agreements, and declines are permanently recorded with timestamps to protect both co-parents and
+    comply with two-party consent legal standards.
+  </div>
+
+  <div class="table-wrapper">
+    <table aria-label="Recording consent log">
+      <thead>
+        <tr>
+          <th>Setting / Type</th>
+          <th>Action</th>
+          <th>Details</th>
+          <th>Date and time</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (entry of consentLogs(); track entry.id) {
+          <tr>
+            <td>
+              <span class="badge badge-setting">{{ entry.setting_type }}</span>
+            </td>
+            <td>
+              <span
+                class="badge"
+                [class.badge-agreed]="entry.action === 'enabled' || entry.action === 'agreed'"
+                [class.badge-declined]="entry.action === 'disabled' || entry.action === 'declined'"
+              >
+                {{ entry.action }}
+              </span>
+            </td>
+            <td>{{ entry.details || 'Calling preference change' }}</td>
+            <td>{{ entry.created_at | date: 'medium' }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="4" class="empty-state-card">
+              No consent actions or preference changes logged yet.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</section>

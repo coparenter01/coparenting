@@ -1,0 +1,68 @@
+<div class="choose-mode-container">
+  <header class="flow-header">
+    <span class="brand-title">ParentPath</span>
+    <span class="step-label">Step 2 of 2 · Household setup</span>
+  </header>
+
+  <main class="flow-main">
+    <div class="intro-block">
+      <h1 class="main-title">How will you use ParentPath?</h1>
+      <p class="intro-description">
+        You can change this later. If your co-parent joins after you start alone, your household
+        becomes Linked and your records stay complete.
+      </p>
+    </div>
+
+    <div class="modes-grid">
+      <a routerLink="/accounts/invite-coparent" class="mode-card highlighted">
+        <div class="mode-icon" aria-hidden="true">
+          <svg height="40" width="40" viewBox="0 0 40 40">
+            <circle cx="14" cy="15" fill="none" r="6" stroke="#0E5A63" stroke-width="2"></circle>
+            <circle cx="27" cy="15" fill="none" r="6" stroke="#0E5A63" stroke-width="2"></circle>
+            <path
+              d="M4 33c1-6 5-9 10-9s9 3 10 9M17 33c1-6 5-9 10-9s9 3 10 9"
+              fill="none"
+              stroke="#0E5A63"
+              stroke-width="2"
+            ></path>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h2 class="card-title">Invite my co-parent</h2>
+          <p class="card-text">
+            Send an invite by email, text message or a link you share. You both share messages, the
+            calendar and expenses.
+          </p>
+          <span class="card-cta">Invite co-parent &rarr;</span>
+        </div>
+      </a>
+
+      <button type="button" (click)="chooseSolo()" class="mode-card">
+        <div class="mode-icon" aria-hidden="true">
+          <svg height="40" width="40" viewBox="0 0 40 40">
+            <circle cx="20" cy="14" fill="none" r="7" stroke="#0E5A63" stroke-width="2"></circle>
+            <path
+              d="M8 35c1-7 6-11 12-11s11 4 12 11"
+              fill="none"
+              stroke="#0E5A63"
+              stroke-width="2"
+            ></path>
+          </svg>
+        </div>
+        <div class="card-content">
+          <h2 class="card-title">Use Solo Mode</h2>
+          <p class="card-text">
+            Keep a full record on your own. You can still message a co-parent who is not on the app
+            by text or email.
+          </p>
+          <span class="card-cta">Choose Solo Mode &rarr;</span>
+        </div>
+      </button>
+    </div>
+
+    <div class="privacy-note" role="note">
+      Privacy: records you save in Solo Mode stay visible only to you after your co-parent joins,
+      until you choose to share them.
+    </div>
+  </main>
+</div>

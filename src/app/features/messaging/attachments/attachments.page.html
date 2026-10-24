@@ -1,0 +1,24 @@
+<section class="attachments-container">
+  <div class="attachments-header">
+    <h1>Shared Attachments & Files</h1>
+  </div>
+
+  <div class="attachments-grid">
+    @for (att of attachments(); track att.id) {
+      <div class="attachment-card">
+        <span class="file-icon">&#128196;</span>
+        <strong class="file-name">{{ att.file_name }}</strong>
+        <span class="file-meta"
+          >{{ att.file_size }} bytes &bull; {{ att.created_at | date: 'mediumDate' }}</span
+        >
+        <button type="button" class="btn-download" (click)="onDownload(att.file_name)">
+          Download File
+        </button>
+      </div>
+    } @empty {
+      <div class="empty-attachments">
+        <p>No attachments shared in your conversations yet.</p>
+      </div>
+    }
+  </div>
+</section>

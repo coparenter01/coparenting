@@ -1,0 +1,32 @@
+<div class="retention-policy-container">
+  <header class="public-nav-header">
+    <span class="brand-title">ParentPath</span>
+    <nav class="public-nav-links" aria-label="Public menu">
+      <a routerLink="/safety/resources" class="nav-link">Safety resources</a>
+      <a routerLink="/support" class="nav-link">Help</a>
+      <a routerLink="/auth/sign-in" class="nav-link">Sign in</a>
+    </nav>
+  </header>
+
+  <main class="policy-main">
+    <header class="page-header">
+      <h1 class="page-title">Retention policy</h1>
+      <p class="page-subtitle">
+        How long co-parenting records are preserved, our judicial discovery obligations, and
+        non-record data deletion.
+      </p>
+    </header>
+
+    <div class="sections-list">
+      @for (sec of sections(); track sec.contentId) {
+        <section class="policy-card" [id]="'policy-section-' + sec.contentId">
+          <h2 class="section-title">{{ sec.title }}</h2>
+          <p class="section-text">{{ sec.text }}</p>
+          <span class="review-date">
+            Approved by Legal Counsel · Last reviewed {{ sec.lastReviewedOn | date: 'longDate' }}
+          </span>
+        </section>
+      }
+    </div>
+  </main>
+</div>

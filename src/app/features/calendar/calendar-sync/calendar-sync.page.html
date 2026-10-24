@@ -1,0 +1,114 @@
+<div class="sync-container">
+  <a routerLink="/calendar" class="back-link">← Calendar (week view)</a>
+
+  <div class="header-row">
+    <h1 class="page-title">Calendar sync</h1>
+  </div>
+
+  @if (copiedMessage()) {
+    <div class="toast-msg" role="status">{{ copiedMessage() }}</div>
+  }
+
+  <section class="sync-card">
+    <h2 class="card-title">Connected calendars</h2>
+
+    <div class="service-row">
+      <div class="service-info">
+        <span class="service-name">Google Calendar</span>
+        <span class="status-badge" [class.disconnected]="!googleConnected()">
+          {{ googleConnected() ? 'Connected' : 'Not connected' }}
+        </span>
+      </div>
+      @if (googleConnected()) {
+        <button
+          type="button"
+          class="btn-danger-outline"
+          (click)="disconnectGoogle()"
+          id="sync-disconnect-google-btn"
+        >
+          Disconnect
+        </button>
+      } @else {
+        <button
+          type="button"
+          class="btn-primary-outline"
+          (click)="connectGoogle()"
+          id="sync-connect-google-btn"
+        >
+          Connect Google Calendar
+        </button>
+      }
+    </div>
+
+    <div class="service-row">
+      <div class="service-info">
+        <span class="service-name">Outlook Calendar</span>
+        <span class="status-badge disconnected">Not connected</span>
+      </div>
+      <button
+        type="button"
+        class="btn-primary-outline"
+        (click)="connectOutlook()"
+        id="sync-connect-outlook-btn"
+      >
+        Connect Outlook Calendar
+      </button>
+    </div>
+  </section>
+
+  <section class="sync-card">
+    <h2 class="card-title">Private ICS Subscription Feed</h2>
+    <p class="notice-box">
+      Subscribe to your ParentPath calendar in Apple Calendar, Thunderbird, or any other app using
+      this private read-only link.
+    </p>
+
+    <label class="field-label">
+      Your private feed URL
+      <input
+        type="text"
+        class="text-input"
+        [value]="syncSettings().icsFeedUrl"
+        readonly
+        id="sync-ics-url-input"
+      />
+    </label>
+
+    <label class="field-label">
+      Send mode
+      <select
+        class="select-input"
+        [ngModel]="syncSettings().sendMode"
+        (ngModelChange)="updateSendMode($event)"
+        id="sync-send-mode-select"
+      >
+        <option value="both">Both parents' schedule (full household calendar)</option>
+        <option value="own_only">Only my own parenting time & events</option>
+      </select>
+    </label>
+
+    <div class="actions-row">
+      <button
+        type="button"
+        class="btn-primary-outline"
+        (click)="copySubscriptionLink()"
+        id="sync-copy-link-btn"
+      >
+        Copy subscription link
+      </button>
+      <button
+        type="button"
+        class="btn-secondary"
+        (click)="regenerateLink()"
+        id="sync-regen-link-btn"
+      >
+        Regenerate private link
+      </button>
+    </div>
+
+    <div class="notice-box">
+      <strong>Safety Mode Note:</strong> For a user with Safety Mode turned on, outside calendars
+      receive synced entries with no location and no sensitive details (FR-CAL-05-07).
+    </div>
+  </section>
+</div>

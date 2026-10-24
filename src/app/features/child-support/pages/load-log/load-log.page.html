@@ -1,0 +1,103 @@
+<div class="operations-layout">
+  <!-- Staff Sidebar -->
+  <aside class="staff-sidebar" aria-label="Staff Navigation">
+    <div class="sidebar-header">
+      <span class="brand">ParentPath</span>
+      <span class="sub-brand">Operations</span>
+    </div>
+    <nav class="staff-nav">
+      <a routerLink="/child-support/load-log" class="nav-item active" id="link-ops-load-log"
+        >Load log</a
+      >
+      <a routerLink="/records/affidavit-reviews" class="nav-item" id="link-ops-affidavits"
+        >Affidavit reviews</a
+      >
+      <a routerLink="/child-support" class="nav-item" id="link-ops-back-app">Back to App</a>
+    </nav>
+  </aside>
+
+  <!-- Main Ops Body -->
+  <main class="ops-main">
+    <header class="ops-header">
+      <div class="header-titles">
+        <h1 class="title">Load log</h1>
+        <p class="subtitle">Technical audit log of agency synchronization batches (PII-free).</p>
+      </div>
+      <div class="staff-profile">
+        <span class="badge-verified">2-step verified</span>
+        <span class="staff-name">Staff Admin · Operations</span>
+      </div>
+    </header>
+
+    <div class="filter-bar">
+      <div class="filter-group">
+        <label for="input-log-date" class="filter-label">Date</label>
+        <input
+          type="date"
+          id="input-log-date"
+          class="form-control"
+          [value]="dateFilter()"
+          (input)="onDateChange($event)"
+        />
+      </div>
+
+      <div class="filter-group">
+        <label for="select-log-status" class="filter-label">Status</label>
+        <select
+          id="select-log-status"
+          class="form-control"
+          [value]="statusFilter()"
+          (change)="onStatusChange($event)"
+        >
+          <option value="all">All statuses</option>
+          <option value="success">Success</option>
+          <option value="held_back">Held back</option>
+          <option value="failed">Failed</option>
+          <option value="late">Late</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th scope="col">Batch ID</th>
+            <th scope="col">Agency</th>
+            <th scope="col">Channel</th>
+            <th scope="col">Started</th>
+            <th scope="col">Finished</th>
+            <th scope="col">Records</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (log of filteredLogs(); track log.logId) {
+            <tr>
+              <td class="cell-code">{{ log.batchId }}</td>
+              <td class="cell-agency">{{ log.agencyName }}</td>
+              <td>
+                <span class="badge-channel">{{ log.channel.toUpperCase() }}</span>
+              </td>
+              <td>{{ formatTime(log.startedAt) }}</td>
+              <td>{{ formatTime(log.finishedAt) }}</td>
+              <td>{{ log.recordsCount }}</td>
+              <td>
+                <span class="badge-status" [class]="getStatusBadgeClass(log.status)">
+                  {{ log.status }}
+                </span>
+                @if (log.errorSummary) {
+                  <div class="log-error-detail">{{ log.errorSummary }}</div>
+                }
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="7" class="empty-cell">No sync batch logs match the specified filter.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </main>
+</div>

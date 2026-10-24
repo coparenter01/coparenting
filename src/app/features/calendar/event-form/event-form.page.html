@@ -1,0 +1,209 @@
+<div class="event-form-layout">
+  <form class="form-card" (ngSubmit)="saveEvent()">
+    <a routerLink="/calendar" class="back-link">← Calendar</a>
+    <h1 class="form-title">{{ isEditing() ? 'Edit event' : 'Add event' }}</h1>
+
+    @if (errorMessage()) {
+      <div class="error-banner" role="alert">{{ errorMessage() }}</div>
+    }
+
+    <label class="field-label">
+      Title
+      <input
+        type="text"
+        class="text-input"
+        [(ngModel)]="title"
+        name="title"
+        placeholder="e.g. Pediatric Dental Checkup"
+        required
+        id="event-title-input"
+      />
+    </label>
+
+    <label class="field-label">
+      Details
+      <textarea
+        rows="2"
+        class="textarea-input"
+        [(ngModel)]="details"
+        name="details"
+        placeholder="Additional notes, directions, or preparation instructions"
+        id="event-details-input"
+      ></textarea>
+    </label>
+
+    <div class="three-col-grid">
+      <label class="field-label">
+        Date
+        <input
+          type="date"
+          class="text-input"
+          [(ngModel)]="date"
+          name="date"
+          required
+          id="event-date-input"
+        />
+      </label>
+      <label class="field-label">
+        Start time
+        <input
+          type="time"
+          class="text-input"
+          [(ngModel)]="startTime"
+          name="startTime"
+          required
+          id="event-start-time-input"
+        />
+      </label>
+      <label class="field-label">
+        End time
+        <input
+          type="time"
+          class="text-input"
+          [(ngModel)]="endTime"
+          name="endTime"
+          required
+          id="event-end-time-input"
+        />
+      </label>
+    </div>
+
+    <label class="field-label">
+      Location
+      <input
+        type="text"
+        class="text-input"
+        [(ngModel)]="location"
+        name="location"
+        placeholder="e.g. 124 Elm Street, Suite 300"
+        id="event-location-input"
+      />
+      <span class="field-hint">Hidden from others when Safety Mode applies.</span>
+    </label>
+
+    <fieldset class="checkbox-fieldset">
+      <legend class="checkbox-legend">Children</legend>
+      <div class="checkbox-row">
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            [checked]="isChildSelected('child-1')"
+            (change)="toggleChild('child-1', 'Maya Rivera')"
+            id="child-cb-1"
+          />
+          Maya Rivera
+        </label>
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            [checked]="isChildSelected('child-2')"
+            (change)="toggleChild('child-2', 'Leo Rivera')"
+            id="child-cb-2"
+          />
+          Leo Rivera
+        </label>
+      </div>
+    </fieldset>
+
+    <div class="two-col-grid">
+      <label class="field-label">
+        Drop-off parent
+        <select
+          class="select-input"
+          [(ngModel)]="dropOffParent"
+          name="dropOffParent"
+          id="event-dropoff-select"
+        >
+          <option value="">— None —</option>
+          <option value="Elena Rivera">Elena Rivera</option>
+          <option value="David Chen">David Chen</option>
+        </select>
+      </label>
+      <label class="field-label">
+        Pick-up parent
+        <select
+          class="select-input"
+          [(ngModel)]="pickUpParent"
+          name="pickUpParent"
+          id="event-pickup-select"
+        >
+          <option value="">— None —</option>
+          <option value="Elena Rivera">Elena Rivera</option>
+          <option value="David Chen">David Chen</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="two-col-grid">
+      <label class="field-label">
+        Repeats
+        <select class="select-input" [(ngModel)]="repeats" name="repeats" id="event-repeats-select">
+          <option value="None">Does not repeat</option>
+          <option value="Daily">Daily</option>
+          <option value="Weekly">Weekly</option>
+          <option value="Biweekly">Every two weeks</option>
+          <option value="Monthly">Monthly</option>
+          <option value="Custom">Custom days</option>
+        </select>
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" [(ngModel)]="isPrivate" name="isPrivate" id="event-private-cb" />
+        Private event (only you see it)
+      </label>
+    </div>
+
+    @if (hasOverlapWarning()) {
+      <div class="warning-banner" role="status">
+        Overlap warning: this time overlaps another scheduled entry. You can still save.
+      </div>
+    }
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" id="event-save-btn">Save</button>
+      <a routerLink="/calendar" class="btn-secondary" id="event-cancel-btn"> Cancel </a>
+    </div>
+  </form>
+
+  <aside class="sidebar-aside">
+    <section class="sidebar-card">
+      <h2 class="sidebar-card-title">Event detail (existing event)</h2>
+      <p class="field-hint">Elena Rivera · Today, 10:00 AM – 11:30 AM · Status: Active</p>
+      <div class="sidebar-actions">
+        <button
+          type="button"
+          class="btn-outline-primary"
+          (click)="editSample()"
+          id="event-side-edit-btn"
+        >
+          Edit
+        </button>
+        <button
+          type="button"
+          class="btn-outline-neutral"
+          (click)="cancelSample()"
+          id="event-side-cancel-btn"
+        >
+          Cancel event
+        </button>
+        <a routerLink="/calendar/history" class="back-link" id="event-side-hist-link">
+          View history
+        </a>
+      </div>
+      <span class="field-hint">
+        Only the creator can edit. An event that has started cannot be cancelled or deleted.
+      </span>
+    </section>
+
+    <section class="sidebar-card">
+      <h2 class="sidebar-card-title">Edit a repeating event</h2>
+      <label class="checkbox-label">
+        <input type="radio" name="repeatingScope" value="single" checked />
+        This occurrence only
+      </label>
+      <label class="checkbox-label">
+        <input type="radio" name="repeatingScope" value="series" />
+        This and all future occurrences
+      </label>
+    </section>
+  </aside>
+</div>

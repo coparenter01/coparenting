@@ -1,0 +1,77 @@
+<div class="affidavit-list-container">
+  <div class="top-nav">
+    <a routerLink="/records" class="back-link" id="link-back-records">← Records home</a>
+  </div>
+
+  <header class="page-header">
+    <div class="header-titles">
+      <h1 class="page-title">Affidavit requests</h1>
+      <p class="page-subtitle">
+        Track your notarized business records affidavits prepared by ParentPath for court filings.
+      </p>
+    </div>
+    <a routerLink="/records/affidavit/request" class="btn-primary" id="btn-new-affidavit">
+      Request affidavit
+    </a>
+  </header>
+
+  <div class="table-card">
+    <table class="requests-table">
+      <thead>
+        <tr>
+          <th>Case number</th>
+          <th>Record ID</th>
+          <th>Requested</th>
+          <th>Delivery</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of affidavitRequests(); track item.requestId) {
+          <tr [id]="'affidavit-row-' + item.requestId">
+            <td class="case-cell">
+              <strong>{{ item.caseNumber }}</strong>
+            </td>
+            <td>
+              <code class="record-code">{{ item.recordId }}</code>
+            </td>
+            <td class="date-cell">{{ item.createdAt | date: 'mediumDate' }}</td>
+            <td>{{ item.delivery === 'electronic' ? 'Electronic PDF' : 'Mailed paper copy' }}</td>
+            <td>
+              <span
+                class="status-chip"
+                [class.status-submitted]="item.status === 'submitted'"
+                [class.status-review]="item.status === 'in_review'"
+                [class.status-ready]="item.status === 'ready' || item.status === 'delivered'"
+                [class.status-declined]="item.status === 'declined'"
+              >
+                {{ item.status | titlecase }}
+              </span>
+            </td>
+            <td>
+              @if (item.status === 'ready' || item.status === 'delivered') {
+                <button
+                  type="button"
+                  class="btn-row-download"
+                  (click)="downloadAffidavit(item)"
+                  [id]="'btn-download-aff-' + item.requestId"
+                >
+                  Download affidavit
+                </button>
+              } @else if (item.status === 'declined') {
+                <span class="declined-note">{{ item.declineReason || 'Declined' }}</span>
+              } @else {
+                <span class="pending-note">In processing</span>
+              }
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="6" class="empty-cell">No affidavit requests submitted yet.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

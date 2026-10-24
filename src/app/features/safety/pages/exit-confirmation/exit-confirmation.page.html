@@ -1,0 +1,20 @@
+<div class="confirm-container">
+  <div class="confirm-card" role="dialog" aria-modal="true" aria-labelledby="confirm-exit-title">
+    <div class="confirm-header">
+      <div class="exit-badge">
+        <span class="material-symbols-rounded" aria-hidden="true">exit_to_app</span>
+      </div>
+      <h1 id="confirm-exit-title" class="confirm-title">Leave ParentPath now?</h1>
+    </div>
+
+    <p class="confirm-body">
+      You will be signed out immediately and redirected to a neutral destination. Your browser Back
+      button will not return to this session.
+    </p>
+
+    <div class="actions-row">
+      <a routerLink="/safety" class="btn btn-secondary"> Stay </a>
+      <button type="button" class="btn btn-danger" (click)="onLeaveNow()">Leave now</button>
+    </div>
+  </div>
+</div>

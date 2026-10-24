@@ -1,0 +1,97 @@
+<div class="public-safety-layout">
+  <header class="public-header" role="banner">
+    <div class="brand">
+      <span class="brand-text">ParentPath</span>
+    </div>
+    <nav class="public-nav" aria-label="Public navigation">
+      <a routerLink="/safety/resources" class="nav-link nav-link--active" aria-current="page">
+        Safety resources
+      </a>
+      <a routerLink="/help" class="nav-link">Help</a>
+      <a routerLink="/auth/sign-in" class="nav-link">Sign in</a>
+    </nav>
+  </header>
+
+  <main class="public-main">
+    <div class="main-header-row">
+      <div class="title-group">
+        <h1 class="main-title">Safety resources</h1>
+        <p class="main-subtitle">Help is available 24/7. You do not need to sign in.</p>
+      </div>
+
+      <button
+        type="button"
+        class="exit-btn"
+        (click)="onExitNow()"
+        aria-label="Exit now – immediately leave page"
+      >
+        <span class="material-symbols-rounded" aria-hidden="true">exit_to_app</span>
+        Exit now
+      </button>
+    </div>
+
+    <div class="urgent-banner" role="alert">
+      <span class="material-symbols-rounded urgent-icon" aria-hidden="true">emergency</span>
+      <span class="urgent-text">
+        <strong>If you are in immediate danger, call 911 if it is safe to do so.</strong>
+      </span>
+    </div>
+
+    <section class="resource-card" aria-labelledby="ndvh-title">
+      <h2 id="ndvh-title" class="card-title">National Domestic Violence Hotline</h2>
+      <p class="resource-desc">
+        Free, confidential support available 24/7 in more than 200 languages.
+      </p>
+      <div class="contact-actions">
+        <a href="tel:18007997233" class="btn btn-call">
+          <span class="material-symbols-rounded" aria-hidden="true">call</span>
+          Call 1-800-799-7233
+        </a>
+        <a href="tel:18007873224" class="btn btn-outline"> TTY 1-800-787-3224 </a>
+        <a href="sms:88788?body=START" class="btn btn-outline">
+          <span class="material-symbols-rounded" aria-hidden="true">chat</span>
+          Text "START" to 88788
+        </a>
+      </div>
+    </section>
+
+    <section class="resource-card" aria-labelledby="more-help-title">
+      <h2 id="more-help-title" class="card-title">More help and crisis support</h2>
+      <ul class="resource-list">
+        <li class="resource-list-item">
+          <div class="resource-info">
+            <strong>Childhelp National Child Abuse Hotline</strong>
+            <span
+              >Dedicated to the prevention and treatment of child abuse. 24/7 crisis
+              counselors.</span
+            >
+          </div>
+          <a href="tel:18004224453" class="btn btn-small">Call 1-800-422-4453</a>
+        </li>
+
+        <li class="resource-list-item">
+          <div class="resource-info">
+            <strong>RAINN (National Sexual Assault Hotline)</strong>
+            <span>Confidential 24/7 support for survivors of sexual assault and abuse.</span>
+          </div>
+          <a href="tel:18006564673" class="btn btn-small">Call 1-800-656-4673</a>
+        </li>
+
+        <li class="resource-list-item">
+          <div class="resource-info">
+            <strong>WomensLaw.org (Legal Information)</strong>
+            <span>Plain-language legal info on protection orders, custody, and family law.</span>
+          </div>
+          <a
+            href="https://www.womenslaw.org"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-small btn-outline"
+          >
+            Visit WomensLaw.org
+          </a>
+        </li>
+      </ul>
+    </section>
+  </main>
+</div>

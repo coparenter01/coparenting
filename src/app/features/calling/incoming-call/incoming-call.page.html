@@ -1,0 +1,20 @@
+<div class="incoming-overlay">
+  <div class="incoming-card" role="dialog" aria-labelledby="incomingTitle" aria-modal="true">
+    <div class="header-row">
+      <h1 id="incomingTitle">Incoming call</h1>
+    </div>
+
+    <div class="caller-display">
+      <div class="caller-avatar">CP</div>
+      <strong class="caller-name">Co-parent</strong>
+      <span class="call-type"
+        >{{ incomingCall()?.call_type === 'video' ? 'Video' : 'Audio' }} call</span
+      >
+    </div>
+
+    <div class="actions-row">
+      <button type="button" class="btn-decline" (click)="onDecline()">Decline</button>
+      <button type="button" class="btn-answer" (click)="onAnswer()">Answer</button>
+    </div>
+  </div>
+</div>

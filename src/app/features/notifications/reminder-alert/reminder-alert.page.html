@@ -1,0 +1,32 @@
+<section class="reminder-container">
+  <div class="reminder-header">
+    <h1>Reminder Alert Preview</h1>
+  </div>
+
+  <div class="preview-card">
+    <div class="simulated-notification">
+      <div class="app-icon">&#128197;</div>
+      <div class="notif-body">
+        <div class="notif-top">
+          <span>Calendar Event Reminder</span>
+          <span>In 24 hours</span>
+        </div>
+        @if (isSafetyModeActive()) {
+          <span class="notif-title">Upcoming Event Scheduled</span>
+          <span class="notif-text"
+            >Check your calendar for tomorrow’s scheduled exchange details.</span
+          >
+        } @else {
+          <span class="notif-title">Parenting Exchange &bull; Central Park West</span>
+          <span class="notif-text">Tomorrow at 5:00 PM. Assigned driver: Parent.</span>
+        }
+      </div>
+    </div>
+
+    <div class="explanation-box">
+      Event reminders are sent according to your reminder preferences (default: 24 hours before).
+    </div>
+
+    <a routerLink="/calendar" class="btn-primary"> Open Calendar </a>
+  </div>
+</section>

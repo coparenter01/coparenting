@@ -1,0 +1,117 @@
+<div class="requests-list-container">
+  <div class="header-row">
+    <div>
+      <h1 class="page-title">Reimbursement Requests</h1>
+      <p class="page-subtitle">Track requested shares, payments, and settlements</p>
+    </div>
+    <a routerLink="/expenses" class="btn btn-secondary">← Back to Expenses</a>
+  </div>
+
+  <div class="summary-cards">
+    <div class="summary-card owed-to-you">
+      <span class="card-label">Accepted Share Owed to You</span>
+      <strong class="card-value">{{ totalOwedToYouFormatted() }}</strong>
+    </div>
+    <div class="summary-card you-owe">
+      <span class="card-label">Accepted Share You Owe</span>
+      <strong class="card-value">{{ totalYouOweFormatted() }}</strong>
+    </div>
+  </div>
+
+  <div class="tabs-bar">
+    <button
+      type="button"
+      (click)="setTab('All')"
+      class="tab-btn"
+      [class.active-tab]="selectedTab() === 'All'"
+    >
+      All ({{ allRequests().length }})
+    </button>
+    <button
+      type="button"
+      (click)="setTab('Pending')"
+      class="tab-btn"
+      [class.active-tab]="selectedTab() === 'Pending'"
+    >
+      Pending
+    </button>
+    <button
+      type="button"
+      (click)="setTab('Accepted')"
+      class="tab-btn"
+      [class.active-tab]="selectedTab() === 'Accepted'"
+    >
+      Accepted
+    </button>
+    <button
+      type="button"
+      (click)="setTab('Declined')"
+      class="tab-btn"
+      [class.active-tab]="selectedTab() === 'Declined'"
+    >
+      Declined
+    </button>
+    <button
+      type="button"
+      (click)="setTab('Paid')"
+      class="tab-btn"
+      [class.active-tab]="selectedTab() === 'Paid'"
+    >
+      Paid
+    </button>
+  </div>
+
+  <div class="table-card">
+    @if (filteredRequests().length === 0) {
+      <div class="empty-state">
+        <p class="empty-title">No reimbursement requests in this view</p>
+        <p class="empty-hint">Requests created for shared expenses will appear here.</p>
+      </div>
+    } @else {
+      <table class="requests-table">
+        <thead>
+          <tr>
+            <th>Expense</th>
+            <th>Requested By</th>
+            <th>Requested From</th>
+            <th>Share %</th>
+            <th>Due Date</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (req of filteredRequests(); track req.id) {
+            <tr>
+              <td class="desc-cell">
+                <a [routerLink]="['/expenses/requests', req.id]" class="req-link">
+                  {{ req.expenseDescription }}
+                </a>
+              </td>
+              <td>{{ req.requestedByName }}</td>
+              <td>{{ req.requestedFromName }}</td>
+              <td>{{ req.splitPercentage }}%</td>
+              <td>{{ req.dueDate }}</td>
+              <td class="amount-cell">{{ formatCents(req.amountCents) }}</td>
+              <td>
+                <span
+                  class="status-badge"
+                  [class.badge-pending]="req.status === 'Pending'"
+                  [class.badge-accepted]="req.status === 'Accepted'"
+                  [class.badge-declined]="req.status === 'Declined'"
+                  [class.badge-paid]="req.status === 'Paid'"
+                >
+                  {{ req.status }}
+                </span>
+              </td>
+              <td>
+                <a [routerLink]="['/expenses/requests', req.id]" class="view-link">View</a>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    }
+  </div>
+</div>

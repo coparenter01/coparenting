@@ -1,0 +1,227 @@
+.call-log-container {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1100px;
+  font-family: var(--pp-font-family);
+  color: var(--pp-neutral-900);
+}
+
+.header-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  h1 {
+    margin: 0;
+    font-size: 28px;
+    font-weight: 700;
+  }
+}
+
+.quick-actions-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-primary {
+  min-height: 40px;
+  box-sizing: border-box;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  border: 0;
+  background: var(--pp-primary-600);
+  color: var(--pp-white);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+
+  &:hover {
+    background: var(--pp-primary-700);
+  }
+}
+
+.btn-secondary {
+  min-height: 40px;
+  box-sizing: border-box;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  border: 1px solid var(--pp-neutral-300);
+  background: var(--pp-white);
+  color: var(--pp-neutral-800);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+
+  &:hover {
+    background: var(--pp-neutral-100);
+  }
+}
+
+.tabs-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  border-bottom: 1px solid var(--pp-neutral-200);
+
+  .tab-btn {
+    min-height: 44px;
+    padding: 10px 16px;
+    border: 0;
+    background: none;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--pp-neutral-600);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+
+    &.active {
+      color: var(--pp-primary-700);
+      border-bottom-color: var(--pp-primary-600);
+      font-weight: 700;
+    }
+  }
+}
+
+.table-wrapper {
+  background: var(--pp-white);
+  border: 1px solid var(--pp-neutral-300);
+  border-radius: 12px;
+  overflow-x: auto;
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 640px;
+
+    th {
+      text-align: left;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--pp-neutral-600);
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--pp-neutral-200);
+      background: var(--pp-neutral-50);
+    }
+
+    td {
+      font-size: 14px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--pp-neutral-100);
+      vertical-align: middle;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+  }
+}
+
+.badge {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 999px;
+  white-space: nowrap;
+
+  &.badge-type {
+    background: var(--pp-neutral-100);
+    color: var(--pp-neutral-800);
+  }
+
+  &.badge-completed {
+    background: var(--pp-primary-50);
+    color: var(--pp-primary-800);
+  }
+
+  &.badge-missed {
+    background: var(--pp-secondary-100);
+    color: var(--pp-secondary-900);
+  }
+
+  &.badge-recorded {
+    background: var(--pp-primary-100);
+    color: var(--pp-primary-800);
+  }
+}
+
+.btn-action {
+  min-height: 36px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid var(--pp-primary-600);
+  background: var(--pp-white);
+  color: var(--pp-primary-600);
+  cursor: pointer;
+
+  &:hover {
+    background: var(--pp-primary-50);
+  }
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(23, 33, 43, 0.6);
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.player-card {
+  width: 560px;
+  max-width: 100%;
+  background: var(--pp-white);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.audio-player {
+  width: 100%;
+}
+
+.transcript-notice {
+  padding: 12px;
+  background: var(--pp-neutral-100);
+  border-radius: 6px;
+  font-size: 13px;
+  color: var(--pp-neutral-700);
+}
+
+.transcript-pre {
+  white-space: pre-wrap;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.empty-state-card {
+  padding: 40px 24px;
+  text-align: center;
+  color: var(--pp-neutral-600);
+  font-size: 15px;
+}

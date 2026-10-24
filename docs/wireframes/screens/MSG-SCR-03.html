@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MSG-SCR-03 · New message and reply</title>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<style>
+body{margin:0;font-family:'Public Sans',system-ui,sans-serif;color:#17212B;background:#F5F6F3}
+a{color:#0E5A63}a:hover{color:#09434A}
+input,select,textarea,button{font:inherit}
+</style>
+</head>
+<body>
+<div style="display: flex; flex-wrap: wrap; min-height: 900px">
+<nav aria-label="Main" style="width: 232px; min-height: 900px; box-sizing: border-box; padding: 20px 12px; background: #FFFFFF; border-right: 1px solid #D9DDE1; display: flex; flex-direction: column; gap: 4px; font-family: 'Public Sans', system-ui, sans-serif; color: #17212B">
+<div style="display: flex; align-items: center; gap: 10px; padding: 4px 10px 20px">
+<svg width="28" height="28" viewBox="0 0 28 28" aria-hidden="true"><rect width="28" height="28" rx="7" fill="#0E5A63"></rect><path d="M8 19V9h6a4 4 0 0 1 0 8h-6" stroke="#FFFFFF" stroke-width="2.2" fill="none" stroke-linecap="round"></path></svg>
+<span style="font-size: 18px; font-weight: 700">ParentPath</span>
+</div>
+<a href="ACC-SCR-19.html" style="display: block; padding: 10px 12px; border-radius: 8px; font-size: 15px; text-decoration: none; color: #2B3540; font-weight: 500;">Home</a>
+<a href="MSG-SCR-01.html" style="display: block; padding: 10px 12px; border-radius: 8px; font-size: 15px; text-decoration: none; background: #E3F0F0; color: #0A4A51; font-weight: 600;">Messages</a>
+<a href="CLL-SCR-06.html" style="display: block; padding: 10px 12px; border-radius: 8px; font-size: 15px; text-decoration: none; color: #2B3540; font-weight: 500;">Calls</a>
+<a href="CAL-SCR-01.html" style="display: block; padding: 10px 12px; border-radius: 8px; font-size: 15px; text-decoration: none; color: #2B3540; font-weight: 500;">Calendar</a>
+<a href="EXP-SCR-01.html" style="display: block; padding: 10px 12px; border-radius: 8px; font-size: 15px; text-decoration: none; color: #2B3540; font-weight: 500;">Expenses</a>
+<a href="CSS-SCR-03.html" style="display: block; padding: 10px 12px; border-radius: 8px; font-size: 15px; text-decoration: none; color: #2B3540; font-weight: 500;">Child support</a>
+<a href="DOC-SCR-01.html" style="display: block; padding: 10px 12px; border-radius: 8px; font-size: 15px; text-decoration: none; color: #2B3540; font-weight: 500;">Children</a>
+<a href="DOC-SCR-05.html" style="display: block; padding: 10px 12px; border-radius: 8px; font-size: 15px; text-decoration: none; color: #2B3540; font-weight: 500;">Documents</a>
+<a href="REC-SCR-B01.html" style="display: block; padding: 10px 12px; border-radius: 8px; font-size: 15px; text-decoration: none; color: #2B3540; font-weight: 500;">Records</a>
+<a href="PRO-SCR-01.html" style="display: block; padding: 10px 12px; border-radius: 8px; font-size: 15px; text-decoration: none; color: #2B3540; font-weight: 500;">Professionals</a>
+<a href="ACC-SCR-20.html" style="display: block; padding: 10px 12px; border-radius: 8px; font-size: 15px; text-decoration: none; color: #2B3540; font-weight: 500;">Settings</a>
+<a href="SUP-SCR-01.html" style="display: block; padding: 10px 12px; border-radius: 8px; font-size: 15px; text-decoration: none; color: #2B3540; font-weight: 500;">Help</a>
+</nav>
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+<header style="min-height: 64px; box-sizing: border-box; padding: 12px 24px; background: #FFFFFF; border-bottom: 1px solid #D9DDE1; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-family: 'Public Sans', system-ui, sans-serif; color: #17212B">
+<div style="display: flex; align-items: center; gap: 10px; flex: 1 1 240px">
+<span style="font-size: 15px; font-weight: 600">[Household name]</span>
+<span style="font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 999px; background: #EEF1F4; color: #2B3540">Linked</span>
+</div>
+<label style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #4E5966">Time zone
+<select style="font: inherit; font-size: 13px; padding: 6px 8px; border: 1px solid #C7CDD3; border-radius: 6px; background: #FFFFFF; color: #17212B"><option>[Browser time zone]</option></select>
+</label>
+
+<button type="button" aria-haspopup="menu" style="font: inherit; font-size: 14px; display: flex; align-items: center; gap: 8px; padding: 6px 10px; min-height: 44px; border: 1px solid #D9DDE1; border-radius: 8px; background: #FFFFFF; color: #17212B; cursor: pointer">
+<span aria-hidden="true" style="width: 28px; height: 28px; border-radius: 50%; background: #E3F0F0; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; color: #0A4A51">YN</span>
+[Your name]
+<svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" stroke="#4E5966" stroke-width="1.6" fill="none"></path></svg>
+</button>
+</header>
+<main style="padding: 32px; display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+<form style="flex: 1 1 460px; padding: 24px; background: #FFFFFF; border: 1px solid #D9DDE1; border-radius: 12px; display: flex; flex-direction: column; gap: 16px">
+<h1 style="margin: 0; font-size: 24px; font-weight: 700">New message to [co-parent]</h1>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600">Subject<input style="padding: 12px; font-size: 16px; border: 1px solid #C7CDD3; border-radius: 8px" type="text"/></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 14px; font-weight: 600">Message<textarea rows="8" style="padding: 12px; font-size: 16px; line-height: 1.5; border: 1px solid #C7CDD3; border-radius: 8px; resize: vertical">[Draft text]</textarea></label>
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px">
+<span style="font-size: 13px; color: #4E5966">[n] / 10,000 characters · Tone check is on</span>
+<div style="display: flex; gap: 10px">
+<a href="MSG-SCR-01.html" style="min-height: 44px; box-sizing: border-box; padding: 10px 14px; font-weight: 600">Cancel</a>
+<button style="min-height: 44px; padding: 10px 16px; border: 1px solid #C7CDD3; border-radius: 8px; background: #FFFFFF; font-weight: 600; cursor: pointer" type="button">Save draft</button>
+<button style="min-height: 44px; padding: 10px 18px; border: 0; border-radius: 8px; background: #0E5A63; color: #FFFFFF; font-weight: 600; cursor: pointer" type="button">Send</button>
+</div>
+</div>
+</form>
+<div style="display: flex; flex-wrap: wrap; gap: 8px"><a href="MSG-SCR-12.html" style="min-height: 40px; box-sizing: border-box; padding: 8px 14px; border-radius: 8px; border: 1px solid #0E5A63; color: #0E5A63; background: #FFFFFF; font-weight: 600; font-size: 14px; text-decoration: none; display: inline-flex; align-items: center">Get coaching</a><a href="MSG-SCR-B01.html" style="min-height: 40px; box-sizing: border-box; padding: 8px 14px; border-radius: 8px; border: 1px solid #0E5A63; color: #0E5A63; background: #FFFFFF; font-weight: 600; font-size: 14px; text-decoration: none; display: inline-flex; align-items: center">Rewrite</a></div><aside aria-labelledby="tc" role="dialog" style="flex: 0 1 380px; padding: 24px; background: #FFFFFF; border: 2px solid #B4531A; border-radius: 12px; display: flex; flex-direction: column; gap: 14px">
+<span style="font-size: 12px; font-weight: 700; color: #7A2E0E; text-transform: uppercase; letter-spacing: 0.05em">Only you can see this</span>
+<h2 id="tc" style="margin: 0; font-size: 20px; font-weight: 700">This may come across as harsh</h2>
+<ul style="margin: 0; padding-left: 20px; font-size: 15px; line-height: 1.6"><li>“<mark style="background: #FCE3C8">[phrase of concern]</mark>” — [short reason]</li></ul>
+<p style="margin: 0; font-size: 13px; color: #4E5966">The tone check reviews only your draft when you choose Send. It is not saved in the record, the recipient never sees it, and your text is not used for training.</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<button style="min-height: 44px; padding: 10px 18px; border: 0; border-radius: 8px; background: #0E5A63; color: #FFFFFF; font-weight: 600; cursor: pointer" type="button">Edit message</button>
+<a href="MSG-SCR-02.html" style="min-height: 44px; box-sizing: border-box; padding: 10px 18px; border-radius: 8px; border: 1px solid #C7CDD3; color: #17212B; font-weight: 600; text-decoration: none">Send anyway</a>
+</div>
+<span style="font-size: 13px; color: #4E5966">If the AI service is down, your message can still be sent.</span>
+</aside>
+</main>
+</div>
+</div>
+<div class="pp-wf-bar" style="position: fixed; right: 12px; bottom: 12px; z-index: 50; display: flex; gap: 12px; align-items: center; padding: 8px 12px; border-radius: 10px; background: #17212B; color: #FFFFFF; font: 13px 'Public Sans', system-ui, sans-serif; box-shadow: 0 4px 16px rgba(0,0,0,.2)"><strong>MSG-SCR-03</strong><a href="../index.html" style="color:#BFE3E3">Index</a><a style="color:#BFE3E3" href="MSG-SCR-02.html">← Previous</a><a style="color:#BFE3E3" href="MSG-SCR-04.html">Next →</a></div>
+</body>
+</html>

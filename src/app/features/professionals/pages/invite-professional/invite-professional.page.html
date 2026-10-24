@@ -1,0 +1,152 @@
+<div class="pro-page-container">
+  <main class="pro-main">
+    <a routerLink="/professionals" class="back-link">← My professionals</a>
+
+    <div class="pro-header">
+      <h1 class="pro-title">Invite a professional</h1>
+    </div>
+
+    @if (errorMessage()) {
+      <div class="alert alert-error" role="alert">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    @if (successMessage()) {
+      <div class="alert alert-success" role="status">
+        {{ successMessage() }}
+      </div>
+    }
+
+    <form class="pro-form" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <label class="form-label">
+          Name
+          <input
+            type="text"
+            class="form-input"
+            name="name"
+            [value]="name()"
+            (input)="onNameInput($event)"
+            required
+          />
+        </label>
+
+        <label class="form-label">
+          Email
+          <input
+            type="email"
+            class="form-input"
+            name="email"
+            [value]="email()"
+            (input)="onEmailInput($event)"
+            required
+          />
+        </label>
+      </div>
+
+      <label class="form-label">
+        Type
+        <select class="form-select" name="type" [value]="type()" (change)="onTypeChange($event)">
+          <option value="Attorney">Attorney</option>
+          <option value="Mediator">Mediator</option>
+          <option value="Therapist">Therapist</option>
+        </select>
+      </label>
+
+      <fieldset class="form-fieldset">
+        <legend class="fieldset-legend">What they can see</legend>
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [checked]="scopeMessages()"
+              (change)="scopeMessages.set(!scopeMessages())"
+            />
+            Messages
+          </label>
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [checked]="scopeCalendar()"
+              (change)="scopeCalendar.set(!scopeCalendar())"
+            />
+            Calendar
+          </label>
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [checked]="scopeExpenses()"
+              (change)="scopeExpenses.set(!scopeExpenses())"
+            />
+            Expenses
+          </label>
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [checked]="scopeChildInfo()"
+              (change)="scopeChildInfo.set(!scopeChildInfo())"
+            />
+            Child information
+          </label>
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [checked]="scopeDocuments()"
+              (change)="scopeDocuments.set(!scopeDocuments())"
+            />
+            Documents
+          </label>
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [checked]="scopeContactAttempts()"
+              (change)="scopeContactAttempts.set(!scopeContactAttempts())"
+            />
+            Contact attempts
+          </label>
+        </div>
+      </fieldset>
+
+      <div class="form-grid">
+        <label class="form-label">
+          From
+          <input
+            type="date"
+            class="form-input"
+            name="dateFrom"
+            [value]="dateFrom()"
+            (input)="onDateFromInput($event)"
+          />
+        </label>
+        <label class="form-label">
+          To
+          <input
+            type="date"
+            class="form-input"
+            name="dateTo"
+            [value]="dateTo()"
+            (input)="onDateToInput($event)"
+          />
+        </label>
+      </div>
+
+      <label class="form-label">
+        Access ends
+        <input
+          type="date"
+          class="form-input"
+          name="accessEndsAt"
+          [value]="accessEndsAt()"
+          (input)="onAccessEndsInput($event)"
+          required
+        />
+      </label>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Send invite</button>
+        <a routerLink="/professionals" class="btn btn-ghost">Cancel</a>
+      </div>
+    </form>
+  </main>
+</div>

@@ -1,0 +1,86 @@
+<div class="contact-log-container">
+  <header class="log-header">
+    <h1 class="page-title">Contact-attempt log</h1>
+    <p class="page-subtitle">
+      Every invite and every attempt to reach your co-parent, with date and time. Entries are saved
+      before anything is sent and can’t be changed or deleted.
+    </p>
+  </header>
+
+  <div class="filters-bar">
+    <label class="filter-field">
+      <span class="filter-label">Type</span>
+      <select class="filter-select" (change)="onTypeChange($event)">
+        <option value="All">All</option>
+        <option value="Invite">Invite</option>
+        <option value="Message">Message</option>
+      </select>
+    </label>
+
+    <label class="filter-field">
+      <span class="filter-label">Channel</span>
+      <select class="filter-select" (change)="onChannelChange($event)">
+        <option value="All">All</option>
+        <option value="Text">Text</option>
+        <option value="Email">Email</option>
+        <option value="Letter">Link</option>
+      </select>
+    </label>
+
+    <span class="filter-status-note">Filter options are active.</span>
+  </div>
+
+  <div class="table-card">
+    <table class="attempts-table" aria-label="Contact attempt records">
+      <thead>
+        <tr>
+          <th scope="col">Attempt time</th>
+          <th scope="col">Type</th>
+          <th scope="col">Channel</th>
+          <th scope="col">Message preview</th>
+          <th scope="col">Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of filteredAttempts(); track item.id) {
+          <tr>
+            <td class="cell-time">{{ item.attemptedAt }}</td>
+            <td class="cell-type">{{ getAttemptType(item) }}</td>
+            <td class="cell-channel">{{ item.channel }}</td>
+            <td class="cell-preview">{{ getMessagePreview(item) }}</td>
+            <td>
+              <span
+                class="result-badge"
+                [class.result-success]="
+                  item.result === 'Delivered' ||
+                  item.result === 'Opened' ||
+                  item.result === 'Replied'
+                "
+                [class.result-failed]="item.result === 'Failed' || item.result === 'Refused'"
+              >
+                {{
+                  item.result === 'Delivered' ||
+                  item.result === 'Opened' ||
+                  item.result === 'Replied'
+                    ? 'Success'
+                    : 'Failed'
+                }}
+              </span>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5" class="empty-cell">No contact attempts match the chosen filters.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <footer class="log-footer">
+    <p class="footer-note">
+      This log is part of your record. Include it in an export from
+      <a routerLink="/records/export" class="link-dark">Export records</a>.
+    </p>
+  </footer>
+</div>

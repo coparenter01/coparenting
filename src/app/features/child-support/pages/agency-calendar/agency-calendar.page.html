@@ -1,0 +1,90 @@
+<div class="css-page-container">
+  <div class="top-nav">
+    <a routerLink="/child-support" class="back-link" id="link-back-css">← Child support</a>
+  </div>
+
+  <header class="header">
+    <div class="header-main">
+      <h1 class="title">Agency items in calendar</h1>
+      <p class="subtitle">
+        Official court hearings, review sessions, and required document deadlines.
+      </p>
+    </div>
+    <div class="filter-row">
+      <label for="select-status-filter" class="filter-label">Filter</label>
+      <select
+        id="select-status-filter"
+        class="form-control-select"
+        [value]="filterStatus()"
+        (change)="onFilterChange($event)"
+      >
+        <option value="all">All events</option>
+        <option value="scheduled">Scheduled</option>
+        <option value="completed">Completed</option>
+      </select>
+    </div>
+  </header>
+
+  <div class="hearings-list">
+    @for (h of filteredHearings(); track h.hearingId) {
+      <article class="card hearing-card">
+        <div class="hearing-header">
+          <div>
+            <span class="badge" [class.badge-active]="h.status === 'scheduled'">
+              {{ h.status }}
+            </span>
+            <h2 class="hearing-title">{{ h.title }}</h2>
+          </div>
+          <div class="hearing-time">
+            {{ formatDate(h.hearingDate) }}
+          </div>
+        </div>
+
+        <div class="hearing-details">
+          <div class="detail-item">
+            <span class="detail-label">Location:</span>
+            <span class="detail-val">{{ h.location }}</span>
+          </div>
+          @if (h.docketNumber) {
+            <div class="detail-item">
+              <span class="detail-label">Docket #:</span>
+              <span class="detail-val">{{ h.docketNumber }}</span>
+            </div>
+          }
+        </div>
+
+        @if (h.requiredDocuments.length > 0) {
+          <div class="docs-section">
+            <span class="detail-label">Required documents:</span>
+            <ul class="docs-list">
+              @for (doc of h.requiredDocuments; track doc) {
+                <li>{{ doc }}</li>
+              }
+            </ul>
+          </div>
+        }
+
+        <div class="card-actions">
+          <button
+            type="button"
+            class="btn-secondary"
+            [id]="'btn-add-cal-' + h.hearingId"
+            [disabled]="isAdded(h.hearingId)"
+            (click)="addToCalendar(h.hearingId)"
+          >
+            {{ isAdded(h.hearingId) ? 'Added to calendar' : 'Add to calendar' }}
+          </button>
+          <a
+            routerLink="/child-support/share-item"
+            class="btn-subtle"
+            [id]="'btn-share-cal-' + h.hearingId"
+          >
+            Share with co-parent
+          </a>
+        </div>
+      </article>
+    } @empty {
+      <div class="empty-notice">No agency events found matching this filter.</div>
+    }
+  </div>
+</div>

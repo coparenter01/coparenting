@@ -1,0 +1,70 @@
+<div class="safety-container">
+  <div class="safety-header">
+    <h1 class="safety-title">Privacy and safety</h1>
+  </div>
+
+  <nav class="safety-nav" aria-label="Privacy and safety sections">
+    <a routerLink="/safety" class="safety-nav-link safety-nav-link--active" aria-current="page">
+      Safety Mode
+    </a>
+    <a routerLink="/safety/alerts-images" class="safety-nav-link"> Alerts and images </a>
+    <a routerLink="/safety/ai-data" class="safety-nav-link"> AI and your data </a>
+  </nav>
+
+  <section class="safety-card">
+    <div class="card-header-row">
+      <h2 class="card-title">Safety Mode</h2>
+      <pp-status-chip
+        [variant]="safetyModeActive() ? 'success' : 'neutral'"
+        [text]="safetyModeActive() ? 'On' : 'Off'"
+      />
+    </div>
+
+    <p class="safety-description">
+      Safety Mode hides your location, address and contact details from the other parent until you
+      share them, makes alerts discreet, and adds an Exit now button to every screen.
+    </p>
+
+    <div class="safety-switch-row">
+      <div class="switch-label-group">
+        <span class="switch-heading">Safety Mode</span>
+        <span class="switch-subheading">
+          Turning it on shows a safety notice first. Turning it off needs a code we send you.
+        </span>
+      </div>
+
+      <button
+        type="button"
+        role="switch"
+        class="switch-control"
+        [class.switch-control--active]="safetyModeActive()"
+        [attr.aria-checked]="safetyModeActive()"
+        aria-label="Toggle Safety Mode"
+        (click)="onToggleClick()"
+      >
+        <span class="switch-thumb"></span>
+      </button>
+    </div>
+
+    <div class="actions-row">
+      @if (!safetyModeActive()) {
+        <a routerLink="/safety/turn-on" class="btn btn-primary"> Turn on Safety Mode </a>
+      } @else {
+        <a routerLink="/safety/turn-off" class="btn btn-danger-outline"> Turn off Safety Mode </a>
+      }
+      <a routerLink="/safety/exit-neutral" class="btn btn-secondary"> What Exit now does </a>
+    </div>
+
+    <div class="info-callout">
+      <span class="material-symbols-rounded callout-icon" aria-hidden="true">visibility_off</span>
+      <span class="callout-text"> Your co-parent is never told whether Safety Mode is on. </span>
+    </div>
+
+    <div class="links-row">
+      <a routerLink="/safety/resources" class="text-link">
+        <span class="material-symbols-rounded link-icon" aria-hidden="true">shield</span>
+        Public safety resources
+      </a>
+    </div>
+  </section>
+</div>

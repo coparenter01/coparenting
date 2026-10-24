@@ -1,0 +1,160 @@
+<div class="ocr-container">
+  <div class="header-row">
+    <a routerLink="/expenses/new" class="back-link">← Manual Entry</a>
+    <h1 class="page-title">AI-Assisted Receipt Scanner</h1>
+    <p class="page-subtitle">
+      Upload a photo of your receipt to auto-fill merchant, date, and amount
+    </p>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="alert alert-error">{{ errorMessage() }}</div>
+  }
+
+  <div class="scanner-grid">
+    <div class="upload-panel">
+      <div class="drop-zone">
+        <span class="scan-icon">📷</span>
+        <strong>Drop your receipt image here</strong>
+        <span class="file-limits">JPG, PNG or PDF (up to 15 MB)</span>
+
+        <label for="ocr-upload" class="upload-btn">
+          Select Receipt Image
+          <input
+            id="ocr-upload"
+            type="file"
+            accept="image/jpeg,image/png,application/pdf"
+            (change)="onFileSelected($event)"
+            class="hidden-file-input"
+          />
+        </label>
+      </div>
+
+      <div class="sample-receipts">
+        <span class="sample-label">Or test with a sample receipt:</span>
+        <div class="sample-buttons">
+          <button type="button" (click)="analyzeReceipt('cvs-pharmacy-rx.jpg')" class="sample-btn">
+            Pharmacy Copay
+          </button>
+          <button
+            type="button"
+            (click)="analyzeReceipt('dental-clinic-cleaning.jpg')"
+            class="sample-btn"
+          >
+            Dental Cleaning
+          </button>
+          <button
+            type="button"
+            (click)="analyzeReceipt('target-school-shoes.jpg')"
+            class="sample-btn"
+          >
+            School Shoes
+          </button>
+        </div>
+      </div>
+
+      @if (isAnalyzing()) {
+        <div class="analyzing-indicator">
+          <div class="spinner"></div>
+          <span>Extracting text and amounts via on-device OCR…</span>
+        </div>
+      }
+    </div>
+
+    <div class="review-panel">
+      <div class="review-card">
+        <div class="review-header">
+          <h2 class="card-title">Extracted Details</h2>
+          @if (ocrResult()) {
+            <span class="confidence-badge">
+              {{ (ocrResult()!.confidenceScore * 100).toFixed(0) }}% Confidence
+            </span>
+          }
+        </div>
+
+        @if (!ocrResult() && !isAnalyzing()) {
+          <div class="empty-state">
+            <p>Upload a receipt or pick a sample on the left to start OCR analysis.</p>
+          </div>
+        } @else if (ocrResult()) {
+          <form (ngSubmit)="saveVerifiedExpense()" class="extracted-form">
+            <div class="form-group">
+              <label for="ocr-merchant" class="form-label">Merchant / Description *</label>
+              <input
+                id="ocr-merchant"
+                type="text"
+                [(ngModel)]="merchantName"
+                name="merchantName"
+                class="form-input"
+                required
+              />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group flex-1">
+                <label for="ocr-amount" class="form-label">Amount (USD) *</label>
+                <input
+                  id="ocr-amount"
+                  type="text"
+                  inputmode="decimal"
+                  [(ngModel)]="amountStr"
+                  name="amountStr"
+                  class="form-input"
+                  required
+                />
+              </div>
+
+              <div class="form-group flex-1">
+                <label for="ocr-date" class="form-label">Date *</label>
+                <input
+                  id="ocr-date"
+                  type="date"
+                  [(ngModel)]="expenseDate"
+                  name="expenseDate"
+                  class="form-input"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="ocr-category" class="form-label">Category *</label>
+              <select
+                id="ocr-category"
+                [(ngModel)]="category"
+                name="category"
+                class="form-input"
+                required
+              >
+                @for (cat of categories; track cat) {
+                  <option [value]="cat">{{ cat }}</option>
+                }
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="ocr-note" class="form-label">Notes</label>
+              <textarea
+                id="ocr-note"
+                [(ngModel)]="note"
+                name="note"
+                rows="2"
+                class="form-textarea"
+              ></textarea>
+            </div>
+
+            <div class="raw-text-box">
+              <span class="raw-label">OCR Raw Text Snippet:</span>
+              <pre class="raw-code">{{ ocrResult()?.rawText }}</pre>
+            </div>
+
+            <div class="form-actions">
+              <button type="submit" class="btn btn-primary">Save as Expense</button>
+              <a routerLink="/expenses" class="btn btn-secondary">Cancel</a>
+            </div>
+          </form>
+        }
+      </div>
+    </div>
+  </div>
+</div>

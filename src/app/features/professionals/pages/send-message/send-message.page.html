@@ -1,0 +1,78 @@
+<div class="pro-page-container">
+  <main class="pro-main">
+    <a routerLink="/professionals" class="back-link">← My professionals</a>
+
+    <div class="pro-header">
+      <h1 class="pro-title">Send a message to {{ professionalName() }}</h1>
+    </div>
+
+    @if (errorMessage()) {
+      <div class="alert alert-error" role="alert">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    @if (successMessage()) {
+      <div class="alert alert-success" role="status">
+        {{ successMessage() }}
+      </div>
+    }
+
+    <form class="pro-form" (ngSubmit)="onSend()">
+      <label class="form-label">
+        Recipient
+        <select
+          class="form-select"
+          name="recipient"
+          [value]="selectedAccessId()"
+          (change)="onRecipientChange($event)"
+        >
+          @for (access of activeAccesses(); track access.id) {
+            <option [value]="access.id">
+              {{ access.professional.name }} ({{ access.professional.type }})
+            </option>
+          }
+        </select>
+      </label>
+
+      <label class="form-label">
+        Subject
+        <input
+          type="text"
+          class="form-input"
+          name="subject"
+          [value]="subject()"
+          (input)="onSubjectInput($event)"
+          required
+        />
+      </label>
+
+      <label class="form-label">
+        Message
+        <textarea
+          rows="6"
+          class="form-textarea"
+          name="body"
+          [value]="body()"
+          (input)="onBodyInput($event)"
+          required
+        ></textarea>
+      </label>
+
+      <label class="form-label">
+        Attachment (optional)
+        <input type="file" class="form-file" name="attachment" (change)="onFileChange($event)" />
+      </label>
+
+      <div class="confirm-notice">
+        You are about to send this message to {{ professionalName() }}. They will see only this
+        message and your note.
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Send</button>
+        <a routerLink="/professionals" class="btn btn-ghost">Cancel</a>
+      </div>
+    </form>
+  </main>
+</div>

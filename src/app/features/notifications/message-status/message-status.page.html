@@ -1,0 +1,57 @@
+<section class="status-container">
+  <div class="status-header">
+    <h1>Message Delivery Status</h1>
+  </div>
+
+  <div class="timeline-card">
+    @if (message(); as msg) {
+      <div class="timeline-step">
+        <div class="step-marker"></div>
+        <div class="step-content">
+          <span class="step-title">Message Sent</span>
+          <span class="step-time">{{ msg.sent_at | date: 'medium' }}</span>
+        </div>
+      </div>
+
+      <div class="timeline-step">
+        <div class="step-marker"></div>
+        <div class="step-content">
+          <span class="step-title">Delivered to Recipient Device</span>
+          <span class="step-time">{{ msg.delivered_at || msg.sent_at | date: 'medium' }}</span>
+        </div>
+      </div>
+
+      <div class="timeline-step">
+        <div class="step-marker"></div>
+        <div class="step-content">
+          <span class="step-title">First Read Time</span>
+          <span class="step-time">
+            {{ msg.read_at ? (msg.read_at | date: 'medium') : 'Pending read confirmation' }}
+          </span>
+        </div>
+      </div>
+    } @else {
+      <div class="timeline-step">
+        <div class="step-marker"></div>
+        <div class="step-content">
+          <span class="step-title">Message Sent</span>
+          <span class="step-time">Just now</span>
+        </div>
+      </div>
+      <div class="timeline-step">
+        <div class="step-marker"></div>
+        <div class="step-content">
+          <span class="step-title">Delivered (Push notification)</span>
+          <span class="step-time">Pending verification</span>
+        </div>
+      </div>
+    }
+
+    <div class="safety-note">
+      <strong>Safety Mode Privacy Rule:</strong> If the recipient has enabled Safety Mode, exact
+      read timestamps may be concealed to protect user security.
+    </div>
+
+    <a routerLink="/messages" class="btn-secondary"> Return to Messages </a>
+  </div>
+</section>

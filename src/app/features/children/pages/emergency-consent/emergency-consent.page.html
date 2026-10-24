@@ -1,0 +1,56 @@
+<div class="public-page-wrapper">
+  <header class="public-header">
+    <a routerLink="/" class="brand-title">ParentPath</a>
+    <nav aria-label="Public" class="public-nav">
+      <a routerLink="/safety" class="nav-link">Safety resources</a>
+      <a routerLink="/help" class="nav-link">Help</a>
+      <a routerLink="/auth/login" class="nav-link">Sign in</a>
+    </nav>
+  </header>
+
+  <main class="public-main">
+    <h1 class="page-title">Emergency contact</h1>
+
+    <section class="consent-card" aria-label="Emergency contact consent decision">
+      <p class="consent-text">
+        <strong>{{ inviterName() }}</strong> asked you to be an emergency contact for
+        <strong>{{ childName() }}</strong
+        >.
+      </p>
+
+      <p class="consent-explanation">
+        Emergency contacts are shared with authorized co-parents, schools, doctors, and caregivers
+        to reach you if parents cannot be reached in an urgent situation. You can accept, decline,
+        or stop being a contact at any time.
+      </p>
+
+      @if (currentStatus() === 'Consented') {
+        <div class="status-banner status-agreed" role="status">
+          ✓ You are currently listed as an active emergency contact for {{ childName() }}.
+        </div>
+      } @else if (currentStatus() === 'Withdrawn') {
+        <div class="status-banner status-withdrawn" role="status">
+          You have declined or withdrawn your consent and are not listed as an emergency contact.
+        </div>
+      }
+
+      <div class="actions-row">
+        @if (currentStatus() !== 'Consented') {
+          <button type="button" class="btn-agree" (click)="setConsent('Consented')">I agree</button>
+        }
+
+        @if (currentStatus() === 'Pending') {
+          <button type="button" class="btn-decline" (click)="setConsent('Withdrawn')">
+            No thanks
+          </button>
+        }
+
+        @if (currentStatus() === 'Consented') {
+          <button type="button" class="btn-withdraw" (click)="setConsent('Withdrawn')">
+            Stop being a contact
+          </button>
+        }
+      </div>
+    </section>
+  </main>
+</div>

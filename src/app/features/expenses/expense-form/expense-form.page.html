@@ -1,0 +1,181 @@
+<div class="expense-form-container">
+  <div class="form-header">
+    <a routerLink="/expenses" class="back-link">← Expenses</a>
+    <h1 class="page-title">Add Expense</h1>
+    <div class="ocr-banner">
+      <span>Have a receipt? Let AI read it for you automatically.</span>
+      <a routerLink="/expenses/ocr" class="ocr-link">Add from a receipt →</a>
+    </div>
+  </div>
+
+  @if (errorMessage()) {
+    <div class="alert alert-error">{{ errorMessage() }}</div>
+  }
+
+  <div class="form-layout">
+    <form (ngSubmit)="saveExpense()" class="main-form-card">
+      <div class="form-group">
+        <label for="desc-input" class="form-label">Description *</label>
+        <input
+          id="desc-input"
+          type="text"
+          [(ngModel)]="description"
+          name="description"
+          maxlength="100"
+          placeholder="e.g. School shoes, Soccer uniform, Pediatric copay"
+          class="form-input"
+          required
+        />
+        <span class="field-hint">{{ description.length }} / 100 characters</span>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group flex-1">
+          <label for="category-select" class="form-label">Category *</label>
+          <select
+            id="category-select"
+            [(ngModel)]="category"
+            name="category"
+            class="form-input"
+            required
+          >
+            <option value="" disabled>Select category…</option>
+            @for (cat of categories; track cat) {
+              <option [value]="cat">{{ cat }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="form-group flex-1">
+          <label for="date-input" class="form-label">Expense Date *</label>
+          <input
+            id="date-input"
+            type="date"
+            [(ngModel)]="expenseDate"
+            name="expenseDate"
+            class="form-input"
+            required
+          />
+        </div>
+
+        <div class="form-group flex-1">
+          <label for="amount-input" class="form-label">Amount (USD) *</label>
+          <input
+            id="amount-input"
+            type="text"
+            inputmode="decimal"
+            [(ngModel)]="amountStr"
+            name="amountStr"
+            placeholder="0.00"
+            class="form-input"
+            required
+          />
+        </div>
+      </div>
+
+      <div class="form-group">
+        <span class="form-label">Children (optional)</span>
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [checked]="isChildSelected('child-1')"
+              (change)="toggleChild('child-1', 'Maya Rivera')"
+            />
+            <span>Maya Rivera</span>
+          </label>
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [checked]="isChildSelected('child-2')"
+              (change)="toggleChild('child-2', 'Leo Rivera')"
+            />
+            <span>Leo Rivera</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="note-input" class="form-label">Note (optional)</label>
+        <textarea
+          id="note-input"
+          [(ngModel)]="note"
+          name="note"
+          maxlength="500"
+          rows="3"
+          placeholder="Add any context or agreement reference…"
+          class="form-textarea"
+        ></textarea>
+        <span class="field-hint">{{ note.length }} / 500 characters</span>
+      </div>
+
+      <div class="form-group">
+        <span class="form-label">Who can see this expense</span>
+        <div class="radio-group">
+          <label class="radio-label">
+            <input type="radio" [(ngModel)]="visibility" name="visibility" value="Shared" />
+            <div>
+              <strong>Shared with my co-parent (Default)</strong>
+              <p class="radio-hint">
+                Visible in the shared household log and eligible for reimbursement requests.
+              </p>
+            </div>
+          </label>
+
+          <label class="radio-label">
+            <input type="radio" [(ngModel)]="visibility" name="visibility" value="Private" />
+            <div>
+              <strong>Private (Only me)</strong>
+              <p class="radio-hint">
+                Only you can see this. Can be shared later, but a shared expense cannot be made
+                private again.
+              </p>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save Expense</button>
+        <a routerLink="/expenses" class="btn btn-secondary">Cancel</a>
+      </div>
+    </form>
+
+    <div class="receipts-sidebar">
+      <div class="sidebar-card">
+        <h2 class="sidebar-title">Receipts</h2>
+        <p class="sidebar-subtitle">JPG, PNG or PDF · up to 5 files</p>
+
+        <div class="upload-dropzone">
+          <label for="file-upload" class="upload-btn">
+            Choose Receipt File
+            <input
+              id="file-upload"
+              type="file"
+              accept="image/jpeg,image/png,application/pdf"
+              (change)="onFileSelected($event)"
+              class="hidden-file-input"
+            />
+          </label>
+        </div>
+
+        @if (receiptFiles().length > 0) {
+          <div class="file-list">
+            @for (f of receiptFiles(); track f.name) {
+              <div class="file-item">
+                <span class="file-icon">📄</span>
+                <span class="file-name">{{ f.name }}</span>
+                <span class="file-size">{{ (f.size / 1024).toFixed(0) }} KB</span>
+              </div>
+            }
+          </div>
+        }
+
+        <p class="sidebar-note">
+          Attached receipts are preserved for legal court compliance. Once saved with the expense,
+          files cannot be deleted.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>

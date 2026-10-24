@@ -1,0 +1,161 @@
+<div class="contacts-container">
+  <a routerLink="/children" class="back-link">← Children list and child form</a>
+
+  <div class="top-row">
+    <h1 class="page-title">Emergency contacts</h1>
+    <button type="button" class="btn-primary" (click)="toggleAddForm()">
+      {{ showAddForm() ? 'Close' : 'Invite contact' }}
+    </button>
+  </div>
+
+  @if (copyMessage()) {
+    <div class="notice-banner" role="status">
+      {{ copyMessage() }}
+    </div>
+  }
+
+  @if (showAddForm()) {
+    <section class="form-card" aria-label="Invite emergency contact form">
+      <h2 class="page-title">Invite emergency contact</h2>
+
+      <div class="field-group">
+        <label for="contact-name">Full name</label>
+        <input
+          id="contact-name"
+          type="text"
+          class="field-input"
+          [value]="newName()"
+          (input)="updateField('name', $event)"
+          placeholder="e.g. Elena Vance, Marcus Brody"
+        />
+      </div>
+
+      <div class="form-grid">
+        <div class="field-group">
+          <label for="contact-child">For child</label>
+          <select
+            id="contact-child"
+            class="field-select"
+            [value]="selectedChildId()"
+            (change)="updateField('child', $event)"
+          >
+            <option value="">All children</option>
+            @for (child of children(); track child.id) {
+              <option [value]="child.id">{{ child.first_name }} {{ child.last_name }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="contact-rel">Relationship</label>
+          <input
+            id="contact-rel"
+            type="text"
+            class="field-input"
+            [value]="newRelationship()"
+            (input)="updateField('rel', $event)"
+            placeholder="e.g. Grandparent, Pediatrician"
+          />
+        </div>
+      </div>
+
+      <div class="form-grid">
+        <div class="field-group">
+          <label for="contact-phone">Phone number</label>
+          <input
+            id="contact-phone"
+            type="tel"
+            class="field-input"
+            [value]="newPhone()"
+            (input)="updateField('phone', $event)"
+            placeholder="+1 555-019-4455"
+          />
+        </div>
+
+        <div class="field-group">
+          <label for="contact-email">Email (for consent invitation)</label>
+          <input
+            id="contact-email"
+            type="email"
+            class="field-input"
+            [value]="newEmail()"
+            (input)="updateField('email', $event)"
+            placeholder="contact@example.com"
+          />
+        </div>
+      </div>
+
+      <label class="field-checkbox">
+        <input type="checkbox" [checked]="isPickup()" (change)="togglePickup($event)" />
+        Authorized school & daycare pickup contact
+      </label>
+
+      <div class="button-row">
+        <button
+          type="button"
+          class="btn-primary"
+          [disabled]="!newName().trim() || !newPhone().trim()"
+          (click)="saveContact()"
+        >
+          Send invitation
+        </button>
+        <button type="button" class="btn-cancel" (click)="toggleAddForm()">Cancel</button>
+      </div>
+    </section>
+  }
+
+  <div class="table-wrapper">
+    <table class="contacts-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Relationship</th>
+          <th>Phone</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (contact of contacts(); track contact.id) {
+          <tr>
+            <td>
+              <strong>{{ contact.name }}</strong>
+              @if (contact.is_authorized_pickup) {
+                <div class="pickup-badge">✓ Authorized pickup</div>
+              }
+            </td>
+            <td>{{ contact.relationship }}</td>
+            <td>{{ contact.phone }}</td>
+            <td>
+              @if (contact.consent_status === 'Consented') {
+                <span class="badge-active">Active</span>
+              } @else if (contact.consent_status === 'Pending') {
+                <span class="badge-invited">Invited</span>
+              } @else {
+                <span class="badge-withdrawn">{{ contact.consent_status }}</span>
+              }
+            </td>
+            <td>
+              <button
+                type="button"
+                class="btn-copy"
+                (click)="copyConsentLink(contact.consent_token)"
+              >
+                Copy consent link
+              </button>
+              <button type="button" class="btn-remove" (click)="removeContact(contact.id)">
+                Remove
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5">
+              No emergency contacts added yet. Click "Invite contact" to create one.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

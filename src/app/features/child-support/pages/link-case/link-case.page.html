@@ -1,0 +1,110 @@
+<div class="css-page-container">
+  <div class="top-nav">
+    <a routerLink="/child-support" class="back-link" id="link-back-css">← Child support</a>
+  </div>
+
+  <header class="header">
+    <h1 class="title">Link your child support case</h1>
+    <p class="subtitle">Connect to your state agency portal to synchronize orders and balances.</p>
+  </header>
+
+  @if (errorMessage()) {
+    <div class="alert-error" role="alert" id="link-case-error">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  @if (codeSent()) {
+    <div class="alert-success" role="status" id="link-case-code-sent">
+      A one-time verification code has been dispatched to the mobile number on file with your
+      agency.
+    </div>
+  }
+
+  <form class="case-form" (submit)="$event.preventDefault(); onSubmit()">
+    <div class="form-group">
+      <label for="state-select" class="form-label">State</label>
+      <select
+        id="state-select"
+        class="form-control"
+        [value]="state()"
+        (change)="onStateChange($event)"
+      >
+        <option value="VA">Virginia (DCSE)</option>
+        <option value="MD">Maryland (Child Support Administration)</option>
+        <option value="DC">District of Columbia (CSSD)</option>
+        <option value="TX">Texas (OAG Child Support)</option>
+        <option value="PA">Pennsylvania (BCSE)</option>
+        <option value="CA">California (DCSS)</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="case-number-input" class="form-label">Agency case number</label>
+      <input
+        type="text"
+        id="case-number-input"
+        class="form-control"
+        placeholder="e.g. CS-VA-994218"
+        [value]="caseNumber()"
+        (input)="onCaseNumberChange($event)"
+      />
+    </div>
+
+    <div class="grid-two-col">
+      <div class="form-group">
+        <label for="first-name-input" class="form-label">Legal first name</label>
+        <input
+          type="text"
+          id="first-name-input"
+          class="form-control"
+          [value]="firstName()"
+          (input)="onFirstNameChange($event)"
+        />
+      </div>
+      <div class="form-group">
+        <label for="last-name-input" class="form-label">Legal last name</label>
+        <input
+          type="text"
+          id="last-name-input"
+          class="form-control"
+          [value]="lastName()"
+          (input)="onLastNameChange($event)"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="dob-input" class="form-label">Date of birth</label>
+      <input
+        type="date"
+        id="dob-input"
+        class="form-control"
+        [value]="dob()"
+        (input)="onDobChange($event)"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="code-input" class="form-label">One-time code</label>
+      <div class="code-input-row">
+        <input
+          type="text"
+          id="code-input"
+          class="form-control"
+          placeholder="6-digit code"
+          [value]="code()"
+          (input)="onCodeChange($event)"
+        />
+        <button type="button" class="btn-secondary" id="btn-send-code" (click)="sendCode()">
+          Send code
+        </button>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" id="btn-continue-consent">Continue</button>
+      <a routerLink="/child-support" class="btn-subtle" id="link-cancel-link">Cancel</a>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,56 @@
+<div class="send-status-container">
+  <div class="breadcrumb-nav">
+    <a routerLink="/notifications" class="back-link">
+      <span aria-hidden="true">&larr;</span> Notifications
+    </a>
+  </div>
+
+  <header class="page-header">
+    <h1 class="page-title">Send status</h1>
+    <p class="page-subtitle">
+      The result of an email or text the app sent for you, such as an invite, a verification code or
+      a non-app message.
+    </p>
+  </header>
+
+  <section class="status-card" aria-label="Dispatch status details">
+    <div class="status-row">
+      <span class="row-label">Send type</span>
+      <span class="row-value font-medium">{{ sendType() }}</span>
+    </div>
+    <div class="status-row">
+      <span class="row-label">Channel</span>
+      <span class="row-value">{{ latestAttempt()?.channel ?? 'Email' }}</span>
+    </div>
+    <div class="status-row">
+      <span class="row-label">Recipient</span>
+      <span class="row-value font-mono">{{ maskedRecipient() }}</span>
+    </div>
+    <div class="status-row">
+      <span class="row-label">Sent at</span>
+      <span class="row-value">{{ latestAttempt()?.attemptedAt ?? 'Just now' }}</span>
+    </div>
+    <div class="status-row">
+      <span class="row-label">Result</span>
+      <span class="row-value result-badge result-delivered">
+        {{ latestAttempt()?.result ?? 'Delivered' }}
+      </span>
+    </div>
+    <div class="status-row">
+      <span class="row-label">Reply received</span>
+      <span class="row-value text-muted">None</span>
+    </div>
+
+    <div class="status-footer">
+      <span class="footer-note"
+        >Expired items stop retrying. Every outbound message is recorded permanently.</span
+      >
+    </div>
+  </section>
+
+  <div class="log-link-row">
+    <a routerLink="/accounts/contact-attempts" class="contact-log-link">
+      Open the contact-attempt log &rarr;
+    </a>
+  </div>
+</div>

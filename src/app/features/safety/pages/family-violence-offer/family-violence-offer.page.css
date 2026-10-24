@@ -1,0 +1,123 @@
+.modal-backdrop {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.modal-card {
+  width: 100%;
+  max-width: 540px;
+  background: var(--pp-surface);
+  border: 1px solid var(--pp-outline-variant);
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.modal-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.shield-badge {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--pp-primary-50);
+  color: var(--pp-primary-700);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.shield-badge .material-symbols-rounded {
+  font-size: 32px;
+}
+
+.modal-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--pp-ink);
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.lead-text {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--pp-ink);
+}
+
+.safeguard-box {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 10px;
+  background: var(--pp-surface-variant);
+}
+
+.box-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.875rem;
+  color: var(--pp-ink-2);
+  line-height: 1.4;
+}
+
+.box-item .material-symbols-rounded {
+  color: var(--pp-primary-600);
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 8px;
+  border-top: 1px solid var(--pp-outline-variant);
+}
+
+.btn {
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: opacity 160ms ease;
+}
+
+.btn-primary {
+  background: var(--pp-primary-600);
+  color: #ffffff;
+}
+
+.btn-secondary {
+  background: transparent;
+  border-color: var(--pp-outline);
+  color: var(--pp-ink);
+}

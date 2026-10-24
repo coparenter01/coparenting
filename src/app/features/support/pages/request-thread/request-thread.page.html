@@ -1,0 +1,93 @@
+<div class="request-thread-page" data-testid="request-thread-page">
+  <a routerLink="/help/my-requests" class="back-link">← My requests</a>
+
+  @if (currentCase(); as c) {
+    <header class="header-row">
+      <h1>{{ c.caseNumber }} &middot; {{ c.subject }}</h1>
+      <span class="status-badge" data-testid="case-status-badge">
+        {{ formatStatus(c.status) }}
+      </span>
+    </header>
+
+    <section class="thread-card" aria-label="Conversation thread">
+      @for (msg of visibleMessages(); track msg.messageId) {
+        <div
+          class="message-bubble"
+          [class.parent]="msg.authorType === 'parent'"
+          [class.staff]="msg.authorType === 'staff' || msg.authorType === 'system'"
+        >
+          <span class="author-meta">
+            {{ msg.authorName }} &middot; {{ msg.createdAt | slice: 0 : 16 }}
+          </span>
+          <div class="content-box">
+            {{ msg.body }}
+          </div>
+        </div>
+      }
+    </section>
+
+    @if (c.status !== 'resolved' && c.status !== 'closed') {
+      <form class="reply-form-card" (submit)="onSendReply($event)">
+        <label for="reply-text">Reply</label>
+        <textarea
+          id="reply-text"
+          rows="4"
+          placeholder="Type your reply here..."
+          [value]="replyBody()"
+          (input)="onReplyInput($event)"
+        ></textarea>
+        <div>
+          <button type="submit" id="send-reply-btn" class="pp-button pp-button--primary">
+            Send reply
+          </button>
+        </div>
+      </form>
+    } @else {
+      <section class="resolved-card" aria-label="Case feedback and reopen">
+        <span class="resolved-badge">Case {{ c.status }}</span>
+
+        @if (!c.solved) {
+          <div class="satisfaction-row" data-testid="solved-question-row">
+            <span>Did we solve your problem?</span>
+            <button
+              type="button"
+              class="pp-button pp-button--outline pp-button--sm"
+              (click)="onRateSolved('yes')"
+            >
+              Yes
+            </button>
+            <button
+              type="button"
+              class="pp-button pp-button--outline pp-button--sm"
+              (click)="onRateSolved('no')"
+            >
+              No
+            </button>
+          </div>
+        } @else {
+          <p>
+            You rated this case: <strong>{{ c.solved === 'yes' ? 'Solved' : 'Not solved' }}</strong>
+          </p>
+        }
+
+        <p class="secondary-text">
+          Your case is {{ c.status }}. You can reopen it within 30 days by replying.
+        </p>
+
+        <div>
+          <button
+            type="button"
+            id="reopen-case-btn"
+            class="pp-button pp-button--outline"
+            (click)="onReopen()"
+          >
+            Reopen case
+          </button>
+        </div>
+      </section>
+    }
+  } @else {
+    <p>Case not found.</p>
+    <a routerLink="/help/my-requests" class="pp-button pp-button--outline">Back to My requests</a>
+  }
+</div>

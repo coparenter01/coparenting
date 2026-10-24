@@ -1,0 +1,70 @@
+<div class="compliance-container">
+  <a routerLink="/calendar" class="back-link">← Calendar (week view)</a>
+
+  <div class="header-row">
+    <h1 class="page-title">Parenting time compliance</h1>
+  </div>
+
+  <div class="filter-row">
+    <label class="field-label">
+      From
+      <input type="date" class="date-input" [(ngModel)]="fromDate" id="comp-from-date" />
+    </label>
+    <label class="field-label">
+      To
+      <input type="date" class="date-input" [(ngModel)]="toDate" id="comp-to-date" />
+    </label>
+  </div>
+
+  <div class="metrics-grid">
+    <section class="metric-card">
+      <span class="metric-label">Scheduled</span>
+      <strong class="metric-value">14 days</strong>
+      <span class="metric-sub">168 hrs Elena · 168 hrs David</span>
+    </section>
+
+    <section class="metric-card">
+      <span class="metric-label">Kept</span>
+      <strong class="metric-value">14 days</strong>
+      <span class="metric-sub">166 hrs Elena · 170 hrs David</span>
+    </section>
+
+    <section class="metric-card">
+      <span class="metric-label">Missed or changed</span>
+      <strong class="metric-value">1 swap</strong>
+      <span class="metric-sub">{{ metrics().lateExchangesCount }} late exchange (&gt;15 min)</span>
+    </section>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="compliance-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Scheduled with</th>
+          <th>Actual</th>
+          <th>Difference</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (row of complianceRows; track row.id) {
+          <tr>
+            <td>{{ row.date }}</td>
+            <td>{{ row.scheduledWith }}</td>
+            <td>{{ row.actualWith }}</td>
+            <td>
+              <span
+                class="diff-tag"
+                [class.plus]="row.diffType === 'plus'"
+                [class.minus]="row.diffType === 'minus'"
+                [class.neutral]="row.diffType === 'neutral'"
+              >
+                {{ row.difference }}
+              </span>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

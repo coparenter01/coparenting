@@ -1,0 +1,60 @@
+<div class="confirmation-page" data-testid="request-confirmation-page">
+  @if (currentCase(); as c) {
+    <section class="confirmation-card" aria-labelledby="confirmation-heading">
+      <span class="badge">Request received</span>
+
+      <h1 id="confirmation-heading">We received your request</h1>
+
+      <p>
+        Your case number is <strong data-testid="case-number-value">{{ c.caseNumber }}</strong
+        >. We reply within {{ c.priority === 'priority' ? '4 working hours' : '1 business day' }}.
+        Support is open Monday to Friday, 8 am to 8 pm Eastern.
+      </p>
+
+      <div class="facts-grid">
+        <span class="label">Case number</span>
+        <span class="value">
+          {{ c.caseNumber }}
+          <button
+            type="button"
+            id="copy-case-number-btn"
+            class="pp-button pp-button--text pp-button--sm"
+            (click)="copyCaseNumber(c.caseNumber)"
+          >
+            {{ copied() ? 'Copied!' : 'Copy' }}
+          </button>
+        </span>
+
+        <span class="label">Reply target</span>
+        <span class="value">
+          {{
+            c.priority === 'priority'
+              ? 'Priority: 4 working hours'
+              : 'Normal: 1 business day (12 support hours)'
+          }}
+        </span>
+
+        <span class="label">Subject</span>
+        <span class="value">{{ c.subject }}</span>
+      </div>
+
+      <p class="secondary-text">A confirmation has also been sent to your email address.</p>
+
+      <div class="actions-row">
+        <a
+          id="view-request-btn"
+          [routerLink]="['/help/thread', c.caseId]"
+          class="pp-button pp-button--primary"
+        >
+          View request
+        </a>
+        <a id="back-to-help-btn" routerLink="/help" class="pp-button pp-button--outline">
+          Back to Help
+        </a>
+      </div>
+    </section>
+  } @else {
+    <p>Request not found.</p>
+    <a routerLink="/help" class="pp-button pp-button--outline">Return to Help</a>
+  }
+</div>

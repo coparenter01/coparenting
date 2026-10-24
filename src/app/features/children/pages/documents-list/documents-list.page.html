@@ -1,0 +1,103 @@
+<div class="documents-container">
+  <div class="top-row">
+    <h1 class="page-title">Documents</h1>
+    <a routerLink="/documents/upload" class="btn-upload">Upload document</a>
+  </div>
+
+  <div class="quick-links">
+    <a routerLink="/documents/photos" class="quick-link-btn">Photos</a>
+    <a routerLink="/documents/share-links" class="quick-link-btn">Share links</a>
+  </div>
+
+  <section class="storage-card" aria-label="Storage meter">
+    <div class="storage-header">
+      <strong class="storage-title">Storage</strong>
+      <span class="storage-meta">
+        You have used {{ storagePercent() }}% of your 100 MB ({{ storageUsedMb() }} MB).
+      </span>
+    </div>
+    <progress
+      class="progress-track"
+      [class.warning]="storagePercent() >= 80"
+      [value]="storagePercent()"
+      max="100"
+    ></progress>
+    @if (storagePercent() >= 80) {
+      <span class="storage-warning-text">Warning shown at 80% of storage limit.</span>
+    }
+  </section>
+
+  <div class="filters-row">
+    <label class="filter-group">
+      Category
+      <select class="filter-select" (change)="onCategoryChange($event)">
+        <option value="">All categories</option>
+        <option value="Medical">Medical</option>
+        <option value="School">School</option>
+        <option value="Legal">Legal</option>
+        <option value="Financial">Financial</option>
+        <option value="Activities">Activities</option>
+        <option value="Other">Other</option>
+      </select>
+    </label>
+
+    <label class="filter-group">
+      Child
+      <select class="filter-select" (change)="onChildChange($event)">
+        <option value="">All children</option>
+        @for (c of children(); track c.id) {
+          <option [value]="c.id">{{ c.first_name }} {{ c.last_name }}</option>
+        }
+      </select>
+    </label>
+
+    <a routerLink="/documents/trash" class="btn-trash-link">Recently deleted</a>
+  </div>
+
+  <div class="table-card">
+    <table class="docs-table" aria-label="Documents list table">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Category</th>
+          <th scope="col">Child</th>
+          <th scope="col">Size</th>
+          <th scope="col">Visibility</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (doc of filteredDocuments(); track doc.id) {
+          <tr>
+            <td>
+              <a [routerLink]="['/documents/detail', doc.id]" class="doc-link">
+                {{ doc.title }}
+              </a>
+            </td>
+            <td>
+              <span class="badge badge-neutral">{{ doc.category }}</span>
+            </td>
+            <td>{{ getChildName(doc.child_id) }}</td>
+            <td>{{ formatFileSize(doc.file_size_bytes) }}</td>
+            <td>
+              <span
+                class="badge"
+                [class.badge-shared]="!doc.is_private"
+                [class.badge-neutral]="doc.is_private"
+              >
+                {{ doc.is_private ? 'Private' : 'Shared' }}
+              </span>
+            </td>
+            <td>
+              <span class="badge badge-shared">Active</span>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="6">No documents match the selected filters.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

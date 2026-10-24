@@ -1,0 +1,131 @@
+<div class="journal-form-container">
+  <a routerLink="/records/journal" class="back-link" id="link-back-journal">← Journal</a>
+
+  <header class="header">
+    <h1 class="title">
+      {{ isEditMode() ? 'Edit journal entry' : 'New journal entry' }}
+    </h1>
+    <p class="subtitle">Write what happened. Only you can see this note.</p>
+  </header>
+
+  <form class="entry-form" (ngSubmit)="onSubmit()">
+    @if (errorMessage()) {
+      <div class="alert-error" role="alert" id="form-error">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    <fieldset class="form-fieldset">
+      <legend class="fieldset-legend">Type</legend>
+      <div class="radio-row">
+        <label class="radio-label">
+          <input
+            type="radio"
+            name="entryType"
+            value="incident"
+            [checked]="entryType() === 'incident'"
+            (change)="setEntryType('incident')"
+            id="radio-incident"
+          />
+          <span>Incident</span>
+        </label>
+        <label class="radio-label">
+          <input
+            type="radio"
+            name="entryType"
+            value="note"
+            [checked]="entryType() === 'note'"
+            (change)="setEntryType('note')"
+            id="radio-note"
+          />
+          <span>Note</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <label class="field-label" for="input-title">
+      Title
+      <input
+        id="input-title"
+        type="text"
+        maxlength="100"
+        class="text-input"
+        placeholder="Brief description of the event"
+        [value]="title()"
+        (input)="onTitleChange($event)"
+      />
+      <span class="field-hint">1 to 100 characters</span>
+    </label>
+
+    <fieldset class="form-fieldset">
+      <legend class="fieldset-legend">Children (optional)</legend>
+      <div class="children-checkboxes">
+        @for (child of availableChildren(); track child.id) {
+          <label class="checkbox-label">
+            <input
+              type="checkbox"
+              [checked]="isChildSelected(child.id)"
+              (change)="toggleChild(child.id)"
+              [id]="'chk-child-' + child.id"
+            />
+            <span>{{ child.name }}</span>
+          </label>
+        }
+      </div>
+    </fieldset>
+
+    <label class="field-label" for="input-datetime">
+      Date and time
+      <input
+        id="input-datetime"
+        type="datetime-local"
+        class="text-input"
+        [value]="happenedAt()"
+        (input)="onHappenedAtChange($event)"
+      />
+      <span class="field-hint">When it happened. Cannot be in the future.</span>
+    </label>
+
+    <label class="field-label" for="input-details">
+      Details
+      <textarea
+        id="input-details"
+        rows="8"
+        maxlength="5000"
+        class="textarea-input"
+        placeholder="Detailed factual record of the occurrence..."
+        [value]="details()"
+        (input)="onDetailsChange($event)"
+      ></textarea>
+      <span class="field-hint">{{ details().length }} / 5,000 characters</span>
+    </label>
+
+    @if (!isEditMode()) {
+      <label class="field-label" for="input-attachments">
+        Attachments (optional)
+        <input
+          id="input-attachments"
+          type="file"
+          multiple
+          accept=".jpg,.jpeg,.png,.pdf"
+          class="file-input"
+          (change)="onFilesSelected($event)"
+        />
+        <span class="field-hint">
+          JPG, PNG or PDF · up to 5 files, 25 MB in all · files are checked for malware
+        </span>
+      </label>
+    }
+
+    <div class="actions-row">
+      <button type="submit" class="btn-primary" [disabled]="isSubmitting()" id="btn-save-entry">
+        @if (isSubmitting()) {
+          Saving…
+        } @else {
+          Save
+        }
+      </button>
+      <a routerLink="/records/journal" class="btn-cancel" id="btn-cancel-entry">Cancel</a>
+    </div>
+  </form>
+</div>

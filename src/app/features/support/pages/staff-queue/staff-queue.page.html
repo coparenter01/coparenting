@@ -1,0 +1,152 @@
+<div class="staff-layout" data-testid="staff-queue-page">
+  <nav class="staff-nav" aria-label="Staff navigation">
+    <div class="nav-brand">ParentPath</div>
+    <div class="nav-sub">Support workspace</div>
+    <div class="nav-links-box">
+      <a routerLink="/staff/support" class="active">Queue</a>
+      <a routerLink="/staff/support/notices">Service notices</a>
+      <a routerLink="/staff/support/articles">Help articles</a>
+      <a routerLink="/staff/support/templates">Reply templates</a>
+      <a routerLink="/operations/support-measures">Support measures</a>
+    </div>
+  </nav>
+
+  <div class="staff-content">
+    <header class="staff-header">
+      <span class="header-left">Support workspace</span>
+      <div class="header-right">
+        <span class="two-step-badge">2-step verified</span>
+        <span>{{ staffName }} &middot; {{ staffRole }}</span>
+      </div>
+    </header>
+
+    <main class="staff-main">
+      <div class="page-title-row">
+        <div>
+          <h1 class="page-title">Open cases</h1>
+          <p class="page-subtitle">Priority first, then oldest first.</p>
+        </div>
+      </div>
+
+      <div class="filter-bar">
+        <label for="status-filter">
+          Status
+          <select
+            id="status-filter"
+            [value]="filterStatus()"
+            (change)="onStatusFilterChange($event)"
+          >
+            <option value="all_open">All open</option>
+            <option value="new">New</option>
+            <option value="in_progress">In progress</option>
+            <option value="waiting_for_you">Awaiting user</option>
+          </select>
+        </label>
+
+        <label for="category-filter">
+          Category
+          <select
+            id="category-filter"
+            [value]="filterCategory()"
+            (change)="onCategoryFilterChange($event)"
+          >
+            <option value="">All</option>
+            @for (cat of categories; track cat.id) {
+              <option [value]="cat.id">{{ cat.label }}</option>
+            }
+          </select>
+        </label>
+
+        <label for="priority-filter">
+          Priority
+          <select
+            id="priority-filter"
+            [value]="filterPriority()"
+            (change)="onPriorityFilterChange($event)"
+          >
+            <option value="">All</option>
+            <option value="priority">Priority</option>
+            <option value="normal">Normal</option>
+          </select>
+        </label>
+
+        <label for="assignee-filter">
+          Assignee
+          <select
+            id="assignee-filter"
+            [value]="filterAssignee()"
+            (change)="onAssigneeFilterChange($event)"
+          >
+            <option value="anyone">Anyone</option>
+            <option value="me">Me</option>
+            <option value="unassigned">Unassigned</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="internal-alert" role="status" data-testid="internal-load-alert">
+        &#9888; Internal alert: State agency night batch sync completed on schedule &mdash; no case
+        values shown.
+      </div>
+
+      <div class="table-card">
+        <table class="staff-table">
+          <thead>
+            <tr>
+              <th>Case</th>
+              <th>Priority</th>
+              <th>Category</th>
+              <th>Status</th>
+              <th>Time to target</th>
+              <th>Assigned</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (c of queuedCases(); track c.caseId) {
+              <tr>
+                <td>
+                  <a [routerLink]="['/staff/support/case', c.caseId]">{{ c.caseNumber }}</a>
+                </td>
+                <td>
+                  <span class="priority-tag" [class]="c.priority">
+                    {{ c.priority === 'priority' ? 'Priority' : 'Normal' }}
+                  </span>
+                </td>
+                <td>{{ getCategoryLabel(c.category) }}</td>
+                <td>
+                  <span class="status-pill" [class]="c.status">
+                    {{ c.status }}
+                  </span>
+                </td>
+                <td>
+                  <strong>{{ calculateTimeLeft(c.targetAt) }}</strong>
+                </td>
+                <td>{{ c.assignedStaffName ?? 'Unassigned' }}</td>
+                <td>
+                  @if (!c.assignedToUserId) {
+                    <button
+                      type="button"
+                      class="pp-button pp-button--outline pp-button--sm"
+                      (click)="onAssignToMe(c.caseId)"
+                    >
+                      Assign to me
+                    </button>
+                  } @else {
+                    <button
+                      type="button"
+                      class="pp-button pp-button--text pp-button--sm"
+                      (click)="onAssignToMe(c.caseId)"
+                    >
+                      Reassign
+                    </button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>

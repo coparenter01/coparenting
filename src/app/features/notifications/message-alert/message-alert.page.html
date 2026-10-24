@@ -1,0 +1,36 @@
+<section class="alert-container">
+  <div class="alert-header">
+    <h1>Message Alert Preview</h1>
+  </div>
+
+  <div class="preview-card">
+    <div class="simulated-notification">
+      <div class="app-icon">PP</div>
+      <div class="notif-body">
+        <div class="notif-top">
+          <span>ParentPath Alert</span>
+          <span>Just now</span>
+        </div>
+        @if (isSafetyModeActive()) {
+          <span class="notif-title">New notification received</span>
+          <span class="notif-text">Open ParentPath to review your secure updates.</span>
+        } @else {
+          <span class="notif-title">Co-Parent &bull; Weekend Pickup</span>
+          <span class="notif-text">Can we confirm the exchange time for tomorrow afternoon?</span>
+        }
+      </div>
+    </div>
+
+    <div class="explanation-box">
+      <strong>Lock Screen Privacy:</strong>
+      @if (isSafetyModeActive()) {
+        Safety Mode is currently ACTIVE. Previews conceal sender names and message snippets to keep
+        you safe from eavesdroppers.
+      } @else {
+        Safety Mode is OFF. Standard preview shows the sender name and message subject.
+      }
+    </div>
+
+    <a routerLink="/messages" class="btn-primary"> Open Messages </a>
+  </div>
+</section>

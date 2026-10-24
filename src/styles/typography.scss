@@ -1,0 +1,91 @@
+/* Public Sans font stack and typographic scale */
+body {
+  font-family:
+    'Public Sans',
+    'Segoe UI',
+    system-ui,
+    -apple-system,
+    sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--pp-ink);
+  background-color: var(--pp-bg);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Numeric tabular figures for money, dates, tables */
+.tabular-nums,
+table,
+.pp-money,
+.pp-date-time {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Heading scale */
+.pp-display {
+  font-size: 32px;
+  line-height: 1.25;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+
+  @media (max-width: 600px) {
+    font-size: 26px;
+  }
+}
+
+h1,
+.pp-h1 {
+  font-size: 28px;
+  line-height: 1.25;
+  font-weight: 700;
+  margin: 0 0 16px;
+
+  @media (max-width: 600px) {
+    font-size: 24px;
+  }
+}
+
+h2,
+.pp-h2 {
+  font-size: 22px;
+  line-height: 1.3;
+  font-weight: 600;
+  margin: 0 0 12px;
+
+  @media (max-width: 600px) {
+    font-size: 20px;
+  }
+}
+
+h3,
+.pp-h3 {
+  font-size: 18px;
+  line-height: 1.35;
+  font-weight: 600;
+  margin: 0 0 8px;
+
+  @media (max-width: 600px) {
+    font-size: 17px;
+  }
+}
+
+.pp-body {
+  font-size: 16px;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.pp-small {
+  font-size: 14px;
+  line-height: 1.45;
+  font-weight: 400;
+}
+
+.pp-caption {
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}

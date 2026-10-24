@@ -1,0 +1,107 @@
+<div class="pro-workspace-layout">
+  <nav class="pro-sidebar" aria-label="Professional portal">
+    <div class="sidebar-brand">ParentPath</div>
+    <div class="sidebar-sub">Professional workspace</div>
+    <div class="sidebar-nav">
+      <a routerLink="/professionals/portal" class="sidebar-link active">Clients</a>
+      <a routerLink="/professionals/portal/messages" class="sidebar-link">Messages from parents</a>
+    </div>
+  </nav>
+
+  <div class="pro-workspace-content">
+    <header class="workspace-header">
+      <span class="header-title">Professional workspace</span>
+      <span class="header-user">
+        <span class="badge badge-verified">2-step verified</span>
+        Sarah Jenkins, Esq. · Attorney
+      </span>
+    </header>
+
+    <main class="workspace-main">
+      <a routerLink="/professionals/portal" class="back-link">← All clients</a>
+
+      <div class="main-header">
+        <h1 class="main-title">{{ clientName() }}</h1>
+      </div>
+
+      <div class="readonly-banner">
+        Read only · access ends {{ accessEnds() }} · Read only. You see what
+        {{ clientName() }} chose to share.
+      </div>
+
+      <div role="tablist" class="tab-list">
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="activeTab() === 'messages'"
+          [class.active]="activeTab() === 'messages'"
+          class="tab-btn"
+          (click)="activeTab.set('messages')"
+        >
+          Messages
+        </button>
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="activeTab() === 'calendar'"
+          [class.active]="activeTab() === 'calendar'"
+          class="tab-btn"
+          (click)="activeTab.set('calendar')"
+        >
+          Calendar
+        </button>
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="activeTab() === 'expenses'"
+          [class.active]="activeTab() === 'expenses'"
+          class="tab-btn"
+          (click)="activeTab.set('expenses')"
+        >
+          Expenses
+        </button>
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="activeTab() === 'documents'"
+          [class.active]="activeTab() === 'documents'"
+          class="tab-btn"
+          (click)="activeTab.set('documents')"
+        >
+          Documents
+        </button>
+        <button
+          type="button"
+          role="tab"
+          [attr.aria-selected]="activeTab() === 'records'"
+          [class.active]="activeTab() === 'records'"
+          class="tab-btn"
+          (click)="activeTab.set('records')"
+        >
+          Records
+        </button>
+      </div>
+
+      <div class="table-card">
+        <table class="pro-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Item</th>
+              <th>From</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (row of filteredItems(); track row.id) {
+              <tr>
+                <td class="item-date">{{ row.date }}</td>
+                <td class="item-title">{{ row.title }}</td>
+                <td class="item-from">{{ row.from }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>

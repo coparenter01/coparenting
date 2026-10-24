@@ -1,0 +1,119 @@
+<div class="tasks-container">
+  <a routerLink="/children" class="back-link">← Children list and child form</a>
+
+  <div class="top-row">
+    <h1 class="page-title">Task lists</h1>
+    <button type="button" class="btn-primary" (click)="toggleAddForm()">
+      {{ showAddForm() ? 'Close' : 'New task' }}
+    </button>
+  </div>
+
+  @if (showAddForm()) {
+    <section class="form-card" aria-label="Add task form">
+      <h2 class="page-title">Create new task</h2>
+      <div class="field-group">
+        <label for="task-title">Task description</label>
+        <input
+          id="task-title"
+          type="text"
+          class="field-input"
+          [value]="newTitle()"
+          (input)="updateField('title', $event)"
+          placeholder="e.g. Sign soccer registration, Schedule dental checkup"
+        />
+      </div>
+
+      <div class="form-grid">
+        <div class="field-group">
+          <label for="task-list">Task category / list</label>
+          <select
+            id="task-list"
+            class="field-select"
+            [value]="selectedListId()"
+            (change)="updateField('listId', $event)"
+          >
+            @for (list of lists(); track list.id) {
+              <option [value]="list.id">{{ list.title }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label for="task-assignee">Assigned to</label>
+          <input
+            id="task-assignee"
+            type="text"
+            class="field-input"
+            [value]="assignedTo()"
+            (input)="updateField('assignee', $event)"
+            placeholder="e.g. Both parents, Alex, Morgan"
+          />
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label for="task-due">Due date (optional)</label>
+        <input
+          id="task-due"
+          type="date"
+          class="field-input"
+          [value]="dueDate()"
+          (input)="updateField('dueDate', $event)"
+        />
+      </div>
+
+      <div class="button-row">
+        <button
+          type="button"
+          class="btn-primary"
+          [disabled]="!newTitle().trim()"
+          (click)="saveTask()"
+        >
+          Save task
+        </button>
+        <button type="button" class="btn-cancel" (click)="toggleAddForm()">Cancel</button>
+      </div>
+    </section>
+  }
+
+  <div class="table-wrapper">
+    <table class="task-table">
+      <thead>
+        <tr>
+          <th>Task</th>
+          <th>Assigned to</th>
+          <th>Due</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (task of tasks(); track task.id) {
+          <tr>
+            <td [class.task-completed]="task.is_completed">
+              <strong>{{ task.title }}</strong>
+            </td>
+            <td>{{ task.assigned_to || 'Unassigned' }}</td>
+            <td>{{ task.due_date ? (task.due_date | date: 'mediumDate') : '—' }}</td>
+            <td>
+              @if (task.is_completed) {
+                <span class="badge-done">Done</span>
+              } @else {
+                <span class="badge-open">Open</span>
+              }
+            </td>
+            <td>
+              <button type="button" class="btn-toggle" (click)="toggleTask(task.id)">
+                {{ task.is_completed ? 'Mark Open' : 'Mark Done' }}
+              </button>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5">No tasks found. Click "New task" to create one.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>

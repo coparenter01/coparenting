@@ -1,0 +1,257 @@
+.operations-layout {
+  display: flex;
+  min-height: 900px;
+  font-family:
+    'Public Sans',
+    system-ui,
+    -apple-system,
+    sans-serif;
+  color: #17212b;
+  background: #f5f6f3;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.staff-sidebar {
+  flex: 0 0 232px;
+  box-sizing: border-box;
+  padding: 20px 12px;
+  background: #17212b;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.sidebar-header {
+  padding: 4px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.brand {
+  font-size: 18px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.sub-brand {
+  font-size: 13px;
+  color: #c7cdd3;
+}
+
+.staff-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 6px;
+}
+
+.nav-item {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  text-decoration: none;
+  color: #2b3540;
+  font-weight: 500;
+
+  &:hover {
+    background: #eef1f4;
+  }
+
+  &.active {
+    background: #e3f0f0;
+    color: #0a4a51;
+    font-weight: 600;
+  }
+}
+
+.ops-main {
+  flex: 1 1 560px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1160px;
+}
+
+.ops-header {
+  min-height: 64px;
+  box-sizing: border-box;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #d9dde1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.header-titles {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: #4e5966;
+}
+
+.staff-profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+.badge-verified {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: #e3f0f0;
+  color: #0a4a51;
+}
+
+.staff-name {
+  color: #2b3540;
+  font-weight: 600;
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.filter-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.filter-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4e5966;
+}
+
+.form-control {
+  padding: 8px 12px;
+  border: 1px solid #c7cdd3;
+  border-radius: 8px;
+  font-size: 14px;
+  background: #ffffff;
+}
+
+.table-container {
+  background: #ffffff;
+  border: 1px solid #d9dde1;
+  border-radius: 12px;
+  overflow-x: auto;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+  font-size: 14px;
+
+  th {
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: #4e5966;
+    padding: 12px 14px;
+    border-bottom: 1px solid #d9dde1;
+    background: #fbfcfb;
+  }
+
+  td {
+    padding: 12px 14px;
+    border-bottom: 1px solid #eef1f4;
+    vertical-align: top;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+}
+
+.cell-code {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-weight: 600;
+  font-size: 13px;
+  color: #0e5a63;
+}
+
+.cell-agency {
+  font-weight: 500;
+  color: #17212b;
+}
+
+.badge-channel {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: #eef1f4;
+  color: #2b3540;
+}
+
+.badge-status {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  text-transform: capitalize;
+  white-space: nowrap;
+
+  &.badge-success {
+    background: #e3f0f0;
+    color: #0a4a51;
+  }
+
+  &.badge-failed {
+    background: #fbede6;
+    color: #7a2e0e;
+  }
+
+  &.badge-warning {
+    background: #fff7e8;
+    color: #5c3d06;
+  }
+
+  &.badge-neutral {
+    background: #eef1f4;
+    color: #4e5966;
+  }
+}
+
+.log-error-detail {
+  margin-top: 4px;
+  font-size: 11px;
+  color: #7a2e0e;
+}
+
+.empty-cell {
+  text-align: center;
+  padding: 32px;
+  color: #6c7885;
+}

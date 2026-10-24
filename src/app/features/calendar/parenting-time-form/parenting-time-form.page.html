@@ -1,0 +1,132 @@
+<div class="pt-form-layout">
+  <form class="form-card" (ngSubmit)="saveParentingTime()">
+    <a routerLink="/calendar" class="back-link">← Calendar</a>
+    <h1 class="form-title">Add parenting time</h1>
+
+    @if (errorMessage()) {
+      <div class="error-banner" role="alert">{{ errorMessage() }}</div>
+    }
+
+    <label class="field-label">
+      Parent
+      <select
+        class="select-input"
+        [(ngModel)]="parentName"
+        name="parentName"
+        required
+        id="pt-parent-select"
+      >
+        <option value="Elena Rivera">Elena Rivera (Parent A)</option>
+        <option value="David Chen">David Chen (Parent B)</option>
+      </select>
+    </label>
+
+    <fieldset class="checkbox-fieldset">
+      <legend class="checkbox-legend">Children</legend>
+      <div class="checkbox-row">
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            [checked]="isChildSelected('child-1')"
+            (change)="toggleChild('child-1', 'Maya Rivera')"
+            id="pt-child-cb-1"
+          />
+          Maya Rivera
+        </label>
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            [checked]="isChildSelected('child-2')"
+            (change)="toggleChild('child-2', 'Leo Rivera')"
+            id="pt-child-cb-2"
+          />
+          Leo Rivera
+        </label>
+      </div>
+    </fieldset>
+
+    <div class="two-col-grid">
+      <label class="field-label">
+        Start
+        <input
+          type="datetime-local"
+          class="text-input"
+          [(ngModel)]="startDateTime"
+          name="startDateTime"
+          required
+          id="pt-start-input"
+        />
+      </label>
+      <label class="field-label">
+        End
+        <input
+          type="datetime-local"
+          class="text-input"
+          [(ngModel)]="endDateTime"
+          name="endDateTime"
+          required
+          id="pt-end-input"
+        />
+      </label>
+    </div>
+
+    <label class="field-label">
+      Repeats
+      <select class="select-input" [(ngModel)]="repeats" name="repeats" id="pt-repeats-select">
+        <option value="None">Does not repeat</option>
+        <option value="Weekly">Weekly (same days each week)</option>
+        <option value="Biweekly">Alternating weeks</option>
+        <option value="Custom">Custom cycle pattern</option>
+      </select>
+    </label>
+
+    @if (hasOverlapWarning()) {
+      <div class="warning-banner" role="status">
+        Overlap warning: this schedule overlaps another parenting-time entry. You can still save.
+      </div>
+    }
+
+    <p class="info-note">
+      In a Linked household the entry is saved as Proposed until your co-parent confirms it. In Solo
+      Mode it is Active at once and you can edit it before it starts.
+    </p>
+
+    <div class="form-actions">
+      <button type="submit" class="btn-primary" id="pt-save-btn">Save</button>
+      <a routerLink="/calendar" class="btn-secondary" id="pt-cancel-btn"> Cancel </a>
+    </div>
+  </form>
+
+  <section class="detail-card" aria-label="Parenting-time detail">
+    <h2 class="detail-card-title">Parenting time detail</h2>
+    <div class="parent-indicator">
+      <span class="color-dot" aria-hidden="true"></span>
+      David Chen · Maya Rivera, Leo Rivera
+    </div>
+    <span class="date-range-text">Friday 18:00 → Sunday 18:00 · Repeats weekly</span>
+
+    @if (undoCountdown() !== null) {
+      <div class="warning-banner" role="status">
+        Confirmed! 10-minute undo window active ({{ undoCountdown() }}s left).
+        <button type="button" class="btn-secondary" (click)="undoConfirm()" id="pt-undo-btn">
+          Undo
+        </button>
+      </div>
+    } @else {
+      <span class="status-badge">Proposed — awaiting your confirmation</span>
+    }
+
+    <div class="detail-actions">
+      <button type="button" class="btn-primary" (click)="confirmProposed()" id="pt-confirm-btn">
+        Confirm
+      </button>
+      <a routerLink="/calendar/request-swap" class="btn-secondary" id="pt-req-change-btn">
+        Request change
+      </a>
+      <a routerLink="/calendar/history" class="back-link" id="pt-view-hist-btn"> View history </a>
+    </div>
+    <span class="info-note">
+      Confirming uses the same confirm step and 10-minute undo window as a swap approval.
+    </span>
+  </section>
+</div>

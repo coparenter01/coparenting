@@ -1,0 +1,35 @@
+<div class="modal-backdrop">
+  <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="offer-title">
+    <div class="modal-header">
+      <div class="shield-badge">
+        <span class="material-symbols-rounded" aria-hidden="true">shield</span>
+      </div>
+      <h1 id="offer-title" class="modal-title">Turn on Safety Mode?</h1>
+    </div>
+
+    <div class="modal-body">
+      <p class="lead-text">
+        An official safety or protection order notice was identified on file. We strongly offer
+        Safety Mode to safeguard your personal contact details.
+      </p>
+
+      <div class="safeguard-box">
+        <div class="box-item">
+          <span class="material-symbols-rounded" aria-hidden="true">lock</span>
+          <span>Your home address, phone number, and location remain strictly confidential.</span>
+        </div>
+        <div class="box-item">
+          <span class="material-symbols-rounded" aria-hidden="true">visibility_off</span>
+          <span>The other parent is never informed that Safety Mode is active.</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-actions">
+      <button type="button" class="btn btn-secondary" (click)="onDecline()">Not now</button>
+      <button type="button" class="btn btn-primary" (click)="onAccept()">
+        Turn on Safety Mode
+      </button>
+    </div>
+  </div>
+</div>

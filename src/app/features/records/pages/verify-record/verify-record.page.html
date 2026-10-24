@@ -1,0 +1,139 @@
+<div class="verify-page-container">
+  <header class="public-nav-header">
+    <span class="brand-title">ParentPath</span>
+    <nav class="public-nav-links" aria-label="Public verification menu">
+      <a routerLink="/safety/resources" class="nav-link">Safety resources</a>
+      <a routerLink="/support" class="nav-link">Help</a>
+      <a routerLink="/auth/sign-in" class="nav-link">Sign in</a>
+    </nav>
+  </header>
+
+  <main class="verify-main">
+    <div class="verify-header">
+      <h1 class="verify-title">Verify a ParentPath record</h1>
+      <p class="verify-subtitle">
+        Enter the Record ID printed on a certified export. No sign-in is needed.
+      </p>
+    </div>
+
+    <div class="quick-links-row">
+      <a routerLink="/records-request" class="subtle-link" id="link-rec-requests">
+        Records requests
+      </a>
+      <a routerLink="/retention-policy" class="subtle-link" id="link-rec-retention">
+        Retention policy
+      </a>
+    </div>
+
+    <section class="card-section" id="section-verify-id">
+      <label class="input-label" for="input-record-id">
+        Record ID
+        <input
+          id="input-record-id"
+          type="text"
+          class="id-input"
+          maxlength="19"
+          placeholder="XXXX-XXXX-XXXX-XXXX"
+          [value]="recordIdInput()"
+          (input)="onRecordIdChange($event)"
+        />
+        <span class="input-hint">16 letters and numbers in four groups of four</span>
+      </label>
+
+      <div class="button-row">
+        <button
+          type="button"
+          class="btn-primary"
+          [disabled]="isCheckingId()"
+          (click)="verifyId()"
+          id="btn-verify-id"
+        >
+          @if (isCheckingId()) {
+            Checking…
+          } @else {
+            Verify
+          }
+        </button>
+      </div>
+
+      @if (idLookupResult()) {
+        @if (idLookupResult()?.result === 'valid') {
+          <div class="status-banner banner-success" role="status" id="verify-success">
+            <strong>Valid.</strong> This record was made by ParentPath on
+            {{ idLookupResult()?.exportItem?.createdAt | date: 'medium' }} UTC. It has
+            {{ idLookupResult()?.exportItem?.pageCount }} pages and holds:
+            {{ formatRecordTypes(idLookupResult()?.exportItem?.recordTypes ?? []) }}.
+          </div>
+        } @else if (idLookupResult()?.result === 'rate_limited') {
+          <div class="status-banner banner-rate-limit" role="alert" id="verify-rate-limited">
+            Too many tries. Please wait 15 minutes and try again.
+          </div>
+        } @else {
+          <div class="status-banner banner-not-found" role="alert" id="verify-not-found">
+            No record was found for this ID. Check the ID and try again.
+          </div>
+        }
+      }
+    </section>
+
+    <section class="card-section" id="section-compare-file">
+      <h2 class="section-title">Compare a file with this record</h2>
+      <p class="section-desc">
+        Upload the PDF you were given. We check its fingerprint against the record. The file is not
+        kept.
+      </p>
+
+      <label class="input-label" for="input-file-compare">
+        Upload PDF to compare
+        <input
+          id="input-file-compare"
+          type="file"
+          accept="application/pdf"
+          class="file-input"
+          (change)="onFileSelected($event)"
+        />
+        <span class="input-hint">PDF only, up to 25 MB</span>
+      </label>
+
+      @if (fileValidationError()) {
+        <div class="status-banner banner-not-found" role="alert" id="file-validation-error">
+          {{ fileValidationError() }}
+        </div>
+      }
+
+      <div class="button-row">
+        <button
+          type="button"
+          class="btn-secondary"
+          [disabled]="!selectedFile() || isComparingFile()"
+          (click)="compareFile()"
+          id="btn-compare-file"
+        >
+          @if (isComparingFile()) {
+            Comparing…
+          } @else {
+            Compare file
+          }
+        </button>
+      </div>
+
+      @if (fileComparisonResult()) {
+        @if (fileComparisonResult()?.matchDetails?.isSameFile) {
+          <div class="status-banner banner-success" role="status" id="file-match-success">
+            The file you uploaded is the same as the record.
+          </div>
+        } @else {
+          <div class="status-banner banner-not-found" role="alert" id="file-match-error">
+            The file you uploaded is not the same as the record.
+          </div>
+        }
+      }
+    </section>
+
+    <div class="bottom-actions">
+      <a routerLink="/court-notes" class="btn-subtle" id="link-bottom-court-notes">
+        Court notes by state
+      </a>
+    </div>
+  </main>
+</div>

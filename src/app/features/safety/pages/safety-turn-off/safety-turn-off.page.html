@@ -1,0 +1,65 @@
+<div class="turn-off-container">
+  <div class="turn-off-card" role="region" aria-labelledby="turn-off-title">
+    <div class="turn-off-header">
+      <div class="icon-badge">
+        <span class="material-symbols-rounded badge-icon" aria-hidden="true">lock_open</span>
+      </div>
+      <h1 id="turn-off-title" class="turn-off-title">Enter code to turn off</h1>
+      <p class="turn-off-subtitle">
+        We sent a 6-digit verification code to your private email. Enter it below to turn off Safety
+        Mode.
+      </p>
+    </div>
+
+    <form [formGroup]="turnOffForm" (ngSubmit)="onSubmit()" class="turn-off-form">
+      @if (errorMessage()) {
+        <div class="error-banner" role="alert">
+          <span class="material-symbols-rounded" aria-hidden="true">error</span>
+          <span>{{ errorMessage() }}</span>
+        </div>
+      }
+
+      @if (resendSuccess()) {
+        <div class="success-banner" role="status">
+          <span class="material-symbols-rounded" aria-hidden="true">check_circle</span>
+          <span>A new 6-digit code has been dispatched to your email.</span>
+        </div>
+      }
+
+      <div class="form-group">
+        <label for="code" class="form-label">6-digit verification code</label>
+        <input
+          id="code"
+          type="text"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          maxlength="6"
+          autocomplete="one-time-code"
+          placeholder="123456"
+          formControlName="code"
+          class="code-input"
+          [class.input-error]="
+            turnOffForm.controls.code.touched && turnOffForm.controls.code.invalid
+          "
+        />
+        @if (turnOffForm.controls.code.touched && turnOffForm.controls.code.errors?.['required']) {
+          <span class="field-error">Please enter the 6-digit code.</span>
+        }
+        @if (turnOffForm.controls.code.touched && turnOffForm.controls.code.errors?.['pattern']) {
+          <span class="field-error">Code must be 6 numeric digits.</span>
+        }
+      </div>
+
+      <div class="resend-row">
+        <button type="button" class="resend-btn" (click)="onResendCode()">Resend code</button>
+      </div>
+
+      <div class="actions-row">
+        <a routerLink="/safety" class="btn btn-secondary"> Cancel </a>
+        <button type="submit" class="btn btn-primary" [disabled]="turnOffForm.invalid">
+          Turn off Safety Mode
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

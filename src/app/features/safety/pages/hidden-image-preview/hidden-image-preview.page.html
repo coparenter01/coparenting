@@ -1,0 +1,53 @@
+<div class="preview-container">
+  <div class="preview-card" role="region" aria-labelledby="hidden-image-title">
+    <div class="card-header">
+      <h1 id="hidden-image-title" class="card-title">Hidden image placeholder</h1>
+      <p class="card-subtitle">
+        When image masking is enabled, incoming photos in threads and expense receipts are obscured
+        until explicitly tapped.
+      </p>
+    </div>
+
+    <div class="chat-bubble-simulation">
+      <div class="bubble-meta">Co-parent · Today at 2:15 PM</div>
+      <div class="bubble-text">Sharing the doctor's visit summary report and receipt.</div>
+
+      @if (imageRevealed()) {
+        <div class="unmasked-image-container">
+          <div class="simulated-image">
+            <span class="material-symbols-rounded image-visual" aria-hidden="true"
+              >description</span
+            >
+            <span class="image-caption">Clinic Visit Summary & Care Plan</span>
+          </div>
+          <button
+            type="button"
+            class="remask-btn"
+            (click)="toggleReveal()"
+            aria-label="Re-mask image"
+          >
+            <span class="material-symbols-rounded" aria-hidden="true">visibility_off</span>
+            Hide image again
+          </button>
+        </div>
+      } @else {
+        <button
+          type="button"
+          class="masked-placeholder-btn"
+          (click)="toggleReveal()"
+          aria-label="Image hidden. Tap to view."
+        >
+          <span class="material-symbols-rounded mask-icon" aria-hidden="true">visibility_off</span>
+          <strong class="mask-heading">Image hidden. Tap to view.</strong>
+          <span class="mask-subtext">Clicking reveals image on demand</span>
+        </button>
+      }
+    </div>
+
+    <div class="actions-row">
+      <a routerLink="/safety/alerts-images" class="btn btn-secondary">
+        Back to Alerts & Images Settings
+      </a>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,137 @@
+<div class="members-container">
+  <div class="breadcrumb-nav">
+    <a routerLink="/accounts/household" class="back-link">
+      <span aria-hidden="true">&larr;</span> Household overview
+    </a>
+  </div>
+
+  <header class="page-header">
+    <h1 class="page-title">Household members and roles</h1>
+    <p class="page-subtitle">
+      Only a Parent can add, change or remove members. Every change is logged.
+    </p>
+  </header>
+
+  @if (successMessage()) {
+    <div class="status-banner" role="status">
+      {{ successMessage() }}
+    </div>
+  }
+
+  <section class="table-card" aria-label="Current members">
+    <div class="table-responsive" tabindex="0" role="region" aria-label="Members table">
+      <table class="members-table">
+        <thead>
+          <tr>
+            <th scope="col">Member</th>
+            <th scope="col">Role</th>
+            <th scope="col">What they can see</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <div class="member-cell">
+                <span class="avatar-badge" aria-hidden="true">YN</span>
+                <span class="member-name">You (Primary)</span>
+              </div>
+            </td>
+            <td><span class="role-chip role-parent">Parent</span></td>
+            <td>Everything allowed in each module</td>
+            <td><span class="text-muted">&mdash;</span></td>
+          </tr>
+          @for (m of members(); track m.id) {
+            <tr>
+              <td>
+                <div class="member-cell">
+                  <span class="avatar-badge secondary" aria-hidden="true">{{ m.role[0] }}</span>
+                  <span class="member-name">{{ m.role }} Account ({{ m.id.substring(0, 8) }})</span>
+                </div>
+              </td>
+              <td>
+                <span
+                  class="role-chip"
+                  [class.role-parent]="m.role === 'Parent' || m.role === 'Co-parent'"
+                  >{{ m.role }}</span
+                >
+              </td>
+              <td>
+                @if (m.role === 'Parent' || m.role === 'Co-parent') {
+                  Shared modules
+                } @else if (m.role === 'Child') {
+                  Messages and calendar view
+                } @else {
+                  Calendar view · Limited sharing
+                }
+              </td>
+              <td>
+                <button type="button" class="btn-action-delete" (click)="onRemoveMember(m.id)">
+                  Remove
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="form-card" aria-labelledby="add-member-heading">
+    <h2 id="add-member-heading" class="card-title">Add a member</h2>
+
+    <form [formGroup]="addMemberForm" (ngSubmit)="onAddMember()" class="member-form">
+      <div class="form-grid">
+        <div class="form-field">
+          <label for="memberName" class="field-label">Name</label>
+          <input
+            id="memberName"
+            type="text"
+            formControlName="name"
+            class="text-input"
+            placeholder="e.g. Grandma Rose, Alex Jr."
+            maxlength="60"
+          />
+          @if (addMemberForm.controls.name.touched && addMemberForm.controls.name.invalid) {
+            <span class="field-error">Please enter a valid name.</span>
+          }
+        </div>
+
+        <div class="form-field">
+          <label for="memberRole" class="field-label">Role</label>
+          <select id="memberRole" formControlName="role" class="select-input">
+            <option value="Parent">Parent</option>
+            <option value="Child">Child</option>
+            <option value="Third party">Third party</option>
+          </select>
+        </div>
+      </div>
+
+      @if (getSelectedRole() === 'Third party') {
+        <fieldset class="permissions-fieldset">
+          <legend class="fieldset-legend">Third party can see</legend>
+          <label class="checkbox-row">
+            <input type="checkbox" formControlName="canSeeCalendar" />
+            <span>Calendar (view only)</span>
+          </label>
+          <label class="checkbox-row">
+            <input type="checkbox" formControlName="receivesMessages" />
+            <span>Receives messages</span>
+          </label>
+        </fieldset>
+      }
+
+      @if (getSelectedRole() === 'Child') {
+        <div class="info-callout" role="note">
+          Child accounts are limited to messages and calendar view.
+        </div>
+      }
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" [disabled]="isSubmitting()">
+          {{ isSubmitting() ? 'Adding...' : 'Add member' }}
+        </button>
+      </div>
+    </form>
+  </section>
+</div>

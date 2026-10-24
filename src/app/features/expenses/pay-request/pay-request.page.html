@@ -1,0 +1,103 @@
+<div class="pay-request-container">
+  <div class="header-row">
+    <a [routerLink]="['/expenses/requests', request()?.id]" class="back-link">← Request Details</a>
+    <h1 class="page-title">Pay Reimbursement Share</h1>
+    <div class="test-mode-badge">TEST MODE · SIMULATED CHECKOUT</div>
+  </div>
+
+  @if (isCompleted()) {
+    <div class="success-card">
+      <div class="success-icon">✓</div>
+      <h2 class="success-title">Payment Completed Successfully!</h2>
+      <p class="success-text">
+        Your payment of <strong>{{ formattedAmount() }}</strong> to
+        {{ request()?.requestedByName }} has been processed.
+      </p>
+      <div class="receipt-box">
+        <span class="ref-label">Transaction Reference:</span>
+        <code class="ref-code">{{ transactionRef() }}</code>
+      </div>
+      <p class="audit-note">
+        This transaction has been added to the tamper-evident payment ledger and marked as Paid.
+      </p>
+      <div class="action-row">
+        <a routerLink="/expenses/requests" class="btn btn-primary">Return to Requests</a>
+        <a routerLink="/expenses/balance" class="btn btn-secondary">Check Running Balance</a>
+      </div>
+    </div>
+  } @else {
+    <div class="checkout-grid">
+      <div class="checkout-card">
+        <h2 class="card-title">Select Payment Method</h2>
+
+        <div class="method-options">
+          <label class="method-label">
+            <input
+              type="radio"
+              [(ngModel)]="paymentMethod"
+              name="paymentMethod"
+              value="Bank transfer (ACH)"
+            />
+            <div class="method-content">
+              <strong>Bank Account (ACH Transfer)</strong>
+              <span class="method-sub">Verified checking · ···· 4821 (Chase)</span>
+            </div>
+          </label>
+
+          <label class="method-label">
+            <input
+              type="radio"
+              [(ngModel)]="paymentMethod"
+              name="paymentMethod"
+              value="Debit/Credit Card"
+            />
+            <div class="method-content">
+              <strong>Debit Card</strong>
+              <span class="method-sub">Visa debit · ···· 9102</span>
+            </div>
+          </label>
+        </div>
+
+        <div class="auth-box">
+          <button
+            type="button"
+            (click)="executePayment()"
+            [disabled]="isProcessing()"
+            class="btn btn-primary btn-full"
+          >
+            @if (isProcessing()) {
+              Processing Payment…
+            } @else {
+              Authorize Payment of {{ formattedAmount() }}
+            }
+          </button>
+        </div>
+      </div>
+
+      <div class="order-summary-card">
+        <h2 class="card-title">Payment Summary</h2>
+        <div class="summary-line">
+          <span>Expense:</span>
+          <strong>{{ request()?.expenseDescription }}</strong>
+        </div>
+        <div class="summary-line">
+          <span>Recipient:</span>
+          <span>{{ request()?.requestedByName }}</span>
+        </div>
+        <div class="summary-line">
+          <span>Subtotal:</span>
+          <span>{{ formattedAmount() }}</span>
+        </div>
+        <div class="summary-line">
+          <span>Processing Fee:</span>
+          <span class="free-fee">$0.00 (Test Mode)</span>
+        </div>
+        <hr class="summary-divider" />
+        <div class="summary-total">
+          <span>Total:</span>
+          <strong>{{ formattedAmount() }}</strong>
+        </div>
+      </div>
+    </div>
+  }
+</div>

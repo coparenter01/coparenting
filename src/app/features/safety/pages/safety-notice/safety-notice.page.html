@@ -1,0 +1,72 @@
+<div class="notice-container">
+  <div class="notice-card" role="region" aria-labelledby="notice-title">
+    <div class="notice-header">
+      <div class="icon-badge">
+        <span class="material-symbols-rounded badge-icon" aria-hidden="true">security</span>
+      </div>
+      <h1 id="notice-title" class="notice-title">Turn on Safety Mode</h1>
+      <p class="notice-subtitle">Review what changes when Safety Mode is turned on.</p>
+    </div>
+
+    <ul class="safeguard-list">
+      <li class="safeguard-item">
+        <span class="material-symbols-rounded item-icon" aria-hidden="true">location_off</span>
+        <div class="item-text">
+          <strong>Location and contact privacy</strong>
+          <span
+            >Your home address, phone number, and location metadata stay private from the other
+            parent.</span
+          >
+        </div>
+      </li>
+
+      <li class="safeguard-item">
+        <span class="material-symbols-rounded item-icon" aria-hidden="true"
+          >notifications_paused</span
+        >
+        <div class="item-text">
+          <strong>Discreet alerts</strong>
+          <span
+            >Notifications show no message text or sensitive preview on your device screen.</span
+          >
+        </div>
+      </li>
+
+      <li class="safeguard-item">
+        <span class="material-symbols-rounded item-icon" aria-hidden="true">bolt</span>
+        <div class="item-text">
+          <strong>Fast emergency exit</strong>
+          <span
+            >The red Exit now button is anchored in the top bar on every screen. Pressing Escape
+            twice exits immediately without leaving a return trace.</span
+          >
+        </div>
+      </li>
+
+      <li class="safeguard-item">
+        <span class="material-symbols-rounded item-icon" aria-hidden="true">pin</span>
+        <div class="item-text">
+          <strong>Protected turn-off</strong>
+          <span
+            >Turning Safety Mode off later will require entering a 6-digit verification code sent to
+            your private email.</span
+          >
+        </div>
+      </li>
+    </ul>
+
+    <div class="resource-link-row">
+      <a routerLink="/safety/resources" class="resource-link">
+        <span class="material-symbols-rounded" aria-hidden="true">help_center</span>
+        More help and safety resources
+      </a>
+    </div>
+
+    <div class="actions-row">
+      <a routerLink="/safety" class="btn btn-secondary"> Cancel </a>
+      <button type="button" class="btn btn-primary" (click)="onConfirmTurnOn()">
+        Confirm and turn on
+      </button>
+    </div>
+  </div>
+</div>

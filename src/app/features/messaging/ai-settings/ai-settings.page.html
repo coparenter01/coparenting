@@ -1,0 +1,56 @@
+<section class="ai-settings-container">
+  <div class="ai-settings-header">
+    <h1>AI & Incoming Shield Settings</h1>
+  </div>
+
+  <div class="privacy-notice">
+    <strong>On-Device Guarantee:</strong> ParentPath processes your message tone and incoming shield
+    entirely on your local device. Your private messages and drafts are never sent to third-party AI
+    models or used for AI training.
+  </div>
+
+  <div class="settings-card">
+    <div class="setting-row">
+      <div class="setting-info">
+        <span class="setting-title">Private Tone Check</span>
+        <span class="setting-desc">
+          Analyzes your draft tone locally before sending, helping avoid hostile phrasing or
+          accusatory words that escalate conflict.
+        </span>
+      </div>
+      <input type="checkbox" [(ngModel)]="toneCheckEnabled" />
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <span class="setting-title">Incoming Message Shield</span>
+        <span class="setting-desc">
+          Temporarily masks abusive or hostile incoming messages behind a warning banner, giving you
+          space to decide when to view them.
+        </span>
+      </div>
+      <input type="checkbox" [(ngModel)]="shieldEnabled" />
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <span class="setting-title">Shield Sensitivity Level</span>
+        <span class="setting-desc">
+          Controls the strictness of the heuristic filter for incoming hostile language.
+        </span>
+      </div>
+      <select class="select-input" [(ngModel)]="shieldSensitivity">
+        <option value="Low">Low (Direct threats only)</option>
+        <option value="Standard">Standard (Hostile & accusatory phrasing)</option>
+        <option value="Strict">Strict (All elevated & demanding tones)</option>
+      </select>
+    </div>
+
+    <div class="setting-row">
+      <button type="button" class="btn-primary" (click)="onSave()">Save Settings</button>
+      @if (isSaved()) {
+        <span class="save-status">Settings saved successfully!</span>
+      }
+    </div>
+  </div>
+</section>

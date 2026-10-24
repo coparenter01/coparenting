@@ -1,0 +1,255 @@
+.verify-page-container {
+  min-height: 900px;
+  display: flex;
+  flex-direction: column;
+  background: #f5f6f3;
+}
+
+.public-nav-header {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 32px;
+  background: #ffffff;
+  border-bottom: 1px solid #d9dde1;
+}
+
+.brand-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #17212b;
+}
+
+.public-nav-links {
+  display: flex;
+  gap: 20px;
+  font-size: 14px;
+}
+
+.nav-link {
+  color: #0e5a63;
+  text-decoration: none;
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.verify-main {
+  flex: 1;
+  width: 100%;
+  max-width: 720px;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 48px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.verify-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.verify-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: #17212b;
+}
+
+.verify-subtitle {
+  margin: 0;
+  font-size: 15px;
+  color: #4e5966;
+}
+
+.quick-links-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.subtle-link {
+  min-height: 40px;
+  box-sizing: border-box;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #0e5a63;
+  color: #0e5a63;
+  background: #ffffff;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+
+  &:hover {
+    background: #e3f0f0;
+  }
+}
+
+.card-section {
+  box-sizing: border-box;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid #d9dde1;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.section-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #17212b;
+}
+
+.section-desc {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #4e5966;
+}
+
+.input-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #17212b;
+}
+
+.id-input {
+  padding: 11px 14px;
+  border: 1px solid #c7cdd3;
+  border-radius: 8px;
+  font-size: 15px;
+  font-family: monospace;
+  font-weight: 600;
+  color: #17212b;
+  background: #ffffff;
+
+  &:focus {
+    outline: none;
+    border-color: #0e5a63;
+  }
+}
+
+.file-input {
+  padding: 10px;
+  border: 1px solid #c7cdd3;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.input-hint {
+  font-size: 12px;
+  font-weight: 400;
+  color: #4e5966;
+}
+
+.button-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-primary {
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 10px 22px;
+  border-radius: 8px;
+  background: #0e5a63;
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 15px;
+  border: 0;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: #09434a;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.btn-secondary {
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 10px 22px;
+  border-radius: 8px;
+  border: 1px solid #0e5a63;
+  background: #ffffff;
+  color: #0e5a63;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    background: #e3f0f0;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+.status-banner {
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.banner-success {
+  background: #e3f0f0;
+  color: #0a4a51;
+}
+
+.banner-not-found {
+  background: #eef1f4;
+  color: #2b3540;
+}
+
+.banner-rate-limit {
+  background: #fbede6;
+  color: #7a2e0e;
+}
+
+.bottom-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.btn-subtle {
+  min-height: 40px;
+  box-sizing: border-box;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid #c7cdd3;
+  background: #ffffff;
+  color: #17212b;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+
+  &:hover {
+    background: #f5f6f3;
+  }
+}

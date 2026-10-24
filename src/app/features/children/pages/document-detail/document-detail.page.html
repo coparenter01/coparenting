@@ -1,0 +1,66 @@
+<div class="doc-detail-container">
+  <a routerLink="/documents" class="back-link">← Documents</a>
+
+  @if (document(); as doc) {
+    <div class="header-row">
+      <h1 class="doc-heading">{{ doc.title }}</h1>
+      <div class="badge-row">
+        <span class="badge badge-neutral">{{ doc.category }}</span>
+        <span class="badge badge-neutral">{{ doc.is_private ? 'Private' : 'Shared' }}</span>
+        <span class="badge badge-shared">Version {{ doc.version }}</span>
+      </div>
+    </div>
+
+    <div class="content-columns">
+      <section class="main-doc-card" aria-label="Document details">
+        <div class="preview-box">
+          <span class="file-icon" aria-hidden="true">📄</span>
+          <strong>{{ doc.file_name }}</strong>
+          <span class="meta-label"
+            >{{ formatBytes(doc.file_size_bytes) }} · {{ doc.mime_type }}</span
+          >
+        </div>
+
+        <div class="meta-grid">
+          <span class="meta-label">Child</span>
+          <span class="meta-val">{{ getChildName(doc.child_id) }}</span>
+
+          <span class="meta-label">Uploaded at</span>
+          <span class="meta-val">{{ doc.created_at | date: 'medium' }}</span>
+
+          <span class="meta-label">File path</span>
+          <span class="meta-val">{{ doc.file_path }}</span>
+
+          <span class="meta-label">Visibility</span>
+          <span class="meta-val">{{
+            doc.is_private ? 'Private (only you)' : 'Shared with co-parent'
+          }}</span>
+        </div>
+
+        <div class="actions-row">
+          <button type="button" class="btn-action btn-download" (click)="downloadFile(doc)">
+            Download
+          </button>
+          <a routerLink="/documents/share-links" class="btn-action btn-share">
+            Create share link
+          </a>
+          <button type="button" class="btn-action btn-delete" (click)="deleteDoc(doc.id)">
+            Delete
+          </button>
+        </div>
+      </section>
+
+      <section class="history-card" aria-label="Version history">
+        <h2 class="history-title">Version history</h2>
+        <ol class="history-list">
+          <li class="history-item">
+            <span class="history-ver">Version {{ doc.version }} · current</span>
+            <span class="history-meta">{{ doc.created_at | date: 'medium' }} · Initial upload</span>
+          </li>
+        </ol>
+      </section>
+    </div>
+  } @else {
+    <p>Document not found.</p>
+  }
+</div>

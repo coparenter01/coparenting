@@ -1,0 +1,70 @@
+<section class="log-container">
+  <div class="log-header">
+    <h1>Notification Delivery Audit Log</h1>
+    <p>Permanent record of all alert dispatch attempts, channels, and delivery confirmations.</p>
+  </div>
+
+  <div class="filter-bar">
+    <label>
+      Channel:
+      <select class="select-filter" [(ngModel)]="selectedChannel">
+        <option value="All">All Channels</option>
+        <option value="Push">Push</option>
+        <option value="SMS">SMS</option>
+        <option value="Email">Email</option>
+      </select>
+    </label>
+    <label>
+      Result:
+      <select class="select-filter" [(ngModel)]="selectedResult">
+        <option value="All">All Results</option>
+        <option value="Delivered">Delivered</option>
+        <option value="Sent">Sent</option>
+        <option value="Failed">Failed</option>
+        <option value="Delayed_Quiet_Hours">Delayed (Quiet Hours)</option>
+      </select>
+    </label>
+  </div>
+
+  <div class="log-table-card">
+    <table class="log-table">
+      <thead>
+        <tr>
+          <th>Attempt Time</th>
+          <th>Event Type</th>
+          <th>Channel</th>
+          <th>Recipient</th>
+          <th>Status</th>
+          <th>Module</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (log of filteredLogs; track log.id) {
+          <tr>
+            <td>{{ log.attempt_time | date: 'short' }}</td>
+            <td>{{ log.event_type }}</td>
+            <td>
+              <span class="badge-channel">{{ log.channel }}</span>
+            </td>
+            <td>{{ log.recipient }}</td>
+            <td>
+              <span class="badge-result" [ngClass]="log.result.toLowerCase()">
+                {{ log.result }}
+              </span>
+            </td>
+            <td>{{ log.source_module }}</td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="6">No delivery logs recorded matching your filter.</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <p class="audit-notice">
+    Audit integrity: Delivery logs are permanent records for court documentation and cannot be
+    modified or deleted.
+  </p>
+</section>

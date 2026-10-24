@@ -1,0 +1,140 @@
+.compliance-container {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1100px;
+}
+
+.back-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pp-primary-600, #0e5a63);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.page-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--pp-on-surface, #17212b);
+}
+
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+}
+
+.field-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pp-on-surface, #17212b);
+}
+
+.date-input {
+  padding: 10px 12px;
+  border: 1px solid var(--pp-outline-variant, #c7cdd3);
+  border-radius: 8px;
+  background: var(--pp-surface, #ffffff);
+  color: var(--pp-on-surface, #17212b);
+  font: inherit;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.metric-card {
+  padding: 20px;
+  background: var(--pp-surface, #ffffff);
+  border: 1px solid var(--pp-outline-variant, #d9dde1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.metric-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--pp-on-surface-variant, #4e5966);
+}
+
+.metric-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--pp-on-surface, #17212b);
+}
+
+.metric-sub {
+  font-size: 12px;
+  color: var(--pp-on-surface-variant, #4e5966);
+}
+
+.table-wrapper {
+  background: var(--pp-surface, #ffffff);
+  border: 1px solid var(--pp-outline-variant, #d9dde1);
+  border-radius: 12px;
+  overflow-x: auto;
+}
+
+.compliance-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 560px;
+
+  th {
+    text-align: left;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--pp-on-surface-variant, #4e5966);
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--pp-outline-variant, #d9dde1);
+    background: var(--pp-surface-variant, #f9fafb);
+  }
+
+  td {
+    font-size: 14px;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--pp-surface-variant, #eef1f4);
+    color: var(--pp-on-surface, #17212b);
+    vertical-align: middle;
+  }
+
+  tr:last-child td {
+    border-bottom: 0;
+  }
+}
+
+.diff-tag {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 999px;
+
+  &.neutral {
+    background: #eef1f4;
+    color: #2b3540;
+  }
+
+  &.plus {
+    background: #def7ec;
+    color: #03543f;
+  }
+
+  &.minus {
+    background: #fde8e8;
+    color: #9b1c1c;
+  }
+}

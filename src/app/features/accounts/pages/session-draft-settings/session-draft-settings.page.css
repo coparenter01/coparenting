@@ -1,0 +1,148 @@
+.session-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 24px;
+  box-sizing: border-box;
+}
+
+.breadcrumb-nav {
+  display: flex;
+  align-items: center;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pp-primary-600, #0e5a63);
+  text-decoration: none;
+  min-height: 44px;
+}
+
+.page-header {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--pp-neutral-900, #17212b);
+}
+
+.page-subtitle {
+  margin: 0;
+  font-size: 15px;
+  color: var(--pp-neutral-600, #4e5966);
+}
+
+.status-banner {
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: var(--pp-primary-50, #e3f0f0);
+  color: var(--pp-primary-800, #0a4a51);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.settings-card {
+  background: #ffffff;
+  border: 1px solid var(--pp-neutral-200, #d9dde1);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--pp-neutral-900, #17212b);
+}
+
+.session-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 380px;
+}
+
+.field-label {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--pp-neutral-900, #17212b);
+}
+
+.select-input {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 15px;
+  border: 1px solid var(--pp-neutral-300, #c7cdd3);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--pp-neutral-900, #17212b);
+  min-height: 44px;
+}
+
+.field-hint {
+  font-size: 13px;
+  color: var(--pp-neutral-600, #4e5966);
+  line-height: 1.4;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-start;
+  padding-top: 4px;
+}
+
+.btn-primary {
+  min-height: 44px;
+  padding: 10px 24px;
+  border: 0;
+  border-radius: 8px;
+  background: var(--pp-primary-600, #0e5a63);
+  color: #ffffff;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background: var(--pp-primary-700, #09434a);
+}
+
+.draft-notice {
+  padding: 12px 16px;
+  border-radius: 8px;
+  background: var(--pp-primary-50, #e3f0f0);
+  color: var(--pp-primary-800, #0a4a51);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.draft-detail {
+  margin: 0;
+  font-size: 14px;
+  color: var(--pp-neutral-600, #4e5966);
+  line-height: 1.5;
+}

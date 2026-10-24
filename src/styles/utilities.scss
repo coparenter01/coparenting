@@ -1,0 +1,62 @@
+/* Focus ring: visible 2px teal focus ring with 2px offset */
+:focus-visible {
+  outline: 2px solid var(--pp-primary-500);
+  outline-offset: 2px;
+}
+
+/* Base card styling */
+.pp-card {
+  background-color: var(--pp-surface);
+  border: 1px solid var(--pp-border);
+  border-radius: var(--pp-radius-md);
+  box-shadow: var(--pp-card-shadow);
+  padding: 16px;
+}
+
+/* Accessibility: Skip to main content link */
+.pp-skip-link {
+  position: absolute;
+  top: -9999px;
+  left: 16px;
+  background: var(--pp-primary-600);
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: var(--pp-radius-sm);
+  z-index: 9999;
+  text-decoration: none;
+  font-weight: 600;
+
+  &:focus {
+    top: 16px;
+  }
+}
+
+/* Screen-reader only */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Motion and Transition timing (150-200ms ease-out) */
+.pp-transition {
+  transition: all 180ms ease-out;
+}
+
+/* Respect user's motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

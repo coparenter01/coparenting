@@ -1,0 +1,83 @@
+<div class="safety-container">
+  <div class="safety-header">
+    <h1 class="safety-title">Privacy and safety</h1>
+  </div>
+
+  <nav class="safety-nav" aria-label="Privacy and safety sections">
+    <a routerLink="/safety" class="safety-nav-link">Safety Mode</a>
+    <a routerLink="/safety/alerts-images" class="safety-nav-link">Alerts and images</a>
+    <a
+      routerLink="/safety/ai-data"
+      class="safety-nav-link safety-nav-link--active"
+      aria-current="page"
+    >
+      AI and your data
+    </a>
+  </nav>
+
+  <section class="safety-card">
+    <div class="card-header-row">
+      <h2 class="card-title">AI and your data</h2>
+      <span class="status-pill" [class.status-pill--active]="aiFeaturesActive()">
+        {{ aiFeaturesActive() ? 'AI Active' : 'AI Turned Off' }}
+      </span>
+    </div>
+
+    <p class="section-desc">
+      ParentPath is designed with a strict on-device privacy policy. We believe assistance should
+      never compromise your family’s privacy.
+    </p>
+
+    <div class="principles-grid">
+      <div class="principle-card">
+        <span class="material-symbols-rounded principle-icon" aria-hidden="true">memory</span>
+        <div class="principle-content">
+          <strong>100% On-device processing</strong>
+          <span
+            >Tone suggestions, de-escalation advice, and receipt data extraction execute strictly on
+            your device. Messages are never transmitted to third-party AI APIs.</span
+          >
+        </div>
+      </div>
+
+      <div class="principle-card">
+        <span class="material-symbols-rounded principle-icon" aria-hidden="true">folder_off</span>
+        <div class="principle-content">
+          <strong>Never used for model training</strong>
+          <span
+            >Your conversations, calendar events, expenses, and children's documents are never
+            harvested or used to train AI models.</span
+          >
+        </div>
+      </div>
+
+      <div class="principle-card">
+        <span class="material-symbols-rounded principle-icon" aria-hidden="true">history</span>
+        <div class="principle-content">
+          <strong>Transparent audit trail</strong>
+          <span
+            >Every automated check is logged locally in an immutable audit ledger without retaining
+            message content.</span
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="actions-row">
+      @if (aiFeaturesActive()) {
+        <button type="button" class="btn btn-danger-outline" (click)="onToggleAi()">
+          Turn all AI off
+        </button>
+      } @else {
+        <button type="button" class="btn btn-primary" (click)="onToggleAi()">
+          Turn on on-device AI
+        </button>
+      }
+
+      <a routerLink="/safety/ai-log" class="btn btn-secondary">
+        <span class="material-symbols-rounded" aria-hidden="true">receipt_long</span>
+        View AI use log
+      </a>
+    </div>
+  </section>
+</div>

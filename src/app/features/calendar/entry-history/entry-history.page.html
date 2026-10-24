@@ -1,0 +1,101 @@
+<div class="history-container">
+  <a routerLink="/calendar" class="back-link">← Calendar</a>
+  <h1 class="page-title">History</h1>
+
+  <section class="section-block">
+    <h2 class="section-title">Requests</h2>
+    <div class="filter-row">
+      <label class="filter-label">
+        Status
+        <select
+          class="select-input"
+          [ngModel]="selectedStatus()"
+          (ngModelChange)="setStatusFilter($event)"
+          id="hist-status-filter"
+        >
+          <option value="All">All</option>
+          <option value="Pending">Pending</option>
+          <option value="Approved">Approved</option>
+          <option value="Declined">Declined</option>
+          <option value="Withdrawn">Withdrawn</option>
+          <option value="Expired">Expired</option>
+        </select>
+      </label>
+    </div>
+
+    <div class="table-wrapper">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Requested by</th>
+            <th>Change period</th>
+            <th>Respond by</th>
+            <th>Status</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (req of filteredRequests(); track req.id) {
+            <tr>
+              <td>{{ req.requestType }}</td>
+              <td>{{ req.requestedByName || 'Co-parent' }}</td>
+              <td>{{ formatPeriod(req.changeStartAt, req.changeEndAt) }}</td>
+              <td>{{ formatDateTime(req.respondByAt) }}</td>
+              <td>
+                <span
+                  class="status-badge"
+                  [class.approved]="req.status === 'Approved'"
+                  [class.declined]="req.status === 'Declined'"
+                  [class.expired]="req.status === 'Expired'"
+                >
+                  {{ req.status }}
+                </span>
+              </td>
+              <td>
+                <a [routerLink]="['/calendar/request-detail', req.id]" class="back-link"> Open </a>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="section-block">
+    <h2 class="section-title">Entry history — Pediatric Dental Checkup</h2>
+    <div class="original-box">
+      <strong>Original details:</strong> Pediatric Dental Checkup, Tomorrow 10:00 AM – 11:30 AM, 124
+      Elm Street, Maya Rivera — as first saved.
+    </div>
+
+    <div class="table-wrapper">
+      <table class="history-table">
+        <thead>
+          <tr>
+            <th>Change time</th>
+            <th>Actor</th>
+            <th>Change</th>
+            <th>Device</th>
+            <th>Result</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (ver of auditVersions; track ver.id) {
+            <tr>
+              <td>{{ ver.changeTime }}</td>
+              <td>{{ ver.actor }}</td>
+              <td>{{ ver.changeDescription }}</td>
+              <td>{{ ver.device }}</td>
+              <td>{{ ver.result }}</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <p class="footnote">
+    History is kept for every event, parenting-time entry and request. Nothing is deleted.
+  </p>
+</div>

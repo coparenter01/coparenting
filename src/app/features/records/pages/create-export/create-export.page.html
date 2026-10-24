@@ -1,0 +1,191 @@
+<div class="create-export-container">
+  <div class="top-nav">
+    <a routerLink="/records" class="back-link" id="link-back-records">← Records</a>
+    <a routerLink="/records/court-notes" class="btn-subtle" id="link-court-notes"
+      >Court notes by state</a
+    >
+  </div>
+
+  <header class="header">
+    <h1 class="title">Export records</h1>
+    <p class="subtitle">Your export includes only the records you can see.</p>
+  </header>
+
+  <form class="export-form" (ngSubmit)="onSubmit()">
+    @if (errorMessage()) {
+      <div class="alert-error" role="alert" id="export-error">
+        {{ errorMessage() }}
+      </div>
+    }
+
+    <fieldset class="form-fieldset">
+      <legend class="fieldset-legend">Format</legend>
+      <div class="format-options">
+        <label class="format-card" [class.selected]="format() === 'certified_pdf'">
+          <div class="format-radio-line">
+            <input
+              type="radio"
+              name="format"
+              value="certified_pdf"
+              [checked]="format() === 'certified_pdf'"
+              (change)="setFormat('certified_pdf')"
+              id="radio-certified-pdf"
+            />
+            <span class="format-title">Certified PDF</span>
+          </div>
+          <span class="format-hint">
+            Carries a Record ID anyone can check on the public verification page.
+          </span>
+        </label>
+
+        <label class="format-card" [class.selected]="format() === 'pdf'">
+          <div class="format-radio-line">
+            <input
+              type="radio"
+              name="format"
+              value="pdf"
+              [checked]="format() === 'pdf'"
+              (change)="setFormat('pdf')"
+              id="radio-pdf"
+            />
+            <span class="format-title">PDF</span>
+          </div>
+          <span class="format-hint"
+            >Standard formatted PDF document without court verification ID.</span
+          >
+        </label>
+
+        <label class="format-card" [class.selected]="format() === 'csv'">
+          <div class="format-radio-line">
+            <input
+              type="radio"
+              name="format"
+              value="csv"
+              [checked]="format() === 'csv'"
+              (change)="setFormat('csv')"
+              id="radio-csv"
+            />
+            <span class="format-title">CSV</span>
+          </div>
+          <span class="format-hint"
+            >Spreadsheet data archive (ZIP containing CSV tables per record type).</span
+          >
+        </label>
+      </div>
+    </fieldset>
+
+    <fieldset class="form-fieldset">
+      <legend class="fieldset-legend">Include</legend>
+      <div class="checkbox-grid">
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            [checked]="isTypeSelected('messages')"
+            (change)="toggleType('messages')"
+            id="chk-messages"
+          />
+          <span>Messages</span>
+        </label>
+
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            [checked]="isTypeSelected('calendar')"
+            (change)="toggleType('calendar')"
+            id="chk-calendar"
+          />
+          <span>Calendar</span>
+        </label>
+
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            [checked]="isTypeSelected('expenses')"
+            (change)="toggleType('expenses')"
+            id="chk-expenses"
+          />
+          <span>Expenses</span>
+        </label>
+
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            [checked]="isTypeSelected('child_support')"
+            (change)="toggleType('child_support')"
+            id="chk-child-support"
+          />
+          <span>Child support payments I recorded</span>
+        </label>
+
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            [checked]="isTypeSelected('contact_attempts')"
+            (change)="toggleType('contact_attempts')"
+            id="chk-contact-attempts"
+          />
+          <span>Contact attempts</span>
+        </label>
+
+        <label class="checkbox-label">
+          <input
+            type="checkbox"
+            [checked]="isTypeSelected('journal')"
+            (change)="toggleType('journal')"
+            id="chk-journal"
+          />
+          <span>Journal notes</span>
+        </label>
+
+        <label class="checkbox-label disabled-label">
+          <input type="checkbox" disabled id="chk-agency-data" />
+          <span>Agency data (only with a linked case)</span>
+        </label>
+      </div>
+    </fieldset>
+
+    <div class="dates-row">
+      <div class="field-group">
+        <label for="input-start-date" class="field-label">Start date</label>
+        <input
+          id="input-start-date"
+          type="date"
+          class="date-input"
+          [value]="startDate()"
+          (input)="onStartDateChange($event)"
+        />
+      </div>
+
+      <div class="field-group">
+        <label for="input-end-date" class="field-label">End date</label>
+        <input
+          id="input-end-date"
+          type="date"
+          class="date-input"
+          [value]="endDate()"
+          (input)="onEndDateChange($event)"
+        />
+      </div>
+    </div>
+
+    <div class="actions-row">
+      <button type="submit" class="btn-submit" [disabled]="isSubmitting()" id="btn-submit-export">
+        @if (isSubmitting()) {
+          Generating export…
+        } @else {
+          Create export
+        }
+      </button>
+
+      @if (isSubmitting()) {
+        <span class="status-indicator" role="status" id="export-status">Status: Preparing…</span>
+      }
+
+      <a routerLink="/records/history" class="history-link" id="link-export-history">
+        View export history
+      </a>
+    </div>
+
+    <p class="free-notice">Exports are free and unlimited. Your data is never locked in.</p>
+  </form>
+</div>

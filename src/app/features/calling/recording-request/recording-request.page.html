@@ -1,0 +1,27 @@
+<div class="recording-request-overlay">
+  <div class="request-card" role="dialog" aria-labelledby="requestTitle" aria-modal="true">
+    <div class="header-row">
+      <h1 id="requestTitle">Recording request</h1>
+    </div>
+
+    <div>
+      <a routerLink="/calls/active" class="back-link">&larr; Back to call</a>
+    </div>
+
+    <p class="explanation-text">
+      Co-parent asks to record this call. Both parents must explicitly consent before any recording
+      begins. If agreed, the recording and transcript will be added to the permanent Call Log and
+      cannot be edited or deleted.
+    </p>
+
+    <div class="meta-grid">
+      <span class="label">Requested at</span>
+      <span class="value">{{ requestedAtTime }}</span>
+    </div>
+
+    <div class="actions-row">
+      <button type="button" class="btn-decline" (click)="onDecline()">Decline</button>
+      <button type="button" class="btn-agree" (click)="onAgree()">Agree to record</button>
+    </div>
+  </div>
+</div>

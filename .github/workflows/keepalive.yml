@@ -1,0 +1,17 @@
+name: Keep Supabase prod awake
+
+on:
+  schedule:
+    - cron: '17 6 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - run: >
+          curl -fsS "${{ secrets.PROD_SUPABASE_URL }}/rest/v1/feature_flags?select=key&limit=1"
+          -H "apikey: ${{ secrets.PROD_SUPABASE_PUBLISHABLE_KEY }}" > /dev/null

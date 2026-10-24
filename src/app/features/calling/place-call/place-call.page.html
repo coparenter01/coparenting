@@ -1,0 +1,59 @@
+<section class="place-call-container">
+  <a routerLink="/calls" class="back-link">&larr; Call log</a>
+
+  <div class="header-row">
+    <h1>Call Co-parent</h1>
+  </div>
+
+  <div class="call-card">
+    <div class="recipient-row">
+      <span class="label">To</span>
+      <span class="value">{{ recipientName }}</span>
+    </div>
+
+    <fieldset class="fieldset-types">
+      <legend>Call type</legend>
+      <div class="radios-row">
+        <label>
+          <input type="radio" name="callType" value="audio" [(ngModel)]="callType" />
+          Audio
+        </label>
+        <label>
+          <input type="radio" name="callType" value="video" [(ngModel)]="callType" />
+          Video
+        </label>
+      </div>
+    </fieldset>
+
+    <div class="toggle-item">
+      <div class="toggle-info">
+        <span class="toggle-label">Ask to record this call</span>
+        <span class="toggle-desc"
+          >Requires mutual consent. A spoken notice will announce the recording.</span
+        >
+      </div>
+      <button
+        type="button"
+        role="switch"
+        class="toggle-switch"
+        [class.active]="askToRecord"
+        [attr.aria-checked]="askToRecord"
+        aria-label="Ask to record this call"
+        (click)="askToRecord = !askToRecord"
+      >
+        <span class="thumb"></span>
+      </button>
+    </div>
+
+    @if (errorMessage) {
+      <div class="error-banner">
+        {{ errorMessage }}
+      </div>
+    }
+
+    <div class="actions-row">
+      <button type="button" class="btn-primary" (click)="onStartCall()">Start call</button>
+      <a routerLink="/calls" class="btn-secondary"> Cancel </a>
+    </div>
+  </div>
+</section>

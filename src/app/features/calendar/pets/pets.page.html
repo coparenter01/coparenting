@@ -1,0 +1,102 @@
+<div class="pets-container">
+  <a routerLink="/calendar" class="back-link">← Calendar (week view)</a>
+
+  <div class="header-row">
+    <h1 class="page-title">Pets</h1>
+    <button type="button" class="btn-primary" (click)="openAddModal()" id="pet-add-btn">
+      Add pet
+    </button>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="pets-table">
+      <thead>
+        <tr>
+          <th>Pet</th>
+          <th>Type</th>
+          <th>With this week</th>
+          <th>Next handover</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (pet of petsList(); track pet.id) {
+          <tr>
+            <td>
+              <div class="pet-name-cell">
+                <strong>{{ pet.name }}</strong>
+                @if (pet.notes) {
+                  <span class="pet-notes">{{ pet.notes }}</span>
+                }
+              </div>
+            </td>
+            <td>{{ pet.species }} {{ pet.breed ? '· ' + pet.breed : '' }}</td>
+            <td>Elena Rivera</td>
+            <td>Friday 18:00 (with Maya & Leo)</td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (showAddModal()) {
+    <div class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="pet-modal-title">
+      <div class="modal-card">
+        <h2 id="pet-modal-title" class="modal-title">Add pet to household</h2>
+
+        <label class="field-label">
+          Pet name
+          <input
+            type="text"
+            class="text-input"
+            [(ngModel)]="petName"
+            placeholder="e.g. Barnaby"
+            required
+            id="pet-name-input"
+          />
+        </label>
+
+        <label class="field-label">
+          Species / Animal type
+          <select class="select-input" [(ngModel)]="petSpecies" id="pet-species-select">
+            <option value="Dog">Dog</option>
+            <option value="Cat">Cat</option>
+            <option value="Bird">Bird</option>
+            <option value="Rabbit">Rabbit</option>
+            <option value="Other">Other</option>
+          </select>
+        </label>
+
+        <label class="field-label">
+          Breed (optional)
+          <input
+            type="text"
+            class="text-input"
+            [(ngModel)]="petBreed"
+            placeholder="e.g. Golden Retriever"
+            id="pet-breed-input"
+          />
+        </label>
+
+        <label class="field-label">
+          Care instructions & medication notes
+          <textarea
+            rows="2"
+            class="textarea-input"
+            [(ngModel)]="petNotes"
+            placeholder="Diet, vet contacts, or special medication guidelines"
+            id="pet-notes-input"
+          ></textarea>
+        </label>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" (click)="closeAddModal()" id="pet-cancel-btn">
+            Cancel
+          </button>
+          <button type="button" class="btn-primary" (click)="savePet()" id="pet-save-btn">
+            Save pet
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

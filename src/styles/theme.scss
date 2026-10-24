@@ -1,0 +1,50 @@
+@use '@angular/material' as mat;
+
+html {
+  @include mat.theme(
+    (
+      color: (
+        theme-type: light,
+        primary: mat.$cyan-palette,
+        tertiary: mat.$orange-palette,
+      ),
+      typography: (
+        plain-family: (
+          'Public Sans',
+          'Segoe UI',
+          system-ui,
+          sans-serif,
+        ),
+        brand-family: (
+          'Public Sans',
+          'Segoe UI',
+          system-ui,
+          sans-serif,
+        ),
+      ),
+      density: 0,
+    )
+  );
+
+  /* Map M3 system color tokens to ParentPath brand tokens */
+  --mat-sys-primary: var(--pp-primary-600);
+  --mat-sys-on-primary: #ffffff;
+  --mat-sys-primary-container: var(--pp-primary-100);
+  --mat-sys-on-primary-container: var(--pp-primary-700);
+
+  --mat-sys-tertiary: var(--pp-accent-500);
+  --mat-sys-tertiary-container: var(--pp-accent-50);
+  --mat-sys-on-tertiary-container: var(--pp-accent-700);
+
+  --mat-sys-error: var(--pp-danger);
+  --mat-sys-error-container: var(--pp-danger-bg);
+  --mat-sys-on-error-container: var(--pp-danger);
+
+  --mat-sys-surface: var(--pp-surface);
+  --mat-sys-on-surface: var(--pp-ink);
+  --mat-sys-surface-variant: var(--pp-bg);
+  --mat-sys-on-surface-variant: var(--pp-ink-2);
+  --mat-sys-outline: var(--pp-border);
+  --mat-sys-background: var(--pp-bg);
+  --mat-sys-on-background: var(--pp-ink);
+}

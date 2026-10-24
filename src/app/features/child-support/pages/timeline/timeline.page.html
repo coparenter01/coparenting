@@ -1,0 +1,50 @@
+<div class="css-page-container">
+  <div class="top-nav">
+    <a routerLink="/child-support" class="back-link" id="link-back-css">← Child support</a>
+  </div>
+
+  <header class="header">
+    <div class="header-titles">
+      <h1 class="title">Child support timeline</h1>
+      <p class="subtitle">
+        Chronological record of order entries, payment disbursements, and synchronization logs.
+      </p>
+    </div>
+    <div class="filter-box">
+      <label for="select-event-filter" class="filter-label">Filter</label>
+      <select
+        id="select-event-filter"
+        class="form-control-select"
+        [value]="filterType()"
+        (change)="onFilterChange($event)"
+      >
+        <option value="all">All events</option>
+        <option value="payment">Payments</option>
+        <option value="order">Orders</option>
+        <option value="hearing">Hearings</option>
+        <option value="sync">Sync runs</option>
+        <option value="proof">Proof submissions</option>
+      </select>
+    </div>
+  </header>
+
+  <div class="timeline-container">
+    @for (event of filteredEvents(); track event.eventId) {
+      <div class="timeline-item">
+        <div class="timeline-dot" aria-hidden="true"></div>
+        <div class="timeline-content card">
+          <div class="timeline-header">
+            <div>
+              <span class="badge">{{ event.badge }}</span>
+              <h2 class="timeline-title">{{ event.title }}</h2>
+            </div>
+            <span class="timeline-time">{{ formatDate(event.timestamp) }}</span>
+          </div>
+          <p class="timeline-summary">{{ event.summary }}</p>
+        </div>
+      </div>
+    } @empty {
+      <div class="empty-notice">No events found for this filter.</div>
+    }
+  </div>
+</div>

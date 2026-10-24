@@ -1,0 +1,185 @@
+.turn-off-container {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 16px;
+}
+
+.turn-off-card {
+  width: 100%;
+  max-width: 520px;
+  background: var(--pp-surface);
+  border: 1px solid var(--pp-outline-variant);
+  border-radius: 16px;
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+}
+
+.turn-off-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.icon-badge {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--pp-warn-subtle);
+  color: var(--pp-warn);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.badge-icon {
+  font-size: 30px;
+}
+
+.turn-off-title {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--pp-ink);
+}
+
+.turn-off-subtitle {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.5;
+  color: var(--pp-ink-2);
+}
+
+.turn-off-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.error-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--pp-error-subtle);
+  color: var(--pp-error);
+  font-size: 0.875rem;
+}
+
+.success-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--pp-success-subtle);
+  color: var(--pp-success);
+  font-size: 0.875rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--pp-ink);
+}
+
+.code-input {
+  height: 52px;
+  font-size: 1.5rem;
+  letter-spacing: 0.3em;
+  text-align: center;
+  border: 1px solid var(--pp-outline);
+  border-radius: 8px;
+  background: var(--pp-surface);
+  color: var(--pp-ink);
+  outline: none;
+  transition: border-color 160ms ease;
+}
+
+.code-input:focus {
+  border-color: var(--pp-primary-600);
+  box-shadow: 0 0 0 2px var(--pp-primary-50);
+}
+
+.input-error {
+  border-color: var(--pp-error);
+}
+
+.field-error {
+  font-size: 0.8125rem;
+  color: var(--pp-error);
+}
+
+.resend-row {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.resend-btn {
+  background: none;
+  border: 0;
+  color: var(--pp-primary-600);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+}
+
+.resend-btn:hover {
+  text-decoration: underline;
+}
+
+.actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-top: 8px;
+  border-top: 1px solid var(--pp-outline-variant);
+}
+
+.btn {
+  min-height: 44px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  border: 1px solid transparent;
+  transition: opacity 160ms ease;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background: var(--pp-primary-600);
+  color: #ffffff;
+}
+
+.btn-secondary {
+  background: transparent;
+  border-color: var(--pp-outline);
+  color: var(--pp-ink);
+}

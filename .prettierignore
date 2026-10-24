@@ -1,0 +1,10 @@
+dist
+coverage
+node_modules
+src/app/core/supabase/database.types.ts
+docs/requirements
+docs/manual
+docs/brd
+docs/wireframes
+test-results
+playwright-report

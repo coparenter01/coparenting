@@ -1,0 +1,64 @@
+<div class="albums-container">
+  <a routerLink="/documents" class="back-link">← Documents list</a>
+
+  <div class="top-row">
+    <h1 class="page-title">Photo albums</h1>
+    <button type="button" class="btn-create" (click)="toggleCreateForm()">
+      {{ showCreateForm() ? 'Close' : 'New album' }}
+    </button>
+  </div>
+
+  @if (showCreateForm()) {
+    <section class="create-album-card" aria-label="Create album form">
+      <h2 class="album-name">Create new album</h2>
+      <div class="field-group">
+        <label for="album-title">Album title</label>
+        <input
+          id="album-title"
+          type="text"
+          class="field-input"
+          [value]="newTitle()"
+          (input)="updateTitle($event)"
+          placeholder="e.g. Summer Vacation, School Play"
+        />
+      </div>
+      <div class="field-group">
+        <label for="album-desc">Description (optional)</label>
+        <input
+          id="album-desc"
+          type="text"
+          class="field-input"
+          [value]="newDescription()"
+          (input)="updateDescription($event)"
+          placeholder="e.g. Photos from 2026 trip"
+        />
+      </div>
+      <div class="button-row">
+        <button
+          type="button"
+          class="btn-create"
+          [disabled]="!newTitle().trim()"
+          (click)="saveAlbum()"
+        >
+          Create album
+        </button>
+        <button type="button" class="btn-cancel" (click)="toggleCreateForm()">Cancel</button>
+      </div>
+    </section>
+  }
+
+  <div class="albums-grid">
+    @for (album of albums(); track album.id) {
+      <article class="album-card">
+        <div class="album-cover-placeholder" aria-hidden="true">📷</div>
+        <h2 class="album-name">{{ album.title }}</h2>
+        <span class="album-desc">{{ getPhotoCount(album.id) }} photos</span>
+        @if (album.description) {
+          <p class="album-desc">{{ album.description }}</p>
+        }
+      </article>
+    } @empty {
+      <p class="album-desc">No photo albums created yet. Click "New album" to start one.</p>
+    }
+  </div>
+</div>

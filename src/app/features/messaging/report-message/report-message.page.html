@@ -1,0 +1,51 @@
+<section class="report-container">
+  <div class="report-header">
+    <h1>Report Inappropriate Message</h1>
+  </div>
+
+  <div class="safety-alert">
+    <strong>Immediate Safety Notice:</strong> If you or your child are in immediate physical danger,
+    please call 911 or visit
+    <a routerLink="/safety/resources" class="bold-link">Public Safety Resources</a> immediately.
+  </div>
+
+  @if (isSubmitted()) {
+    <div class="submitted-box">
+      <h3>Report Logged</h3>
+      <p>
+        Thank you. Your report has been submitted to your audit history and flagged for professional
+        review.
+      </p>
+      <a routerLink="/messages" class="btn-secondary">Return to Messages</a>
+    </div>
+  } @else {
+    <div class="report-card">
+      <div class="form-group">
+        <label for="report-reason">Reason for Reporting</label>
+        <select id="report-reason" class="select-input" [(ngModel)]="reason">
+          <option value="Harassment">Harassment</option>
+          <option value="Hostile Tone">Hostile or Demanding Tone</option>
+          <option value="Threat">Threat of Harm or Retaliation</option>
+          <option value="Profanity">Inappropriate Language or Profanity</option>
+          <option value="False Information">Misleading or False Claims</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="report-details">Additional Details (Optional)</label>
+        <textarea
+          id="report-details"
+          class="textarea-details"
+          placeholder="Explain why this message violates communication standards..."
+          [(ngModel)]="details"
+        ></textarea>
+      </div>
+
+      <div class="actions-row">
+        <a routerLink="/messages" class="btn-secondary">Cancel</a>
+        <button type="button" class="btn-report" (click)="onSubmit()">Submit Report</button>
+      </div>
+    </div>
+  }
+</section>

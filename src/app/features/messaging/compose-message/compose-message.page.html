@@ -1,0 +1,94 @@
+<section class="compose-container">
+  <div class="compose-header">
+    <h1>New Message</h1>
+  </div>
+
+  <div class="notice-banner">
+    Court-ready notice: All messages sent are permanent, timestamped, and cannot be edited or
+    deleted.
+  </div>
+
+  <div class="compose-card">
+    <div class="form-group">
+      <label for="msg-subject">Subject</label>
+      <input
+        id="msg-subject"
+        type="text"
+        class="input-text"
+        placeholder="e.g., Weekend Pickup Schedule"
+        [(ngModel)]="subject"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="msg-category">Topic Category</label>
+      <select id="msg-category" class="select-input" [(ngModel)]="category">
+        <option value="General">General</option>
+        <option value="Medical">Medical</option>
+        <option value="School">School</option>
+        <option value="Schedule">Schedule</option>
+        <option value="Expenses">Expenses</option>
+        <option value="Legal">Legal</option>
+        <option value="Emergency">Emergency</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label for="msg-body">Message</label>
+      <textarea
+        id="msg-body"
+        class="textarea-body"
+        placeholder="Write your message clearly, keeping the focus strictly on the children..."
+        [(ngModel)]="body"
+        (input)="onCheckTone()"
+        maxlength="10000"
+      ></textarea>
+    </div>
+
+    <div class="meta-row">
+      <label class="urgent-label">
+        <input type="checkbox" [(ngModel)]="isUrgent" />
+        Mark as Urgent
+      </label>
+      <span class="char-limit">{{ body.length }} / 10,000 characters</span>
+    </div>
+
+    @if (toneFeedback(); as fb) {
+      <div class="tone-feedback-box" [ngClass]="fb.score">
+        <div class="tone-title">Tone Assessment: {{ fb.score | uppercase }}</div>
+        <ul class="tone-suggestions">
+          @for (sug of fb.suggestions; track sug) {
+            <li>{{ sug }}</li>
+          }
+        </ul>
+        @if (fb.rewrites.length > 0) {
+          <div>
+            <strong>Suggested Calmer Rewrite:</strong>
+            <p>{{ fb.rewrites[0] }}</p>
+            <button
+              type="button"
+              class="btn-secondary"
+              (click)="onApplyRewrite(fb.rewrites[0] || '')"
+            >
+              Apply Rewrite
+            </button>
+          </div>
+        }
+      </div>
+    }
+
+    <div class="actions-row">
+      <a routerLink="/messages" class="btn-secondary">Cancel</a>
+      <button type="button" class="btn-secondary" (click)="onCheckTone()">Check Tone</button>
+      <button type="button" class="btn-secondary" (click)="onSaveDraft()">Save Draft</button>
+      <button
+        type="button"
+        class="btn-primary"
+        [disabled]="isSubmitting() || !body.trim()"
+        (click)="onSend()"
+      >
+        {{ isSubmitting() ? 'Sending...' : 'Send Message' }}
+      </button>
+    </div>
+  </div>
+</section>

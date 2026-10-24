@@ -1,0 +1,193 @@
+.household-page-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6, 24px);
+  max-width: 1040px;
+  width: 100%;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--space-4, 16px);
+}
+
+.header-household-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3, 12px);
+}
+
+.household-title {
+  margin: 0;
+  font-size: var(--font-size-2xl, 28px);
+  font-weight: 700;
+  color: var(--color-ink, #17212b);
+}
+
+.mode-badge {
+  font-size: var(--font-size-xs, 12px);
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-full, 9999px);
+  background: var(--color-sage-light, #e3f0f0);
+  color: var(--color-teal-dark, #0a4a51);
+}
+
+.mode-badge.solo {
+  background: var(--color-sand, #eef1f4);
+  color: var(--color-ink-muted, #4e5966);
+}
+
+.page-main {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6, 24px);
+}
+
+.quick-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2, 8px);
+}
+
+.nav-chip {
+  min-height: 40px;
+  box-sizing: border-box;
+  padding: 8px 16px;
+  border-radius: var(--radius-md, 8px);
+  border: 1px solid var(--color-teal, #0e5a63);
+  color: var(--color-teal, #0e5a63);
+  background: var(--color-paper, #ffffff);
+  font-weight: 600;
+  font-size: var(--font-size-sm, 14px);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  transition: background-color 0.15s ease;
+}
+
+.nav-chip:hover {
+  background: var(--color-sage-light, #e3f0f0);
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-4, 16px);
+}
+
+.stat-card {
+  padding: var(--space-5, 20px);
+  background: var(--color-paper, #ffffff);
+  border: 1px solid var(--color-sand-dark, #d9dde1);
+  border-radius: var(--radius-lg, 12px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1, 6px);
+}
+
+.stat-label {
+  font-size: var(--font-size-xs, 13px);
+  color: var(--color-ink-muted, #4e5966);
+}
+
+.stat-value {
+  font-size: var(--font-size-xl, 20px);
+  font-weight: 700;
+  color: var(--color-ink, #17212b);
+}
+
+.members-card {
+  padding: var(--space-6, 24px);
+  background: var(--color-paper, #ffffff);
+  border: 1px solid var(--color-sand-dark, #d9dde1);
+  border-radius: var(--radius-lg, 12px);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3, 12px);
+}
+
+.section-title {
+  margin: 0;
+  font-size: var(--font-size-lg, 18px);
+  font-weight: 600;
+  color: var(--color-ink, #17212b);
+}
+
+.member-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--space-3, 12px);
+  padding: 12px 0;
+  border-bottom: 1px solid var(--color-sand, #eef1f4);
+  font-size: var(--font-size-base, 15px);
+}
+
+.member-name {
+  font-weight: 500;
+  color: var(--color-ink, #17212b);
+}
+
+.member-role {
+  color: var(--color-ink-muted, #4e5966);
+}
+
+.member-row.unjoined .member-name,
+.member-row.unjoined .member-role {
+  color: var(--color-ink-muted, #4e5966);
+}
+
+.actions-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3, 12px);
+  align-items: center;
+}
+
+.action-btn {
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 12px 20px;
+  border-radius: var(--radius-md, 8px);
+  font-weight: 600;
+  font-size: var(--font-size-base, 15px);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.action-btn.primary {
+  background: var(--color-teal, #0e5a63);
+  color: var(--color-paper, #ffffff);
+}
+
+.action-btn.primary:hover {
+  background: var(--color-teal-dark, #0a4a51);
+}
+
+.action-btn.secondary {
+  border: 1px solid var(--color-teal, #0e5a63);
+  color: var(--color-teal, #0e5a63);
+  background: var(--color-paper, #ffffff);
+}
+
+.action-btn.secondary:hover {
+  background: var(--color-sage-light, #e3f0f0);
+}
+
+.action-btn.text-link {
+  color: var(--color-teal, #0e5a63);
+  background: transparent;
+  padding: 12px 14px;
+}
+
+.action-btn.text-link:hover {
+  text-decoration: underline;
+}

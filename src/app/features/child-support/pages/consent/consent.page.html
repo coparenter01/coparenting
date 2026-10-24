@@ -1,0 +1,106 @@
+<div class="css-page-container">
+  <div class="top-nav">
+    <a routerLink="/child-support/link" class="back-link" id="link-back-link-case">← Link a case</a>
+  </div>
+
+  <header class="header">
+    <h1 class="title">Scope of agency sync & consent</h1>
+    <p class="subtitle">
+      Please review what ParentPath reads from your agency record and our strict privacy safeguards.
+    </p>
+  </header>
+
+  @if (errorMessage()) {
+    <div class="alert-error" role="alert" id="consent-error">
+      {{ errorMessage() }}
+    </div>
+  }
+
+  <div class="consent-card">
+    <h2 class="section-title">What we synchronize</h2>
+    <ul class="data-list">
+      <li>
+        <strong>Official order amounts:</strong> Current monthly obligation specified in your order.
+      </li>
+      <li>
+        <strong>Disbursements & payments:</strong> Official state ledger records of payments made
+        and received.
+      </li>
+      <li><strong>Arrears balance:</strong> Past due amounts tracked by the agency.</li>
+      <li><strong>Hearings:</strong> Scheduled court appearances and regulatory deadlines.</li>
+    </ul>
+
+    <h2 class="section-title">Disclosures and safeguards</h2>
+
+    <div class="checkbox-group">
+      <label class="checkbox-label" for="cb-read-only">
+        <input
+          type="checkbox"
+          id="cb-read-only"
+          class="checkbox-input"
+          [checked]="agreedReadOnly()"
+          (change)="toggleReadOnly($event)"
+        />
+        <span>
+          <strong>Strictly Read-Only Invariant:</strong> ParentPath never modifies agency records,
+          never alters official arrears, and never recalculates official orders.
+        </span>
+      </label>
+
+      <label class="checkbox-label" for="cb-not-agency">
+        <input
+          type="checkbox"
+          id="cb-not-agency"
+          class="checkbox-input"
+          [checked]="agreedNotAgency()"
+          (change)="toggleNotAgency($event)"
+        />
+        <span>
+          <strong>ParentPath is not a government agency:</strong> We do not collect or disburse
+          payments directly. We synchronize data purely for co-parent recordkeeping.
+        </span>
+      </label>
+
+      <label class="checkbox-label" for="cb-privacy">
+        <input
+          type="checkbox"
+          id="cb-privacy"
+          class="checkbox-input"
+          [checked]="agreedPrivacy()"
+          (change)="togglePrivacy($event)"
+        />
+        <span>
+          <strong>Co-parent privacy:</strong> Your linked case data is private to you. Your
+          co-parent cannot see your agency data unless you explicitly choose to share an item.
+        </span>
+      </label>
+
+      <label class="checkbox-label" for="cb-revoke">
+        <input
+          type="checkbox"
+          id="cb-revoke"
+          class="checkbox-input"
+          [checked]="agreedRevoke()"
+          (change)="toggleRevoke($event)"
+        />
+        <span>
+          <strong>Revoke at any time:</strong> You may unlink your agency connection at any time.
+          Sync will halt immediately and cached records are purged after 30 days.
+        </span>
+      </label>
+    </div>
+
+    <div class="form-actions">
+      <button
+        type="button"
+        class="btn-primary"
+        id="btn-confirm-consent"
+        [disabled]="!canConfirm()"
+        (click)="onConfirm()"
+      >
+        Confirm and activate sync
+      </button>
+      <a routerLink="/child-support" class="btn-subtle" id="link-cancel-consent">Cancel</a>
+    </div>
+  </div>
+</div>

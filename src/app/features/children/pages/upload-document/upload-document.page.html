@@ -1,0 +1,95 @@
+<div class="upload-container">
+  <a routerLink="/documents" class="back-link">← Documents</a>
+
+  <h1 class="page-title">Upload a document</h1>
+
+  <form
+    class="upload-card"
+    [formGroup]="uploadForm"
+    (ngSubmit)="submitUpload()"
+    aria-label="Upload document form"
+  >
+    <div
+      class="dropzone-box"
+      tabindex="0"
+      role="button"
+      aria-label="Upload document file chooser"
+      (click)="fileInput.click()"
+      (keydown.enter)="fileInput.click()"
+      (keydown.space)="fileInput.click()"
+    >
+      <span class="dropzone-title">Click to choose a file</span>
+      <span class="dropzone-sub">PDF, PNG, JPG, WEBP, DOCX, XLSX, TXT up to 15 MB</span>
+      <input
+        #fileInput
+        type="file"
+        class="hidden-file-input"
+        accept=".pdf,.png,.jpg,.jpeg,.webp,.docx,.xlsx,.txt"
+        (change)="onFileSelected($event)"
+      />
+    </div>
+
+    @if (chosenFile()) {
+      <div class="file-chosen-banner">
+        Selected file: {{ chosenFile()?.name }} ({{ formatBytes(chosenFile()?.size ?? 0) }})
+      </div>
+    }
+
+    @if (errorMessage()) {
+      <div role="alert" class="error-banner">{{ errorMessage() }}</div>
+    }
+
+    <label class="field-group">
+      Document title
+      <input type="text" formControlName="title" class="field-input" maxlength="120" required />
+      <span class="field-hint">1 to 120 characters</span>
+    </label>
+
+    <label class="field-group">
+      Category
+      <select formControlName="category" class="field-select">
+        <option value="Medical">Medical</option>
+        <option value="School">School</option>
+        <option value="Legal">Legal</option>
+        <option value="Financial">Financial</option>
+        <option value="Activities">Activities</option>
+        <option value="Other">Other</option>
+      </select>
+    </label>
+
+    <label class="field-group">
+      Child (optional)
+      <select formControlName="childId" class="field-select">
+        <option value="">All children / General</option>
+        @for (c of children(); track c.id) {
+          <option [value]="c.id">{{ c.first_name }} {{ c.last_name }}</option>
+        }
+      </select>
+    </label>
+
+    <fieldset class="visibility-fieldset">
+      <legend class="fieldset-legend">Visibility</legend>
+      <div class="radio-group">
+        <label class="radio-label">
+          <input type="radio" formControlName="visibility" value="Shared" />
+          Shared — your co-parent can see it
+        </label>
+        <label class="radio-label">
+          <input type="radio" formControlName="visibility" value="Private" />
+          Private — only you
+        </label>
+      </div>
+    </fieldset>
+
+    <p class="info-note">
+      Private documents can later be shared, but a Shared document cannot be made private again.
+    </p>
+
+    <div class="button-row">
+      <button type="submit" class="btn-primary" [disabled]="uploadForm.invalid || !chosenFile()">
+        Upload
+      </button>
+      <a routerLink="/documents" class="btn-secondary">Cancel</a>
+    </div>
+  </form>
+</div>

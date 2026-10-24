@@ -1,0 +1,65 @@
+<section class="call-screen-container">
+  <div class="top-bar-row">
+    <div class="participant-meta">
+      <h1>{{ remoteName }}</h1>
+      <p class="timer-text">[{{ formattedTime }}]</p>
+    </div>
+
+    <div class="badges-row">
+      @if (activeCall()?.isRecording) {
+        <span class="badge-recording">&#9679; Recording</span>
+      } @else if (activeCall()?.recordingPendingConsent) {
+        <span class="badge-pending">&#9203; Recording Consent Requested</span>
+      }
+    </div>
+  </div>
+
+  <div class="media-viewport">
+    <div class="stream-avatar">CP</div>
+    <div class="stream-status">
+      @if (activeCall()?.isCameraOff) {
+        <span>Camera is turned off (Audio connected)</span>
+      } @else {
+        <span>Connected &bull; Encrypted Media Stream</span>
+      }
+    </div>
+    <div class="network-privacy-tag">
+      Relayed via ParentPath &bull; Personal phone number & IP hidden
+    </div>
+  </div>
+
+  <div class="controls-bar">
+    <button
+      type="button"
+      class="btn-ctrl"
+      [class.active]="activeCall()?.isMuted"
+      (click)="onToggleMute()"
+    >
+      {{ activeCall()?.isMuted ? 'Unmute' : 'Mute' }}
+    </button>
+
+    <button
+      type="button"
+      class="btn-ctrl"
+      [class.active]="activeCall()?.isCameraOff"
+      (click)="onToggleCamera()"
+    >
+      {{ activeCall()?.isCameraOff ? 'Camera on' : 'Camera off' }}
+    </button>
+
+    <button
+      type="button"
+      class="btn-ctrl"
+      [class.active]="activeCall()?.isSpeaker"
+      (click)="onToggleSpeaker()"
+    >
+      Speaker
+    </button>
+
+    @if (!activeCall()?.isRecording && !activeCall()?.recordingPendingConsent) {
+      <a routerLink="/calls/recording-request" class="btn-ctrl"> Ask to record </a>
+    }
+
+    <button type="button" class="btn-end-call" (click)="onEndCall()">End call</button>
+  </div>
+</section>

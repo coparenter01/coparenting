@@ -1,0 +1,50 @@
+<section class="coach-container">
+  <div class="coach-header">
+    <h1>AI Co-Parenting Coach</h1>
+    <p>Private, on-device guidance for calm, constructive co-parent communication.</p>
+  </div>
+
+  <div class="prompt-chips">
+    <button
+      type="button"
+      class="chip-btn"
+      (click)="selectPrompt('How do I request a weekend swap calmly?')"
+    >
+      Request a weekend swap
+    </button>
+    <button
+      type="button"
+      class="chip-btn"
+      (click)="selectPrompt('How do I respond to an angry accusation?')"
+    >
+      Respond to an angry message
+    </button>
+    <button
+      type="button"
+      class="chip-btn"
+      (click)="selectPrompt('Setting boundaries around pickup times')"
+    >
+      Set pickup time boundaries
+    </button>
+  </div>
+
+  <div class="coach-chat-card">
+    <div class="coach-input-area">
+      <input
+        type="text"
+        class="coach-input"
+        placeholder="Ask a question or describe a difficult conversation..."
+        [(ngModel)]="userQuestion"
+        (keyup.enter)="askCoach()"
+      />
+      <button type="button" class="btn-primary" (click)="askCoach()">Ask Coach</button>
+    </div>
+
+    @if (coachAnswer(); as ans) {
+      <div class="coach-response">
+        <h3>{{ ans.title }}</h3>
+        <p>{{ ans.advice }}</p>
+      </div>
+    }
+  </div>
+</section>

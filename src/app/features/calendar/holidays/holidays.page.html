@@ -1,0 +1,130 @@
+<div class="holidays-container">
+  <a routerLink="/calendar" class="back-link">← Calendar (week view)</a>
+
+  <div class="header-row">
+    <h1 class="page-title">Holidays</h1>
+    <button type="button" class="btn-primary" (click)="openAddModal()" id="holiday-add-btn">
+      Add holiday
+    </button>
+  </div>
+
+  <div class="table-wrapper">
+    <table class="holidays-table">
+      <thead>
+        <tr>
+          <th>Holiday</th>
+          <th>Date</th>
+          <th>With</th>
+          <th>Repeats</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (h of holidaysList(); track h.id) {
+          <tr>
+            <td>
+              <strong>{{ h.name }}</strong>
+            </td>
+            <td>{{ formatHolidayDate(h) }}</td>
+            <td>
+              <select
+                class="parent-select"
+                [ngModel]="h.assignedParentName || 'Elena Rivera'"
+                (ngModelChange)="updateAssignedParent(h.id, $event)"
+                id="holiday-parent-{{ h.holidayKey }}"
+              >
+                <option value="Elena Rivera">Elena Rivera (Parent A)</option>
+                <option value="David Chen">David Chen (Parent B)</option>
+              </select>
+            </td>
+            <td>
+              <select
+                class="rule-select"
+                [ngModel]="h.rule"
+                (ngModelChange)="updateHolidayRule(h.id, $event)"
+                id="holiday-rule-{{ h.holidayKey }}"
+              >
+                <option value="Every year">Every year</option>
+                <option value="Even years">Even years</option>
+                <option value="Odd years">Odd years</option>
+                <option value="Split">Split</option>
+              </select>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  @if (showAddModal()) {
+    <div
+      class="modal-backdrop"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="custom-holiday-title"
+    >
+      <div class="modal-card">
+        <h2 id="custom-holiday-title" class="modal-title">Add custom holiday / special day</h2>
+
+        <label class="field-label">
+          Holiday name
+          <input
+            type="text"
+            class="text-input"
+            [(ngModel)]="customName"
+            placeholder="e.g. Maya's Birthday"
+            required
+            id="custom-holiday-name"
+          />
+        </label>
+
+        <label class="field-label">
+          Date
+          <input
+            type="date"
+            class="text-input"
+            [(ngModel)]="customDate"
+            required
+            id="custom-holiday-date"
+          />
+        </label>
+
+        <label class="field-label">
+          Assigned parent
+          <select class="select-input" [(ngModel)]="customParent" id="custom-holiday-parent">
+            <option value="Elena Rivera">Elena Rivera</option>
+            <option value="David Chen">David Chen</option>
+          </select>
+        </label>
+
+        <label class="field-label">
+          Repeats
+          <select class="select-input" [(ngModel)]="customRule" id="custom-holiday-rule">
+            <option value="Every year">Every year</option>
+            <option value="Even years">Even years</option>
+            <option value="Odd years">Odd years</option>
+            <option value="Split">Split</option>
+          </select>
+        </label>
+
+        <div class="modal-actions">
+          <button
+            type="button"
+            class="btn-secondary"
+            (click)="closeAddModal()"
+            id="custom-holiday-cancel"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            class="btn-primary"
+            (click)="saveCustomHoliday()"
+            id="custom-holiday-save"
+          >
+            Save
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>

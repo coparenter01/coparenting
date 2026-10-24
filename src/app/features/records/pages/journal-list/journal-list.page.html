@@ -1,0 +1,96 @@
+<div class="journal-list-container">
+  <a routerLink="/records" class="back-link" id="link-back-records">← Records</a>
+
+  <header class="page-header">
+    <div class="header-titles">
+      <h1 class="page-title">Journal</h1>
+      <p class="page-subtitle">Private notes and incident notes. Only you can see them.</p>
+    </div>
+    <a routerLink="/records/journal/new" class="btn-primary" id="btn-add-journal">
+      Add journal entry
+    </a>
+  </header>
+
+  <div class="privacy-notice">
+    Journal notes are private to you. They are added to an export only when you choose “Journal
+    notes”.
+  </div>
+
+  <div class="filter-controls">
+    <label class="field-label" for="input-search">
+      Search
+      <input
+        id="input-search"
+        type="search"
+        class="text-input"
+        placeholder="Search titles and details"
+        [value]="searchQuery()"
+        (input)="onSearchChange($event)"
+      />
+    </label>
+
+    <label class="field-label" for="input-from-date">
+      From
+      <input
+        id="input-from-date"
+        type="date"
+        class="date-input"
+        [value]="fromDate()"
+        (input)="onFromDateChange($event)"
+      />
+    </label>
+
+    <label class="field-label" for="input-to-date">
+      To
+      <input
+        id="input-to-date"
+        type="date"
+        class="date-input"
+        [value]="toDate()"
+        (input)="onToDateChange($event)"
+      />
+    </label>
+  </div>
+
+  <section class="entries-card">
+    @for (entry of filteredEntries(); track entry.entryId) {
+      <a
+        [routerLink]="['/records/journal', entry.entryId]"
+        class="entry-row"
+        [class.voided-row]="entry.status === 'voided'"
+        [id]="'journal-entry-' + entry.entryId"
+      >
+        <div class="entry-header">
+          @if (entry.status === 'voided') {
+            <span class="entry-title voided-title"
+              ><s>{{ entry.title }}</s></span
+            >
+            <span class="badge-voided">Voided</span>
+          } @else {
+            <span class="entry-title">{{ entry.title }}</span>
+            <span class="entry-meta">
+              {{ entry.happenedAt | date: 'medium' }}
+              @if (entry.attachments.length) {
+                · 📎 {{ entry.attachments.length }}
+                {{ entry.attachments.length === 1 ? 'file' : 'files' }}
+              }
+            </span>
+          }
+        </div>
+
+        <p class="entry-snippet">
+          @if (entry.status === 'voided') {
+            This note was voided. It stays in your history.
+          } @else {
+            {{ entry.details | slice: 0 : 180 }}{{ entry.details.length > 180 ? '…' : '' }}
+          }
+        </p>
+      </a>
+    } @empty {
+      <div class="empty-state">
+        <p>No journal entries found matching your search.</p>
+        <a routerLink="/records/journal/new" class="btn-subtle">Write your first note</a>
+      </div>
+    }
+  </section>
+</div>

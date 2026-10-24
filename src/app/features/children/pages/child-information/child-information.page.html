@@ -1,0 +1,116 @@
+<div class="child-info-container">
+  <a routerLink="/children" class="back-link">← Children</a>
+
+  <div class="top-bar-row">
+    <div class="child-title-block">
+      <h1 class="child-main-name">
+        @if (selectedChild(); as c) {
+          {{ c.first_name }} {{ c.last_name }}
+        } @else {
+          All Children
+        }
+      </h1>
+      <p class="child-sub-meta">
+        @if (selectedChild(); as c) {
+          Born {{ c.birth_date }} · Status: {{ c.status }}
+        } @else {
+          Showing family-wide information
+        }
+      </p>
+    </div>
+
+    <div class="actions-cluster">
+      <a routerLink="/children/entry/new" class="btn-primary-action">Add information</a>
+      <a routerLink="/children" class="btn-secondary-action">Edit child</a>
+      <a routerLink="/documents/upload" class="btn-secondary-action">Upload document</a>
+      <a routerLink="/children/wishlist" class="btn-secondary-action">Wish list</a>
+    </div>
+  </div>
+
+  <div class="tab-and-filter-row">
+    <div role="tablist" class="section-tabs" aria-label="Information sections">
+      @for (tab of sections; track tab) {
+        <button
+          type="button"
+          role="tab"
+          class="tab-btn"
+          [class.active]="selectedSection() === tab"
+          [attr.aria-selected]="selectedSection() === tab"
+          (click)="setSection(tab)"
+        >
+          {{ tab }}
+        </button>
+      }
+    </div>
+
+    <label class="filter-group">
+      Child
+      <select class="filter-select" (change)="onChildFilterChange($event)">
+        <option value="">All children</option>
+        @for (c of children(); track c.id) {
+          <option [value]="c.id" [selected]="selectedChildId() === c.id">
+            {{ c.first_name }} {{ c.last_name }}
+          </option>
+        }
+      </select>
+    </label>
+  </div>
+
+  <div class="table-card">
+    <table class="entries-table" aria-label="Child information entries">
+      <thead>
+        <tr>
+          <th scope="col">Title</th>
+          <th scope="col">Entry type</th>
+          <th scope="col">Child</th>
+          <th scope="col">Visibility</th>
+          <th scope="col">Section</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (entry of filteredEntries(); track entry.id) {
+          <tr>
+            <td>
+              <a [routerLink]="['/children/entry', entry.id]" class="entry-title-link">
+                {{ entry.title }}
+              </a>
+            </td>
+            <td>
+              <span class="badge badge-neutral">{{ entry.entry_type }}</span>
+            </td>
+            <td>{{ getChildName(entry.child_id) }}</td>
+            <td>
+              <span
+                class="badge"
+                [class.badge-shared]="entry.visibility === 'Shared'"
+                [class.badge-neutral]="entry.visibility === 'Private'"
+              >
+                {{ entry.visibility }}
+              </span>
+            </td>
+            <td>
+              <span class="badge badge-neutral">{{ entry.section }}</span>
+            </td>
+          </tr>
+        } @empty {
+          <tr>
+            <td colspan="5">
+              No entries in this section yet. Click "Add information" above to record notes.
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+
+  <section class="related-docs-card" aria-label="Related documents">
+    <h2 class="section-title">Related documents</h2>
+    <div class="doc-chip-list">
+      @for (doc of documents(); track doc.id) {
+        <a [routerLink]="['/documents/detail', doc.id]" class="doc-chip"> 📄 {{ doc.title }} </a>
+      } @empty {
+        <p class="child-sub-meta">No linked documents uploaded yet.</p>
+      }
+    </div>
+  </section>
+</div>

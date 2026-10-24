@@ -1,0 +1,209 @@
+.entry-detail-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--pp-space-5);
+  max-width: 1060px;
+  margin: 0 auto;
+}
+
+.back-link {
+  font-size: var(--pp-font-size-sm);
+  color: var(--pp-primary-600);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.header-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--pp-space-3);
+}
+
+.entry-heading {
+  margin: 0;
+  font-size: var(--pp-font-size-2xl);
+  font-weight: var(--pp-font-weight-bold);
+  color: var(--pp-neutral-900);
+}
+
+.badge-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pp-space-2);
+}
+
+.badge {
+  font-size: var(--pp-font-size-xs);
+  font-weight: var(--pp-font-weight-semibold);
+  padding: 4px 10px;
+  border-radius: var(--pp-radius-full);
+}
+
+.badge-neutral {
+  background: var(--pp-neutral-200);
+  color: var(--pp-neutral-800);
+}
+
+.badge-active {
+  background: var(--pp-primary-100);
+  color: var(--pp-primary-900);
+}
+
+.content-columns {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--pp-space-6);
+}
+
+.main-detail-card {
+  flex: 2 1 420px;
+  box-sizing: border-box;
+  padding: var(--pp-space-6);
+  background: var(--pp-neutral-0);
+  border: 1px solid var(--pp-neutral-300);
+  border-radius: var(--pp-radius-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--pp-space-4);
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: minmax(130px, auto) 1fr;
+  gap: 12px 24px;
+  font-size: var(--pp-font-size-md);
+}
+
+.grid-label {
+  color: var(--pp-neutral-600);
+  font-weight: var(--pp-font-weight-medium);
+}
+
+.grid-value {
+  color: var(--pp-neutral-900);
+}
+
+.safety-note-box {
+  padding: 12px 16px;
+  border-radius: var(--pp-radius-md);
+  background: var(--pp-neutral-100);
+  color: var(--pp-neutral-800);
+  font-size: var(--pp-font-size-sm);
+  line-height: 1.5;
+}
+
+.sub-heading {
+  margin: 0;
+  font-size: var(--pp-font-size-lg);
+  font-weight: var(--pp-font-weight-semibold);
+  color: var(--pp-neutral-900);
+}
+
+.doc-chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--pp-space-2);
+}
+
+.doc-chip {
+  min-height: 40px;
+  padding: 8px 14px;
+  border-radius: var(--pp-radius-md);
+  border: 1px solid var(--pp-neutral-300);
+  background: var(--pp-neutral-0);
+  color: var(--pp-neutral-900);
+  text-decoration: none;
+  font-weight: var(--pp-font-weight-semibold);
+  font-size: var(--pp-font-size-sm);
+  display: inline-flex;
+  align-items: center;
+}
+
+.actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--pp-space-3);
+  margin-top: var(--pp-space-2);
+}
+
+.btn-action {
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: var(--pp-radius-md);
+  font-weight: var(--pp-font-weight-semibold);
+  font-size: var(--pp-font-size-md);
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-edit {
+  border: 1px solid var(--pp-primary-600);
+  background: var(--pp-neutral-0);
+  color: var(--pp-primary-600);
+}
+
+.btn-share {
+  border: 1px solid var(--pp-neutral-300);
+  background: var(--pp-neutral-0);
+  color: var(--pp-neutral-900);
+}
+
+.btn-archive {
+  border: 1px solid var(--pp-error-700);
+  background: var(--pp-neutral-0);
+  color: var(--pp-error-700);
+}
+
+.footnote {
+  margin: 0;
+  font-size: var(--pp-font-size-xs);
+  line-height: 1.5;
+  color: var(--pp-neutral-600);
+}
+
+.history-card {
+  flex: 1 1 280px;
+  box-sizing: border-box;
+  padding: var(--pp-space-6);
+  background: var(--pp-neutral-0);
+  border: 1px solid var(--pp-neutral-300);
+  border-radius: var(--pp-radius-xl);
+  display: flex;
+  flex-direction: column;
+  gap: var(--pp-space-3);
+}
+
+.history-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--pp-space-3);
+}
+
+.history-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-left: var(--pp-space-3);
+  border-left: 2px solid var(--pp-neutral-300);
+}
+
+.history-ver {
+  font-size: var(--pp-font-size-sm);
+  font-weight: var(--pp-font-weight-semibold);
+  color: var(--pp-neutral-900);
+}
+
+.history-meta {
+  font-size: var(--pp-font-size-xs);
+  color: var(--pp-neutral-600);
+}

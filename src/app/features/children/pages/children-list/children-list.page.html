@@ -1,0 +1,110 @@
+<div class="children-container">
+  <div class="top-actions">
+    <div class="title-group">
+      <h1 class="page-title">Children</h1>
+      <p class="page-subtitle">Up to 10 children per household.</p>
+    </div>
+    <button type="button" class="btn-save" (click)="startAddChild()">Add child</button>
+  </div>
+
+  <div class="quick-links">
+    <a routerLink="/children/tasks" class="quick-link-btn">Tasks</a>
+    <a routerLink="/children/emergency" class="quick-link-btn">Emergency contacts</a>
+    <a routerLink="/children/wishlist" class="quick-link-btn">Wish list</a>
+  </div>
+
+  <div class="main-content-layout">
+    <section class="children-cards-section" aria-label="Children cards">
+      @for (child of children(); track child.id) {
+        <div class="child-card" [class.archived]="child.status === 'Archived'">
+          <div class="card-header">
+            <a
+              [routerLink]="['/children/info']"
+              [queryParams]="{ childId: child.id }"
+              class="child-name-link"
+            >
+              {{ child.first_name }} {{ child.last_name }}
+            </a>
+            <span
+              class="status-badge"
+              [class.status-active]="child.status === 'Active'"
+              [class.status-archived]="child.status === 'Archived'"
+            >
+              {{ child.status }}
+            </span>
+          </div>
+          <span class="child-meta">Born {{ child.birth_date }}</span>
+          <div class="card-actions">
+            <a
+              [routerLink]="['/children/info']"
+              [queryParams]="{ childId: child.id }"
+              class="btn-card-action btn-card-primary"
+            >
+              View information
+            </a>
+            <button type="button" class="btn-card-action" (click)="editChild(child)">Edit</button>
+          </div>
+        </div>
+      } @empty {
+        <p class="page-subtitle">No children registered yet.</p>
+      }
+    </section>
+
+    @if (formOpen()) {
+      <form
+        class="child-form-card"
+        [formGroup]="childForm"
+        (ngSubmit)="saveChild()"
+        aria-label="Child form"
+      >
+        <h2 class="form-title">{{ isEditing() ? 'Edit child' : 'Add child' }}</h2>
+
+        <label class="field-group">
+          First name
+          <input
+            type="text"
+            formControlName="firstName"
+            class="field-input"
+            maxlength="60"
+            required
+          />
+          <span class="field-hint">1 to 60 characters</span>
+        </label>
+
+        <label class="field-group">
+          Last name (optional)
+          <input type="text" formControlName="lastName" class="field-input" maxlength="60" />
+        </label>
+
+        <label class="field-group">
+          Date of birth
+          <input type="date" formControlName="birthDate" class="field-input" required />
+          <span class="field-hint">Today or earlier</span>
+        </label>
+
+        @if (errorMessage()) {
+          <div role="alert" class="error-banner">{{ errorMessage() }}</div>
+        }
+
+        <div class="form-button-row">
+          <button type="submit" class="btn-save" [disabled]="childForm.invalid">Save</button>
+          <button type="button" class="btn-cancel" (click)="closeForm()">Cancel</button>
+        </div>
+
+        @if (isEditing()) {
+          <hr class="form-divider" />
+          <div>
+            <button type="button" class="btn-archive" (click)="archiveCurrentChild()">
+              Archive child
+            </button>
+          </div>
+        }
+
+        <p class="form-footnote">
+          Archive keeps the child’s history and asks you to confirm. Only a Parent can add or edit a
+          child.
+        </p>
+      </form>
+    }
+  </div>
+</div>

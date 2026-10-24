@@ -1,0 +1,60 @@
+<section class="quiet-container">
+  <div class="quiet-header">
+    <h1>Quiet Windows & Daily Limits</h1>
+    <p>
+      Protect your rest and boundaries by setting quiet hours where non-urgent notifications are
+      muted.
+    </p>
+  </div>
+
+  <div class="quiet-card">
+    <div class="setting-row">
+      <div class="setting-info">
+        <span class="setting-title">Enable Quiet Hours</span>
+        <span class="setting-desc"
+          >Mutes non-urgent sounds and push alerts during your designated window.</span
+        >
+      </div>
+      <input type="checkbox" [(ngModel)]="quietHoursEnabled" />
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <span class="setting-title">Quiet Hours Window</span>
+        <span class="setting-desc">Start time to end time (e.g. 9:00 PM to 7:00 AM).</span>
+      </div>
+      <div>
+        <input type="time" class="time-input" [(ngModel)]="quietStart" />
+        to
+        <input type="time" class="time-input" [(ngModel)]="quietEnd" />
+      </div>
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <span class="setting-title">Allow Urgent Messages to Bypass</span>
+        <span class="setting-desc"
+          >Emergency schedule changes and messages marked Urgent will still alert you.</span
+        >
+      </div>
+      <input type="checkbox" [(ngModel)]="allowUrgent" />
+    </div>
+
+    <div class="setting-row">
+      <div class="setting-info">
+        <span class="setting-title">Maximum Alerts Per Day</span>
+        <span class="setting-desc"
+          >Caps the total volume of daily push notifications to prevent harassment.</span
+        >
+      </div>
+      <input type="number" class="number-input" [(ngModel)]="maxAlertsPerDay" min="5" max="100" />
+    </div>
+
+    <div class="setting-row">
+      <button type="button" class="btn-primary" (click)="onSave()">Save Quiet Windows</button>
+      @if (isSaved()) {
+        <span class="save-status">Settings saved!</span>
+      }
+    </div>
+  </div>
+</section>

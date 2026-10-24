@@ -1,0 +1,128 @@
+<div class="operations-layout" data-testid="support-measures-page">
+  <nav class="operations-nav" aria-label="Operations navigation">
+    <div class="nav-brand">ParentPath</div>
+    <div class="nav-sub">Operations</div>
+    <div class="nav-links-box">
+      <a routerLink="/child-support/load-log">Load log</a>
+      <a routerLink="/records/affidavit-reviews">Affidavit reviews</a>
+      <a routerLink="/operations/support-measures" class="active">Support measures</a>
+    </div>
+  </nav>
+
+  <div class="operations-content">
+    <header class="operations-header">
+      <span class="header-left">Operations</span>
+      <div class="header-right">
+        <span class="two-step-badge">2-step verified</span>
+        <span>Taylor Lead &middot; Support Lead</span>
+      </div>
+    </header>
+
+    <main class="operations-main">
+      <div class="page-title-row">
+        <h1 class="page-title">Support measures</h1>
+        <div>
+          <button
+            type="button"
+            id="export-measures-csv-btn"
+            class="pp-button pp-button--outline"
+            (click)="onExportCsv()"
+          >
+            Export CSV
+          </button>
+        </div>
+      </div>
+
+      <div class="date-controls">
+        <label for="date-from">
+          From
+          <input id="date-from" type="date" [value]="from()" (change)="onFromChange($event)" />
+        </label>
+        <label for="date-to">
+          To
+          <input id="date-to" type="date" [value]="to()" (change)="onToChange($event)" />
+        </label>
+      </div>
+
+      <div class="stats-grid">
+        <section class="stat-card" aria-label="Cases opened">
+          <span class="stat-label">Cases opened</span>
+          <span class="stat-value">{{ report().casesOpened }}</span>
+        </section>
+
+        <section class="stat-card" aria-label="First reply on time">
+          <div class="stat-label">
+            <span>First reply on time</span>
+            <span class="stat-target">Target 95%</span>
+          </div>
+          <span class="stat-value">
+            {{ formatPercent(report().firstReplyOnTimeShare) }}
+          </span>
+        </section>
+
+        <section class="stat-card" aria-label="Priority cases">
+          <div class="stat-label">
+            <span>Priority cases</span>
+            <span class="stat-target">Target 95%</span>
+          </div>
+          <span class="stat-value">
+            {{ formatPercent(report().priorityOnTimeShare) }}
+          </span>
+        </section>
+
+        <section class="stat-card" aria-label="Satisfaction">
+          <div class="stat-label">
+            <span>Satisfaction</span>
+            <span class="stat-target">Target 95%</span>
+          </div>
+          <span class="stat-value">
+            {{ formatPercent(report().satisfactionShare) }}
+          </span>
+        </section>
+      </div>
+
+      <div class="table-card">
+        <table class="measures-table">
+          <thead>
+            <tr>
+              <th>Category</th>
+              <th>Cases</th>
+              <th>Median first reply</th>
+              <th>Resolved</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of report().categoryBreakdown; track item.category) {
+              <tr>
+                <td>{{ item.categoryLabel }}</td>
+                <td>{{ item.casesCount }}</td>
+                <td>{{ item.medianReplyHours }}h</td>
+                <td>{{ item.resolvedCount }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <div class="split-searches">
+        <div class="search-card">
+          <h3>Top 20 help searches</h3>
+          <ul>
+            @for (s of report().topSearches; track s.term) {
+              <li>{{ s.term }} ({{ s.count }})</li>
+            }
+          </ul>
+        </div>
+
+        <div class="search-card">
+          <h3>Searches with no results</h3>
+          <ul>
+            @for (s of report().zeroResultSearches; track s.term) {
+              <li>{{ s.term }} ({{ s.count }})</li>
+            }
+          </ul>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

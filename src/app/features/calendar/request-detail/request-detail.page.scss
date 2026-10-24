@@ -1,0 +1,240 @@
+.req-detail-layout {
+  padding: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.main-card {
+  flex: 1 1 420px;
+  padding: 24px;
+  background: var(--pp-surface, #ffffff);
+  border: 1px solid var(--pp-outline-variant, #d9dde1);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.back-link {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pp-primary-600, #0e5a63);
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.card-header-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.page-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--pp-on-surface, #17212b);
+}
+
+.status-chip {
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #fff7e8;
+  color: #5c3d06;
+
+  &.approved {
+    background: #def7ec;
+    color: #03543f;
+  }
+
+  &.declined {
+    background: #fde8e8;
+    color: #9b1c1c;
+  }
+
+  &.withdrawn {
+    background: #f3f4f6;
+    color: #374151;
+  }
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 15px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--pp-surface-variant, #eef1f4);
+  color: var(--pp-on-surface, #17212b);
+
+  &.vertical {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+
+.row-label {
+  color: var(--pp-on-surface-variant, #4e5966);
+  font-weight: 500;
+}
+
+.row-val {
+  font-weight: 600;
+}
+
+.field-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--pp-on-surface, #17212b);
+}
+
+.textarea-input {
+  padding: 10px;
+  border: 1px solid var(--pp-outline-variant, #c7cdd3);
+  border-radius: 8px;
+  background: var(--pp-surface, #ffffff);
+  color: var(--pp-on-surface, #17212b);
+  font: inherit;
+}
+
+.actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: center;
+}
+
+.btn-primary {
+  min-height: 44px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  background: var(--pp-primary-600, #0e5a63);
+  color: #ffffff;
+  font-weight: 600;
+  border: 0;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--pp-primary-700, #09434a);
+  }
+}
+
+.btn-secondary {
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid var(--pp-outline-variant, #c7cdd3);
+  border-radius: 8px;
+  background: var(--pp-surface, #ffffff);
+  color: var(--pp-on-surface, #17212b);
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--pp-surface-variant, #eef1f4);
+  }
+}
+
+.btn-danger {
+  min-height: 44px;
+  padding: 10px 18px;
+  border: 1px solid #f8b4b4;
+  border-radius: 8px;
+  background: #fde8e8;
+  color: #9b1c1c;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    background: #fbd5d5;
+  }
+}
+
+.footnote {
+  font-size: 13px;
+  color: var(--pp-on-surface-variant, #4e5966);
+}
+
+.confirm-dialog-card {
+  flex: 0 1 380px;
+  padding: 24px;
+  background: var(--pp-surface, #ffffff);
+  border: 2px solid var(--pp-primary-600, #0e5a63);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.dialog-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--pp-on-surface, #17212b);
+}
+
+.dialog-summary {
+  margin: 0;
+  font-size: 15px;
+  color: var(--pp-on-surface, #2b3540);
+  line-height: 1.5;
+}
+
+.impact-box {
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: var(--pp-surface-variant, #f5f6f3);
+  font-size: 14px;
+  color: var(--pp-on-surface, #17212b);
+}
+
+.divider {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid var(--pp-surface-variant, #eef1f4);
+  margin: 4px 0;
+}
+
+.undo-status-bar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  background: var(--pp-primary-50, #e3f0f0);
+  color: var(--pp-primary-800, #0a4a51);
+}
+
+.undo-status-text {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.btn-undo {
+  min-height: 40px;
+  padding: 8px 14px;
+  border: 1px solid var(--pp-primary-600, #0e5a63);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--pp-primary-600, #0e5a63);
+  font-weight: 700;
+  cursor: pointer;
+
+  &:hover {
+    background: var(--pp-primary-100, #c8e4e4);
+  }
+}

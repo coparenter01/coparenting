@@ -1,0 +1,72 @@
+<div class="profile-container">
+  <div class="breadcrumb-nav">
+    <a routerLink="/settings" class="back-link">
+      <span aria-hidden="true">&larr;</span> Settings
+    </a>
+  </div>
+
+  <header class="page-header">
+    <h1 class="page-title">Profile</h1>
+    <p class="page-subtitle">Manage your personal details, email and verified contact methods.</p>
+  </header>
+
+  @if (successMessage()) {
+    <div class="status-banner" role="status">
+      {{ successMessage() }}
+    </div>
+  }
+
+  <section class="form-card" aria-label="Profile information">
+    <form [formGroup]="profileForm" (ngSubmit)="onSave()" class="profile-form">
+      <div class="form-field">
+        <label for="displayName" class="field-label">Display name</label>
+        <input
+          id="displayName"
+          type="text"
+          formControlName="displayName"
+          class="text-input"
+          maxlength="60"
+        />
+        @if (profileForm.controls.displayName.touched && profileForm.controls.displayName.invalid) {
+          <span class="field-error">Please enter a valid display name (max 60 characters).</span>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="email" class="field-label">Email</label>
+        <input id="email" type="email" formControlName="email" class="text-input" />
+        <span class="field-hint">
+          A new email must be verified before it is used. Your current email stays in use until
+          then.
+        </span>
+        @if (profileForm.controls.email.touched && profileForm.controls.email.invalid) {
+          <span class="field-error">Please enter a valid email address.</span>
+        }
+      </div>
+
+      <div class="form-field">
+        <label for="mobileNumber" class="field-label">Mobile number</label>
+        <input id="mobileNumber" type="tel" formControlName="mobileNumber" class="text-input" />
+        <span class="field-hint">A changed number needs re-verification.</span>
+      </div>
+
+      <div class="form-field disabled-field">
+        <label for="language" class="field-label">Language</label>
+        <select id="language" formControlName="language" class="select-input">
+          <option value="English">English</option>
+        </select>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn-primary" [disabled]="isSubmitting()">
+          {{ isSubmitting() ? 'Saving...' : 'Save' }}
+        </button>
+        <button type="button" class="btn-secondary" (click)="onCancel()">Cancel</button>
+      </div>
+    </form>
+  </section>
+
+  <div class="security-link-row">
+    <a routerLink="/settings/app-lock" class="app-lock-link"> Security and app lock &rarr; </a>
+  </div>
+</div>

@@ -1,0 +1,63 @@
+<div class="pro-workspace-layout">
+  <nav class="pro-sidebar" aria-label="Professional portal">
+    <div class="sidebar-brand">ParentPath</div>
+    <div class="sidebar-sub">Professional workspace</div>
+    <div class="sidebar-nav">
+      <a routerLink="/professionals/portal" class="sidebar-link">Clients</a>
+      <a routerLink="/professionals/portal/messages" class="sidebar-link active"
+        >Messages from parents</a
+      >
+    </div>
+  </nav>
+
+  <div class="pro-workspace-content">
+    <header class="workspace-header">
+      <span class="header-title">Professional workspace</span>
+      <span class="header-user">
+        <span class="badge badge-verified">2-step verified</span>
+        Sarah Jenkins, Esq. · Attorney
+      </span>
+    </header>
+
+    <main class="workspace-main">
+      <div class="main-header">
+        <h1 class="main-title">Messages from parents</h1>
+      </div>
+
+      <div class="reply-notice">
+        Read only inbox. You cannot reply here. Please contact the client directly outside the
+        application.
+      </div>
+
+      <div class="table-card">
+        <table class="pro-table">
+          <thead>
+            <tr>
+              <th>From</th>
+              <th>Subject</th>
+              <th>Received</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (msg of messages(); track msg.id) {
+              <tr>
+                <td class="msg-from">Alex Morgan</td>
+                <td class="msg-subject">
+                  <div class="subject-title">{{ msg.subject }}</div>
+                  <div class="subject-body">{{ msg.body }}</div>
+                  @if (msg.note) {
+                    <div class="subject-note">Note: {{ msg.note }}</div>
+                  }
+                  @if (msg.attachmentName) {
+                    <div class="subject-attachment">📎 {{ msg.attachmentName }}</div>
+                  }
+                </td>
+                <td class="msg-time">{{ msg.sentAt }}</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
